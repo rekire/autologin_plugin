@@ -7,7 +7,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="autologin_plugin_example"
+        android:label="Autologin-Plugin example"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

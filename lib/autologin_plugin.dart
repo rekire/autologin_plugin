@@ -12,8 +12,8 @@ class AutologinPlugin {
   }
 
   static Future<Credential> getLoginData() async {
-    final List<String> data = await _channel.invokeMethod('getLoginData');
-    return Credential.fromArgs(data[0], data[1]);
+    final List<dynamic> data = await _channel.invokeMethod('getLoginData');
+    return Credential.fromArgs(data[0] as String, data[1] as String);
   }
 
   static Future<bool> saveLoginData(Credential credential) async {

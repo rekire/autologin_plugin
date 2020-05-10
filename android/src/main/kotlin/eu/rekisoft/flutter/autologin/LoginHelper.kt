@@ -18,7 +18,7 @@ object LoginHelper {
     private const val loginRequestCode = 48232
     private const val saveRequestCode = 48233
 
-    fun loadLoginData(binding: ActivityPluginBinding, callback: (username: String, password: String) -> Unit, error: (Exception?) -> Unit) {
+    fun loadLoginData(binding: ActivityPluginBinding, callback: (username: String, password: String?) -> Unit, error: (Exception?) -> Unit) {
         val availability = GoogleApiAvailability().isGooglePlayServicesAvailable(binding.activity)
         if (availability == ConnectionResult.SUCCESS) {
             val request = CredentialRequest.Builder()
@@ -29,7 +29,7 @@ object LoginHelper {
                 if (it.isSuccessful) {
                     val username = it.result?.credential?.id
                     val password = it.result?.credential?.password
-                    if (username != null && password != null) {
+                    if (username != null) {
                         callback(username, password)
                     } else {
                         error(GoogleApiError(-1))
@@ -47,7 +47,7 @@ object LoginHelper {
                                 val password = credential?.password
                                 println("username: $username, password: $password")
                                 println(credential)
-                                if (username != null && password != null) {
+                                if (username != null) {
                                     callback(username, password)
                                 } else {
                                     error(GoogleApiError(-1))
