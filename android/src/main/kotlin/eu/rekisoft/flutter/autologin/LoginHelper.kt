@@ -17,6 +17,7 @@ import io.flutter.plugin.common.PluginRegistry
 object LoginHelper {
     private const val loginRequestCode = 48232
     private const val saveRequestCode = 48233
+    private const val debugCalls = true
 
     fun loadLoginData(binding: ActivityPluginBinding, callback: (username: String, password: String?) -> Unit, error: (Exception?) -> Unit) {
         val availability = GoogleApiAvailability().isGooglePlayServicesAvailable(binding.activity)
@@ -41,12 +42,11 @@ object LoginHelper {
                             // credentials and needs to pick one. This requires showing UI to
                             // resolve the read request.
                             binding.addActivityResultListener(loginRequestCode) { _, data ->
-                                println("onActivityResult(_,_,$data)")
+                                if (debugCalls) println("onActivityResult(_,_,$data)")
                                 val credential = data?.getParcelableExtra<Credential>(Credential.EXTRA_KEY)
                                 val username = credential?.id
                                 val password = credential?.password
-                                println("username: $username, password: $password")
-                                println(credential)
+                                if (debugCalls) println("username: $username, password: (${if (password.isNullOrBlank()) "not set" else "removed"})")
                                 if (username != null) {
                                     callback(username, password)
                                 } else {
