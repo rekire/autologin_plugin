@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:autologin_plugin/autologin_plugin.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -51,6 +51,12 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Center(
           child: Text('Selected account: $_username'),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.save),
+          onPressed: () {
+            AutologinPlugin.saveLoginData(Credential.fromArgs("test", "test"));
+          },
         ),
       ),
     );
