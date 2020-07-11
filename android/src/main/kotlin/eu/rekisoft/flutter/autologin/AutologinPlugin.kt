@@ -26,8 +26,7 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "autologin_plugin")
         channel.setMethodCallHandler(this)
 
-        //flutterPluginBinding.flutterEngine.add
-        println("onAttachedToEngine")
+        debug("onAttachedToEngine")
     }
 
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
@@ -43,7 +42,7 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         @JvmStatic
         fun registerWith(registrar: Registrar) {
             val channel = MethodChannel(registrar.messenger(), "autologin_plugin")
-            println("registerWith " + registrar.activity().javaClass.simpleName)
+            debug("registerWith " + registrar.activity().javaClass.simpleName)
             channel.setMethodCallHandler(AutologinPlugin())
         }
     }
@@ -63,7 +62,7 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "getPlatformVersion" -> result.success("Android ${android.os.Build.VERSION.RELEASE}")
             "getLoginData" -> {
                 onBound = { binding ->
-                    println("loadLoginData()")
+                    debug("loadLoginData()")
                     LoginHelper.loadLoginData(binding, { username, password ->
                         result.success(listOf(username, password))
                     }, ::handleError)
@@ -77,7 +76,7 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "saveLoginData" -> {
                 operator fun MethodCall.get(arg: String): String = requireNotNull(argument(arg)) { "$arg was null" }
                 onBound = { binding ->
-                    println("saveLoginData()")
+                    debug("saveLoginData()")
                     LoginHelper.saveLoginData(binding, call["username"], call["password"], { result.success(true) }, ::handleError)
                     onBound = null
                 }
@@ -99,13 +98,13 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-        println("onReattachedToActivityForConfigChanges()")
+        debug("onReattachedToActivityForConfigChanges()")
         onBound?.invoke(binding)
         this.binding = binding
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        println("onAttachedToActivity()")
+        debug("onAttachedToActivity()")
         onBound?.invoke(binding)
         this.binding = binding
     }
