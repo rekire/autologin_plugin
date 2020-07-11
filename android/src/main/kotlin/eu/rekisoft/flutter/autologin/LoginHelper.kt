@@ -19,6 +19,8 @@ object LoginHelper {
     private const val saveRequestCode = 48233
     internal const val debugCalls = true
 
+    fun isPlatformSupported(binding: ActivityPluginBinding) = GoogleApiAvailability().isGooglePlayServicesAvailable(binding.activity) == ConnectionResult.SUCCESS
+
     fun loadLoginData(binding: ActivityPluginBinding, callback: (username: String, password: String?) -> Unit, error: (Exception?) -> Unit) {
         val availability = GoogleApiAvailability().isGooglePlayServicesAvailable(binding.activity)
         if (availability == ConnectionResult.SUCCESS) {

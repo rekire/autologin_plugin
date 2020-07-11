@@ -59,7 +59,11 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             }
         }
         when (call.method) {
-            "getPlatformVersion" -> result.success("Android ${android.os.Build.VERSION.RELEASE}")
+            "isPlatformSupported" ->
+                tasks.add { binding ->
+                    debug("isPlatformSupported()")
+                    LoginHelper.isPlatformSupported(binding)
+                }
             "getLoginData" ->
                 tasks.add { binding ->
                     debug("loadLoginData()")

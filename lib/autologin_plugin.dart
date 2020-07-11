@@ -6,9 +6,8 @@ class AutologinPlugin {
   static const MethodChannel _channel =
       const MethodChannel('autologin_plugin');
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
+  static Future<String> get isPlatformSupported async {
+    return await _channel.invokeMethod('isPlatformSupported');
   }
 
   static Future<Credential> getLoginData() async {
