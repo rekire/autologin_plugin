@@ -20,7 +20,7 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /// when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
     private var binding: ActivityPluginBinding? = null
-    private var onBound: ((ActivityPluginBinding) -> Unit)? = null
+    private val tasks: MutableList<(ActivityPluginBinding) -> Unit> = mutableListOf()
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "autologin_plugin")
@@ -60,32 +60,29 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
         when (call.method) {
             "getPlatformVersion" -> result.success("Android ${android.os.Build.VERSION.RELEASE}")
-            "getLoginData" -> {
-                onBound = { binding ->
+            "getLoginData" ->
+                tasks.add { binding ->
                     debug("loadLoginData()")
                     LoginHelper.loadLoginData(binding, { username, password ->
                         result.success(listOf(username, password))
                     }, ::handleError)
-                    onBound = null
                 }
-                binding?.let {
-                    onBound?.invoke(it)
-                    onBound = null
-                }
-            }
             "saveLoginData" -> {
                 operator fun MethodCall.get(arg: String): String = requireNotNull(argument(arg)) { "$arg was null" }
-                onBound = { binding ->
+                tasks.add { binding ->
                     debug("saveLoginData()")
                     LoginHelper.saveLoginData(binding, call["username"], call["password"], { result.success(true) }, ::handleError)
-                    onBound = null
-                }
-                binding?.let {
-                    onBound?.invoke(it)
-                    onBound = null
                 }
             }
             else -> result.notImplemented()
+        }
+        executeTasks()
+    }
+
+    private fun executeTasks() {
+        binding?.let { binding ->
+            tasks.forEach { task -> task.invoke(binding) }
+            tasks.clear()
         }
     }
 
@@ -99,14 +96,14 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
         debug("onReattachedToActivityForConfigChanges()")
-        onBound?.invoke(binding)
         this.binding = binding
+        executeTasks()
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         debug("onAttachedToActivity()")
-        onBound?.invoke(binding)
         this.binding = binding
+        executeTasks()
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
