@@ -13,7 +13,7 @@ class AutologinPlugin {
 
   static Future<Credential> getLoginData() async {
     final List<dynamic> data = await _channel.invokeMethod('getLoginData');
-    return Credential.fromArgs(data[0] as String, data[1] as String);
+    return Credential(data[0] as String, data[1] as String);
   }
 
   static Future<bool> saveLoginData(Credential credential) async {
@@ -25,10 +25,5 @@ class Credential {
   String username;
   String password;
 
-  Credential({this.username, this.password});
-
-  Credential.fromArgs(String username, String password) {
-    this.username = username;
-    this.password = password;
-  }
+  Credential(this.username, this.password);
 }

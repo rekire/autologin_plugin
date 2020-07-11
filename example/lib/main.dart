@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.save),
           onPressed: () {
-            AutologinPlugin.saveLoginData(Credential.fromArgs("test", "test"));
+            AutologinPlugin.saveLoginData(Credential("test", "test"));
           },
         ),
       ),
