@@ -21,7 +21,7 @@ object LoginHelper {
 
     fun isPlatformSupported(binding: ActivityPluginBinding) = GoogleApiAvailability().isGooglePlayServicesAvailable(binding.activity) == ConnectionResult.SUCCESS
 
-    fun loadLoginData(binding: ActivityPluginBinding, callback: (username: String, password: String?) -> Unit, error: (Exception?) -> Unit) {
+    fun loadLoginData(binding: ActivityPluginBinding, callback: (username: String?, password: String?) -> Unit, error: (Exception?) -> Unit) {
         val availability = GoogleApiAvailability().isGooglePlayServicesAvailable(binding.activity)
         if (availability == ConnectionResult.SUCCESS) {
             val request = CredentialRequest.Builder()
@@ -32,11 +32,7 @@ object LoginHelper {
                 if (it.isSuccessful) {
                     val username = it.result?.credential?.id
                     val password = it.result?.credential?.password
-                    if (username != null) {
-                        callback(username, password)
-                    } else {
-                        error(GoogleApiError(-1))
-                    }
+                    callback(username, password)
                 } else {
                     when (it.exception) {
                         is ResolvableApiException -> {
@@ -49,11 +45,7 @@ object LoginHelper {
                                 val username = credential?.id
                                 val password = credential?.password
                                 debug("username: $username, password: (${if (password.isNullOrBlank()) "not set" else "removed"})")
-                                if (username != null) {
-                                    callback(username, password)
-                                } else {
-                                    error(GoogleApiError(-1))
-                                }
+                                callback(username, password)
                             }
                             try {
                                 (it.exception as ResolvableApiException).startResolutionForResult(binding.activity, loginRequestCode)
@@ -107,6 +99,14 @@ object LoginHelper {
         }
     }
 
+    fun disableAutoLogIn(binding: ActivityPluginBinding, success: (Boolean) -> Unit, error: (Exception?) -> Unit) {
+        val available = GoogleApiAvailability().isGooglePlayServicesAvailable(binding.activity) == ConnectionResult.SUCCESS
+        if (available) {
+            Credentials.getClient(binding.activity).disableAutoSignIn()
+        }
+        success(available)
+    }
+
     private fun ActivityPluginBinding.addActivityResultListener(requestCodeFilter: Int, listener: (resultCode: Int, data: Intent?) -> Unit) =
             addActivityResultListener(object : PluginRegistry.ActivityResultListener {
                 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
@@ -124,4 +124,4 @@ object LoginHelper {
                     ?: "no details given"})", cause)
 }
 
-internal inline fun debug(msg: String) = if(LoginHelper.debugCalls) println(msg) else Unit
+internal inline fun debug(msg: String) = if (LoginHelper.debugCalls) println(msg) else Unit

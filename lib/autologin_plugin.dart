@@ -3,15 +3,15 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 class AutologinPlugin {
-  static const MethodChannel _channel =
-      const MethodChannel('autologin_plugin');
+  static const MethodChannel _channel = const MethodChannel('autologin_plugin');
 
-  static Future<String> get isPlatformSupported async {
+  static Future<bool> get isPlatformSupported async {
     return await _channel.invokeMethod('isPlatformSupported');
   }
 
   static Future<Credential> getLoginData() async {
     final List<dynamic> data = await _channel.invokeMethod('getLoginData');
+    if(data[0] == null) return null;
     return Credential(data[0] as String, data[1] as String);
   }
 
