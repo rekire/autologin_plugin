@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:autologin_plugin/autologin_plugin.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,12 +23,12 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
+    Credential credentials = await AutologinPlugin.getLoginData();
     String username;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      username = (await AutologinPlugin.getLoginData()).username;
-    } on PlatformException {
-      username = '<No account chosen>';
+    if (credentials != null) {
+      username = credentials.username;
+    } else {
+      username = "<nothing selected>";
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -55,7 +54,7 @@ class _MyAppState extends State<MyApp> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.save),
           onPressed: () {
-            AutologinPlugin.saveLoginData(Credential.fromArgs("test", "test"));
+            AutologinPlugin.saveLoginData(Credential("test", "test"));
           },
         ),
       ),

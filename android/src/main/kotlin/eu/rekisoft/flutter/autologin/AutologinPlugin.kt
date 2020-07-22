@@ -20,14 +20,13 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /// when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
     private var binding: ActivityPluginBinding? = null
-    private var onBound: ((ActivityPluginBinding) -> Unit)? = null
+    private val tasks: MutableList<(ActivityPluginBinding) -> Unit> = mutableListOf()
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "autologin_plugin")
         channel.setMethodCallHandler(this)
 
-        //flutterPluginBinding.flutterEngine.add
-        println("onAttachedToEngine")
+        debug("onAttachedToEngine")
     }
 
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
@@ -43,7 +42,7 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         @JvmStatic
         fun registerWith(registrar: Registrar) {
             val channel = MethodChannel(registrar.messenger(), "autologin_plugin")
-            println("registerWith " + registrar.activity().javaClass.simpleName)
+            debug("registerWith " + registrar.activity().javaClass.simpleName)
             channel.setMethodCallHandler(AutologinPlugin())
         }
     }
@@ -60,33 +59,40 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             }
         }
         when (call.method) {
-            "getPlatformVersion" -> result.success("Android ${android.os.Build.VERSION.RELEASE}")
-            "getLoginData" -> {
-                onBound = { binding ->
-                    println("loadLoginData()")
+            "isPlatformSupported" ->
+                tasks.add { binding ->
+                    debug("isPlatformSupported()")
+                    LoginHelper.isPlatformSupported(binding)
+                }
+            "getLoginData" ->
+                tasks.add { binding ->
+                    debug("loadLoginData()")
                     LoginHelper.loadLoginData(binding, { username, password ->
                         result.success(listOf(username, password))
                     }, ::handleError)
-                    onBound = null
                 }
-                binding?.let {
-                    onBound?.invoke(it)
-                    onBound = null
-                }
-            }
             "saveLoginData" -> {
                 operator fun MethodCall.get(arg: String): String = requireNotNull(argument(arg)) { "$arg was null" }
-                onBound = { binding ->
-                    println("saveLoginData()")
+                tasks.add { binding ->
+                    debug("saveLoginData()")
                     LoginHelper.saveLoginData(binding, call["username"], call["password"], { result.success(true) }, ::handleError)
-                    onBound = null
                 }
-                binding?.let {
-                    onBound?.invoke(it)
-                    onBound = null
+            }
+            "disableAutoLogIn" -> {
+                tasks.add { binding ->
+                    debug("disableAutoLogIn()")
+                    LoginHelper.disableAutoLogIn(binding, result::success, ::handleError)
                 }
             }
             else -> result.notImplemented()
+        }
+        executeTasks()
+    }
+
+    private fun executeTasks() {
+        binding?.let { binding ->
+            tasks.forEach { task -> task.invoke(binding) }
+            tasks.clear()
         }
     }
 
@@ -99,15 +105,15 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-        println("onReattachedToActivityForConfigChanges()")
-        onBound?.invoke(binding)
+        debug("onReattachedToActivityForConfigChanges()")
         this.binding = binding
+        executeTasks()
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        println("onAttachedToActivity()")
-        onBound?.invoke(binding)
+        debug("onAttachedToActivity()")
         this.binding = binding
+        executeTasks()
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
