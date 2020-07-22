@@ -9,6 +9,15 @@ public class SwiftAutologinPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result("iOS " + UIDevice.current.systemVersion)
+    switch call.method {
+    case "isPlatformSupported":
+      result(false)
+      break
+    case "getLoginData":
+        result(["hallo", "welt"])
+      break
+    default:
+      result(FlutterMethodNotImplemented)
+    }
   }
 }
