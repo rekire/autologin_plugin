@@ -18,6 +18,10 @@ class AutologinPlugin {
   static Future<bool> saveLoginData(Credential credential) async {
     return await _channel.invokeMethod('saveLoginData', <String, dynamic>{'username': credential.username, 'password': credential.password});
   }
+
+  static Future<bool> disableAutoLogIn() async {
+    return await _channel.invokeMethod('disableAutoLogIn()');
+  }
 }
 
 class Credential {

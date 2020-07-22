@@ -78,6 +78,12 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     LoginHelper.saveLoginData(binding, call["username"], call["password"], { result.success(true) }, ::handleError)
                 }
             }
+            "disableAutoLogIn" -> {
+                tasks.add { binding ->
+                    debug("disableAutoLogIn()")
+                    LoginHelper.disableAutoLogIn(binding, result::success, ::handleError)
+                }
+            }
             else -> result.notImplemented()
         }
         executeTasks()
