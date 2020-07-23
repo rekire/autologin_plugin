@@ -1,14 +1,11 @@
-# autologin_plugin
+# Autologin plugin for Flutter
 
-Experimental autologin plugin for flutter.
+Experimental autologin plugin for Flutter. This library should log in the user if the login data are already known by the operating system of the device e.g. on the first run.
 
-## Getting Started
+This plugin uses for Android [Smartlock for Passwords](https://developers.google.com/identity/smartlock-passwords/android) and for iOS [AutoFill](https://developer.apple.com/videos/play/wwdc2018/204/).
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+## TODO
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+- [ ] Add documentation how to use it. In the mean time you can use the [example app](./example)
+- [ ] Upload the final version to pub.dev
+- [ ] Finish and verify iOS implementation #5
