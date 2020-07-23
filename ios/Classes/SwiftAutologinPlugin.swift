@@ -1,5 +1,6 @@
 import Flutter
 import UIKit
+import os
 
 public class SwiftAutologinPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
@@ -12,21 +13,23 @@ public class SwiftAutologinPlugin: NSObject, FlutterPlugin {
     switch call.method {
     case "isPlatformSupported":
       print("isPlatformSupported via print()")
-      os_log("isPlatformSupported via os_log()")
+      if #available(iOS 10.0, *) {
+        os_log("isPlatformSupported via os_log()")
+      }
       result(false)
       break
     case "getLoginData":
       print("getLoginData via print()")
-      os_log("getLoginData via os_log()")
+      //os_log("getLoginData via os_log()")
       checkSafariCredentialsWithCompletion(completion: {username, password in
-        print("completion \(username) via print()")
-        os_log("completion \(username) via os_log()")
+        print("completion \(String(describing: username)) via print()")
+        //os_log("completion \(username) via os_log()")
         result([username, password])
       })
       break
     default:
       print("Unsupported method \(call.method) via print()")
-      os_log("Unsupported method \(call.method) via os_log()")
+      //os_log("Unsupported method \(call.method) via os_log()")
       result(FlutterMethodNotImplemented)
     }
   }
@@ -37,7 +40,6 @@ public class SwiftAutologinPlugin: NSObject, FlutterPlugin {
 
       if let error = error {
         print("error: \(error)")
-        os_log("error: \(error)")
         completion(nil, nil)
       } else if CFArrayGetCount(credentials) > 0 {
         let unsafeCred = CFArrayGetValueAtIndex(credentials, 0)
@@ -46,15 +48,15 @@ public class SwiftAutologinPlugin: NSObject, FlutterPlugin {
         let username = dict[kSecAttrAccount as String]
         let password = dict[kSecSharedPassword as String]
 
-        print("CFArrayGetCount \(username) via print()")
-        os_log("CFArrayGetCount \(username) via os_log()")
+        print("CFArrayGetCount \(String(describing: username)) via print()")
+        //os_log("CFArrayGetCount \(username) via os_log()")
         DispatchQueue.main.async {
           completion(username, password)
         }
       } else {
         DispatchQueue.main.async {
           print("Nothing found via print()")
-          os_log("Nothing found via os_log()")
+          //os_log("Nothing found via os_log()")
           completion(nil, nil)
         }
       }
