@@ -20,7 +20,7 @@ class AutologinPlugin {
   }
 
   static Future<bool> disableAutoLogIn() async {
-    return await _channel.invokeMethod('disableAutoLogIn()');
+    return await _channel.invokeMethod('disableAutoLogIn');
   }
 }
 
