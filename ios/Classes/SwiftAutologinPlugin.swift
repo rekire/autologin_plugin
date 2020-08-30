@@ -12,24 +12,18 @@ public class SwiftAutologinPlugin: NSObject, FlutterPlugin {
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     switch call.method {
     case "isPlatformSupported":
-      print("isPlatformSupported via print()")
-      if #available(iOS 10.0, *) {
-        os_log("isPlatformSupported via os_log()")
-      }
-      result(false)
+      print("isPlatformSupported()")
+      result(false) // wip
       break
     case "getLoginData":
-      print("getLoginData via print()")
-      //os_log("getLoginData via os_log()")
+      print("getLoginData()")
       checkSafariCredentialsWithCompletion(completion: {username, password in
-        print("completion \(String(describing: username)) via print()")
-        //os_log("completion \(username) via os_log()")
+        print("completion \(String(describing: username))")
         result([username, password])
       })
       break
     default:
-      print("Unsupported method \(call.method) via print()")
-      //os_log("Unsupported method \(call.method) via os_log()")
+      print("Unsupported method \(call.method)")
       result(FlutterMethodNotImplemented)
     }
   }
@@ -48,15 +42,13 @@ public class SwiftAutologinPlugin: NSObject, FlutterPlugin {
         let username = dict[kSecAttrAccount as String]
         let password = dict[kSecSharedPassword as String]
 
-        print("CFArrayGetCount \(String(describing: username)) via print()")
-        //os_log("CFArrayGetCount \(username) via os_log()")
+        print("CFArrayGetCount \(String(describing: username))")
         DispatchQueue.main.async {
           completion(username, password)
         }
       } else {
         DispatchQueue.main.async {
-          print("Nothing found via print()")
-          //os_log("Nothing found via os_log()")
+          print("No account selected or found")
           completion(nil, nil)
         }
       }
