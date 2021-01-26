@@ -10,6 +10,10 @@ class AutologinPlugin {
       return await _channel.invokeMethod('isPlatformSupported');
     } on MissingPluginException {
       return false;
+    } catch(e) {
+      print("Crash");
+      print(e);
+      throw e;
     }
   }
 
