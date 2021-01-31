@@ -6,6 +6,7 @@ import android.content.IntentSender
 import com.google.android.gms.auth.api.credentials.Credential
 import com.google.android.gms.auth.api.credentials.CredentialRequest
 import com.google.android.gms.auth.api.credentials.Credentials
+import com.google.android.gms.auth.api.credentials.CredentialsOptions
 import com.google.android.gms.auth.api.credentials.IdentityProviders
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -73,7 +74,8 @@ object LoginHelper {
             val credential: Credential = Credential.Builder(email)
                     .setPassword(password)
                     .build()
-            Credentials.getClient(binding.activity).save(credential).addOnCompleteListener {
+            val options = CredentialsOptions.Builder().forceEnableSaveDialog().build()
+            Credentials.getClient(binding.activity, options).save(credential).addOnCompleteListener {
                 if (it.isSuccessful) {
                     debug("Login data saved")
                     success()
