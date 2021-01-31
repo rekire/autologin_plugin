@@ -62,14 +62,7 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "isPlatformSupported" ->
                 tasks.add { binding ->
                     debug("isPlatformSupported()")
-                    try {
-                        LoginHelper.isPlatformSupported(binding)
-                        debug("No exception")
-                    } catch(e: Throwable) {
-                        e.printStackTrace()
-                        result.error("-3", e?.message ?: "No error details given", "Stack is on sys out.")
-                    }
-                    debug("Block executed")
+                    result.success(LoginHelper.isPlatformSupported(binding))
                 }
             "getLoginData" ->
                 tasks.add { binding ->
