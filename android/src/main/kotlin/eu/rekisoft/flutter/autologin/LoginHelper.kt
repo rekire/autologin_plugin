@@ -69,16 +69,20 @@ object LoginHelper {
     fun saveLoginData(binding: ActivityPluginBinding, email: String, password: String, success: () -> Unit, error: (Exception?) -> Unit) {
         val availability = GoogleApiAvailability().isGooglePlayServicesAvailable(binding.activity)
         if (availability == ConnectionResult.SUCCESS) {
+            debug("Saving is possible")
             val credential: Credential = Credential.Builder(email)
                     .setPassword(password)
                     .build()
             Credentials.getClient(binding.activity).save(credential).addOnCompleteListener {
                 if (it.isSuccessful) {
+                    debug("Login data saved")
                     success()
                 } else {
+                    debug("Could not save it. $it")
                     if (it.exception is ResolvableApiException) {
                         // Try to resolve the save request. This will prompt the user if
                         // the credential is new.
+                        debug("Adding listener for the save request")
                         binding.addActivityResultListener(saveRequestCode) { resultCode, _ ->
                             if (resultCode == RESULT_OK) {
                                 success()
@@ -88,13 +92,16 @@ object LoginHelper {
                         }
                         try {
                             (it.exception as ResolvableApiException).startResolutionForResult(binding.activity, saveRequestCode)
+                            debug("Intend send to the system to ask to save the login data")
                         } catch (e: IntentSender.SendIntentException) {
+                            debug("On no, something crashed. $e")
                             error(e)
                         }
                     }
                 }
             }
         } else {
+            debug("Cannot save the login data")
             error(GoogleApiError(availability))
         }
     }
