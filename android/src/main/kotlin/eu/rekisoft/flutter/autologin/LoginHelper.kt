@@ -78,7 +78,7 @@ object LoginHelper {
                     debug("Login data saved")
                     success()
                 } else {
-                    debug("Could not save it. $it")
+                    debug("Could not save it. $it.message")
                     if (it.exception is ResolvableApiException) {
                         // Try to resolve the save request. This will prompt the user if
                         // the credential is new.
@@ -97,6 +97,9 @@ object LoginHelper {
                             debug("On no, something crashed. $e")
                             error(e)
                         }
+                    } else {
+                        debug("On no, something crashed.")
+                        error(it.exception)
                     }
                 }
             }
