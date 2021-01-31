@@ -49,6 +49,7 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         fun handleError(exception: Exception?) {
+            debug("Error processing...")
             val stackTrace = StringWriter()
             exception?.printStackTrace(PrintWriter(stackTrace))
             if (exception is LoginHelper.GoogleApiError) {
@@ -75,7 +76,7 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 operator fun MethodCall.get(arg: String): String = requireNotNull(argument(arg)) { "$arg was null" }
                 tasks.add { binding ->
                     debug("saveLoginData()")
-                    LoginHelper.saveLoginData(binding, call["username"], call["password"], { result.success(true) }, ::handleError)
+                    LoginHelper.saveLoginData(binding, call["username"], call["password"], { debug("Saved successful."); result.success(true) }, ::handleError)
                 }
             }
             "disableAutoLogIn" -> {
