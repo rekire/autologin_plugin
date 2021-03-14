@@ -3,13 +3,16 @@ package eu.rekisoft.flutter.autologin
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.IntentSender
+import android.util.Log
 import com.google.android.gms.auth.api.credentials.Credential
 import com.google.android.gms.auth.api.credentials.CredentialRequest
 import com.google.android.gms.auth.api.credentials.Credentials
+import com.google.android.gms.auth.api.credentials.CredentialsOptions
 import com.google.android.gms.auth.api.credentials.IdentityProviders
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.api.ResolvableApiException
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.PluginRegistry
@@ -50,14 +53,11 @@ object LoginHelper {
                             try {
                                 (it.exception as ResolvableApiException).startResolutionForResult(binding.activity, loginRequestCode)
                             } catch (e: IntentSender.SendIntentException) {
-                                //Log.e(TAG, "Failed to send resolution.", e)
                                 error(e)
                             }
                         }
-                        is ApiException ->
-                            error(GoogleApiError((it.exception as ApiException).statusCode, it.exception))
-                        else ->
-                            error(it.exception)
+                        is ApiException -> error(GoogleApiError((it.exception as ApiException).statusCode, it.exception))
+                        else -> error(it.exception)
                     }
                 }
             }
@@ -72,13 +72,15 @@ object LoginHelper {
             val credential: Credential = Credential.Builder(email)
                     .setPassword(password)
                     .build()
-            Credentials.getClient(binding.activity).save(credential).addOnCompleteListener {
-                if (it.isSuccessful) {
-                    success()
-                } else {
-                    if (it.exception is ResolvableApiException) {
+            val options = CredentialsOptions.Builder().forceEnableSaveDialog().build()
+            Credentials.getClient(binding.activity, options).save(credential).addOnCompleteListener {
+                when {
+                    it.isSuccessful -> success()
+                    (it.exception as? ApiException)?.statusCode == CommonStatusCodes.CANCELED -> success()
+                    it.exception is ResolvableApiException -> {
                         // Try to resolve the save request. This will prompt the user if
                         // the credential is new.
+                        debug("Adding listener for the save request")
                         binding.addActivityResultListener(saveRequestCode) { resultCode, _ ->
                             if (resultCode == RESULT_OK) {
                                 success()
@@ -89,12 +91,15 @@ object LoginHelper {
                         try {
                             (it.exception as ResolvableApiException).startResolutionForResult(binding.activity, saveRequestCode)
                         } catch (e: IntentSender.SendIntentException) {
+                            debug("On no, something crashed. $e")
                             error(e)
                         }
                     }
+                    else -> error(it.exception)
                 }
             }
         } else {
+            debug("Cannot save the login data")
             error(GoogleApiError(availability))
         }
     }
@@ -120,8 +125,9 @@ object LoginHelper {
             })
 
     class GoogleApiError(val error: Int, cause: Exception? = null) :
-            RuntimeException("Error code $error while loading the login data (${cause?.message
-                    ?: "no details given"})", cause)
+            RuntimeException("Error code $error while loading the login data (${cause?.message ?: "no details given"})", cause)
 }
 
-internal inline fun debug(msg: String) = if (LoginHelper.debugCalls) println(msg) else Unit
+internal inline fun debug(msg: String) {
+    if (LoginHelper.debugCalls) Log.d("AutoLogin", msg)
+}

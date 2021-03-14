@@ -6,7 +6,15 @@ class AutologinPlugin {
   static const MethodChannel _channel = const MethodChannel('autologin_plugin');
 
   static Future<bool> get isPlatformSupported async {
-    return await _channel.invokeMethod('isPlatformSupported');
+    try {
+      return await _channel.invokeMethod('isPlatformSupported');
+    } on MissingPluginException {
+      return false;
+    } catch(e) {
+      print("Crash");
+      print(e);
+      throw e;
+    }
   }
 
   static Future<Credential> getLoginData() async {
@@ -20,7 +28,7 @@ class AutologinPlugin {
   }
 
   static Future<bool> disableAutoLogIn() async {
-    return await _channel.invokeMethod('disableAutoLogIn()');
+    return await _channel.invokeMethod('disableAutoLogIn');
   }
 }
 
