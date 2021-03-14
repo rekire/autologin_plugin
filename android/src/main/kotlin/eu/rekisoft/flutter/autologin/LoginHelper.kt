@@ -66,7 +66,7 @@ object LoginHelper {
         }
     }
 
-    fun saveLoginData(binding: ActivityPluginBinding, email: String, password: String, success: () -> Unit, error: (Exception?) -> Unit) {
+    fun saveLoginData(binding: ActivityPluginBinding, email: String, password: String, result: (Boolean) -> Unit, error: (Exception?) -> Unit) {
         val availability = GoogleApiAvailability().isGooglePlayServicesAvailable(binding.activity)
         if (availability == ConnectionResult.SUCCESS) {
             val credential: Credential = Credential.Builder(email)
@@ -75,18 +75,14 @@ object LoginHelper {
             val options = CredentialsOptions.Builder().forceEnableSaveDialog().build()
             Credentials.getClient(binding.activity, options).save(credential).addOnCompleteListener {
                 when {
-                    it.isSuccessful -> success()
-                    (it.exception as? ApiException)?.statusCode == CommonStatusCodes.CANCELED -> success()
+                    it.isSuccessful -> result(true)
+                    (it.exception as? ApiException)?.statusCode == CommonStatusCodes.CANCELED -> result(false)
                     it.exception is ResolvableApiException -> {
                         // Try to resolve the save request. This will prompt the user if
                         // the credential is new.
                         debug("Adding listener for the save request")
                         binding.addActivityResultListener(saveRequestCode) { resultCode, _ ->
-                            if (resultCode == RESULT_OK) {
-                                success()
-                            } else {
-                                error(GoogleApiError(-1))
-                            }
+                            result(resultCode == RESULT_OK)
                         }
                         try {
                             (it.exception as ResolvableApiException).startResolutionForResult(binding.activity, saveRequestCode)
