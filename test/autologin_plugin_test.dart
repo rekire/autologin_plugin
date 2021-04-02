@@ -9,7 +9,7 @@ void main() {
 
   setUp(() {
     channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return '42';
+      return false;
     });
   });
 
@@ -17,7 +17,7 @@ void main() {
     channel.setMockMethodCallHandler(null);
   });
 
-  test('getPlatformVersion', () async {
-    expect(await AutologinPlugin.platformVersion, '42');
+  test('isPlatformSupported', () async {
+    expect(await AutologinPlugin.isPlatformSupported, false);
   });
 }
