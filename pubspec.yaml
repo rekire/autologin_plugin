@@ -2,7 +2,7 @@ name: autologin_plugin
 description: Library for offering automatic logins with platform methods like smartlock or the keychain.
 version: 0.0.1
 author: René Kilczan
-homepage:
+homepage: https://github.com/rekire/autologin_plugin
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
