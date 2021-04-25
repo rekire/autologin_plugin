@@ -10,3 +10,4 @@ build/
 
 .idea
 android/.idea
+lib/kotlin-*.jar
