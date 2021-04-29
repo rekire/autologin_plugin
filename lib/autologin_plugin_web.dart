@@ -1,9 +1,11 @@
 import 'dart:async';
+
 // In order to *not* need this ignore, consider extracting the "web" version
 // of your plugin as a separate package, instead of inlining it in the same
 // package as the core of your plugin.
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html show window;
+import 'dart:html';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -12,7 +14,7 @@ import 'autologin_plugin.dart';
 
 /// A web implementation of the AutologinPlugin plugin.
 class AutologinPluginWeb {
-  static MethodChannel _channel;
+  static late MethodChannel _channel;
 
   static void registerWith(Registrar registrar) {
     _channel = MethodChannel(
@@ -31,34 +33,41 @@ class AutologinPluginWeb {
   Future<dynamic> handleMethodCall(MethodCall call) async {
     switch (call.method) {
       case 'isPlatformSupported':
-        return false;
-        break;
+        return html.window.navigator.credentials != null;
       case 'getLoginData':
+        return await getLoginData();
       case 'saveLoginData':
+        return await saveLoginData(call.arguments);
       case 'disableAutoLogIn':
-        // TODO handle that call, however the isPlatformSupported method says it is not supported yet ;-)
-        html.window.alert('TODO: Handle the ${call.method}() call');
-        return false;
-        break;
+        return await disableAutoLogIn();
       default:
         throw PlatformException(
           code: 'Unimplemented',
-          details: 'autologin_plugin for web doesn\'t implement \'${call.method}\'',
+          details:
+              'autologin_plugin for web doesn\'t implement \'${call.method}\'',
         );
     }
   }
 
-  static Future<Credential> getLoginData() async {
-    final List<dynamic> data = await _channel.invokeMethod('getLoginData');
-    if(data[0] == null) return null;
-    return Credential(data[0] as String, data[1] as String);
+  static Future<Credential?> getLoginData() async {
+    final PasswordCredential? data =
+        await html.window.navigator.credentials?.get({
+      'password': true,
+    });
+    if (data == null) return null;
+    return Credential(data.id!, data.password!);
   }
 
-  static Future<bool> saveLoginData(Credential credential) async {
-    return await _channel.invokeMethod('saveLoginData', <String, dynamic>{'username': credential.username, 'password': credential.password});
+  static Future<bool> saveLoginData(Map<String, dynamic> data) async {
+    await html.window.navigator.credentials?.store(PasswordCredential({
+      'id': data['username'],
+      'password': data['password'],
+    }));
+    return true;
   }
 
   static Future<bool> disableAutoLogIn() async {
-    return await _channel.invokeMethod('disableAutoLogIn');
+    await html.window.navigator.credentials?.preventSilentAccess();
+    return true;
   }
 }
