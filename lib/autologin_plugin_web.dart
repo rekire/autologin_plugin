@@ -7,14 +7,13 @@ import 'dart:async';
 import 'dart:html' as html show window;
 import 'dart:html';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
-import 'autologin_plugin.dart';
-
 /// A web implementation of the AutologinPlugin plugin.
-class AutologinPluginWeb {
-  static late MethodChannel _channel;
+class AutologinPlugin {
+  static MethodChannel _channel;
 
   static void registerWith(Registrar registrar) {
     _channel = MethodChannel(
@@ -23,7 +22,7 @@ class AutologinPluginWeb {
       registrar,
     );
 
-    final pluginInstance = AutologinPluginWeb();
+    final pluginInstance = AutologinPlugin();
     _channel.setMethodCallHandler(pluginInstance.handleMethodCall);
   }
 
@@ -37,7 +36,10 @@ class AutologinPluginWeb {
       case 'getLoginData':
         return await getLoginData();
       case 'saveLoginData':
-        return await saveLoginData(call.arguments);
+        return await saveLoginData(
+          username: call.arguments['username'],
+          password: call.arguments['username'],
+        );
       case 'disableAutoLogIn':
         return await disableAutoLogIn();
       default:
@@ -49,19 +51,20 @@ class AutologinPluginWeb {
     }
   }
 
-  static Future<Credential?> getLoginData() async {
-    final PasswordCredential? data =
-        await html.window.navigator.credentials?.get({
+  static Future<List<dynamic>> getLoginData() async {
+    PasswordCredential data = await html.window.navigator.credentials?.get({
       'password': true,
     });
-    if (data == null) return null;
-    return Credential(data.id!, data.password!);
+    return [data?.id, data?.password];
   }
 
-  static Future<bool> saveLoginData(Map<String, dynamic> data) async {
+  static Future<bool> saveLoginData({
+    @required username,
+    @required password,
+  }) async {
     await html.window.navigator.credentials?.store(PasswordCredential({
-      'id': data['username'],
-      'password': data['password'],
+      'id': username,
+      'password': password,
     }));
     return true;
   }
