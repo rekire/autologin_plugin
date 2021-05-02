@@ -6,6 +6,7 @@ import 'dart:async';
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html show window;
 import 'dart:html';
+import 'dart:js';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -32,7 +33,8 @@ class AutologinPlugin {
   Future<dynamic> handleMethodCall(MethodCall call) async {
     switch (call.method) {
       case 'isPlatformSupported':
-        return html.window.navigator.credentials != null;
+        return html.window.navigator.credentials != null &&
+            context.hasProperty("PasswordCredential");
       case 'getLoginData':
         return await getLoginData();
       case 'saveLoginData':
