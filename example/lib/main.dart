@@ -14,6 +14,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _username = 'Unknown';
+  bool _isPlatformSupported;
 
   @override
   void initState() {
@@ -24,6 +25,7 @@ class _MyAppState extends State<MyApp> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     Credential credentials = await AutologinPlugin.getLoginData();
+    bool isPlatformSupported = await AutologinPlugin.isPlatformSupported;
     String username;
     if (credentials != null) {
       username = credentials.username;
@@ -38,6 +40,7 @@ class _MyAppState extends State<MyApp> {
 
     setState(() {
       _username = username;
+      _isPlatformSupported = isPlatformSupported;
     });
   }
 
@@ -49,12 +52,12 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Autologin-Plugin example app'),
         ),
         body: Center(
-          child: Text('Selected account: $_username'),
+          child: Text('Selected account: $_username\nisPlatformSupported: $_isPlatformSupported'),
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.save),
           onPressed: () {
-            AutologinPlugin.saveLoginData(Credential("test", "test"));
+            AutologinPlugin.saveLoginData(Credential("Random-Username", "S@mpl3_P@\$\$wörd"));
           },
         ),
       ),

@@ -37,6 +37,8 @@ flutter:
       web:
         pluginClass: AutologinPlugin
         fileName: autologin_plugin_web.dart
+      windows:
+        pluginClass: AutoLoginPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

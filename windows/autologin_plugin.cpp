@@ -1,4 +1,4 @@
-#include "include/autologin_plugin/autologin_plugin.h"
+#include "include/autologin_plugin/auto_login_plugin.h"
 
 // This must be included before many other Windows headers.
 #include <windows.h>
@@ -10,6 +10,7 @@
 #include <map>
 #include <memory>
 #include <sstream>
+#include <iostream>
 
 namespace {
 
@@ -55,6 +56,12 @@ void AutologinPlugin::HandleMethodCall(
     std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result) {
   if (method_call.method_name().compare("isPlatformSupported") == 0) {
     result->Success(flutter::EncodableValue(false));
+  } else if (method_call.method_name().compare("getLoginData") == 0) {
+    MessageBox(NULL, (LPCWSTR)L"TODO: getLoginData()", NULL, 0);
+    result->Success(flutter::EncodableValue(false));
+  } else if (method_call.method_name().compare("saveLoginData") == 0) {
+    MessageBox(NULL, (LPCWSTR)L"TODO: saveLoginData()", NULL, 0);
+    result->Success(flutter::EncodableValue(false));
   } else {
     result->NotImplemented();
   }
@@ -62,7 +69,7 @@ void AutologinPlugin::HandleMethodCall(
 
 }  // namespace
 
-void AutologinPluginRegisterWithRegistrar(
+void AutoLoginPluginRegisterWithRegistrar(
     FlutterDesktopPluginRegistrarRef registrar) {
   AutologinPlugin::RegisterWithRegistrar(
       flutter::PluginRegistrarManager::GetInstance()
