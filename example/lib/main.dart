@@ -23,6 +23,12 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
+    if (!(await AutologinPlugin.isPlatformSupported)) {
+      setState(() {
+        _username = "not supported";
+      });
+      return;
+    }
     Credential credentials = await AutologinPlugin.getLoginData();
     String username;
     if (credentials != null) {
@@ -53,7 +59,13 @@ class _MyAppState extends State<MyApp> {
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.save),
-          onPressed: () {
+          onPressed: () async {
+            if (!(await AutologinPlugin.isPlatformSupported)) {
+              setState(() {
+                _username = "not supported";
+              });
+              return;
+            }
             AutologinPlugin.saveLoginData(Credential("test", "test"));
           },
         ),
