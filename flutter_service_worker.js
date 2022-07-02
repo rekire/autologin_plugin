@@ -4,25 +4,29 @@ const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "favicon.png": "5dcef449791fa27946b3d35ad8803796",
-"version.json": "878b083fb1157105e8f03128d3d1fbff",
-"icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
+"canvaskit/canvaskit.js": "c2b4e5f3d7a3d82aed024e7249a78487",
+"canvaskit/profiling/canvaskit.js": "ae2949af4efc61d28a4a80fffa1db900",
+"canvaskit/profiling/canvaskit.wasm": "95e736ab31147d1b2c7b25f11d4c32cd",
+"canvaskit/canvaskit.wasm": "4b83d89d9fecbea8ca46f2f760c5a9ba",
+"index.html": "3c94d2755fbd5fcff9b2c2c741c1d88e",
+"/": "3c94d2755fbd5fcff9b2c2c741c1d88e",
+"flutter.js": "eb2682e33f25cd8f1fc59011497c35f8",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
+"icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "manifest.json": "cbcc943c8045e3359f34b1bc47e1e6d7",
-"main.dart.js": "12a7f58e85dd998c04f4524b703fa0af",
-"assets/NOTICES": "3987b692063e7544bf500d8ce571d40b",
-"assets/fonts/MaterialIcons-Regular.otf": "1288c9e28052e028aba623321f7826ac",
+"version.json": "4c552c5d4518a446d3be3b6bd8698cf8",
+"assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
+"assets/fonts/MaterialIcons-Regular.otf": "95db9098c58fd6db106f1116bae85a0b",
 "assets/AssetManifest.json": "2efbb41d7877d10aac9d091f58ccd7b9",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "115e937bb829a890521f72d2e664b632",
-"assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
-"index.html": "a2614ee3d37dea2ec561cce7e5cc3910",
-"/": "a2614ee3d37dea2ec561cce7e5cc3910"
+"assets/NOTICES": "504975168acb15b5baa0a26e9ee389fb",
+"main.dart.js": "8691913adbcf96e7969675e269bb29e0"
 };
 
 // The application shell files that are downloaded before a service worker can
 // start.
 const CORE = [
-  "/",
-"main.dart.js",
+  "main.dart.js",
 "index.html",
 "assets/NOTICES",
 "assets/AssetManifest.json",
@@ -33,7 +37,7 @@ self.addEventListener("install", (event) => {
   return event.waitUntil(
     caches.open(TEMP).then((cache) => {
       return cache.addAll(
-        CORE.map((value) => new Request(value + '?revision=' + RESOURCES[value], {'cache': 'reload'})));
+        CORE.map((value) => new Request(value, {'cache': 'reload'})));
     })
   );
 });
