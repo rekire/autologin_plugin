@@ -42,7 +42,7 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         @JvmStatic
         fun registerWith(registrar: Registrar) {
             val channel = MethodChannel(registrar.messenger(), "autologin_plugin")
-            debug("registerWith " + registrar.activity().javaClass.simpleName)
+            debug("registerWith " + (registrar.activity()?.javaClass?.simpleName ?: "unknown"))
             channel.setMethodCallHandler(AutologinPlugin())
         }
     }
