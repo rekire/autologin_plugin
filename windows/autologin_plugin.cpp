@@ -63,7 +63,7 @@ void AutologinPlugin::RegisterWithRegistrar(
 }
 
 AutologinPlugin::AutologinPlugin() {
-  LPTSTR productName2 = (LPTSTR)_T("FlutterApp");
+  productName = std::basic_string<TCHAR>();
   DWORD fileInfoSize = 0;
   TCHAR moduleName[MAX_PATH] = { '\0', };
 
@@ -81,16 +81,17 @@ AutologinPlugin::AutologinPlugin() {
     BOOL queryResult = VerQueryValue(fileInfoData, L"\\VarFileInfo\\Translation", (LPVOID*)&translate, &dataLength);
 
     if (queryResult && translate && dataLength) {
-        wchar_t productNameBlock[MAX_PATH];
-        _snwprintf_s(productNameBlock, MAX_PATH, MAX_PATH, L"\\StringFileInfo\\%04x%04x\\ProductName", translate->language, translate->code_page);
-      queryResult = VerQueryValue(fileInfoData, productNameBlock, (LPVOID*)&productName2, &dataLength);
-      if (!queryResult || !productName2 || !dataLength) {
-          productName2 = (LPTSTR)_T("FlutterApp");
-        }
+      wchar_t productNameBlock[MAX_PATH];
+      _snwprintf_s(productNameBlock, MAX_PATH, MAX_PATH, L"\\StringFileInfo\\%04x%04x\\ProductName", translate->language, translate->code_page);
+      LPVOID productNamePointer;
+      VerQueryValue(fileInfoData, productNameBlock, &productNamePointer, &dataLength);
+      productName.assign((TCHAR*)productNamePointer);
     }
   }
+  if (productName.empty()) {
+    productName.assign(_T("FlutterApp"));
+  }
 
-  productName = std::basic_string<TCHAR>(productName2);
   delete[] fileInfoData;
 }
 
@@ -115,10 +116,12 @@ void AutologinPlugin::HandleMethodCall(
 
     PCREDENTIALW pcred;
     BOOL ok = ::CredRead((LPTSTR)(productName.c_str()), CRED_TYPE_GENERIC, 0, &pcred);
-    wprintf (L"CredRead() - errno %d\n", ok ? 0 : ::GetLastError());
+    //wprintf (L"CredRead() - errno %d\n", ok ? 0 : ::GetLastError());
 
-    if(!ok) {
-      result->Error("Read Error", "Cannot read data...");
+    if (!ok) {
+      flutter::EncodableList list;
+      result->Success(flutter::EncodableValue(list));
+      //result->Error("Read Error", "Cannot read data...");
       return;
     }
 
