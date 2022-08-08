@@ -40,6 +40,8 @@ class AutologinPlugin : public flutter::Plugin {
   void HandleMethodCall(
       const flutter::MethodCall<flutter::EncodableValue> &method_call,
       std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>> result);
+
+  std::basic_string<TCHAR> productName;
 };
 
 // static
@@ -60,42 +62,39 @@ void AutologinPlugin::RegisterWithRegistrar(
   registrar->AddPlugin(std::move(plugin));
 }
 
-AutologinPlugin::AutologinPlugin() {}
+AutologinPlugin::AutologinPlugin() {
+  LPTSTR productName2 = (LPTSTR)_T("FlutterApp");
+  DWORD fileInfoSize = 0;
+  TCHAR moduleName[MAX_PATH] = { '\0', };
 
-AutologinPlugin::~AutologinPlugin() {}
+  char* fileInfoData = NULL;
 
-std::basic_string<TCHAR> getProductName() {
-    LPTSTR productName = (LPTSTR)_T("FlutterApp");
-    DWORD fileInfoSize = 0;
-    TCHAR moduleName[MAX_PATH] = { '\0', };
+  GetModuleFileName(NULL, moduleName, MAX_PATH);
 
-    char* fileInfoData = NULL;
+  fileInfoSize = GetFileVersionInfoSize(moduleName, 0);
 
-    GetModuleFileName(NULL, moduleName, MAX_PATH);
+  fileInfoData = new char[fileInfoSize];
 
-    fileInfoSize = GetFileVersionInfoSize(moduleName, 0);
+  if (fileInfoSize && GetFileVersionInfo(moduleName, 0, fileInfoSize, fileInfoData) != 0) {
+    UINT dataLength = 0;
+    LanguageAndCodePage* translate = NULL;
+    BOOL queryResult = VerQueryValue(fileInfoData, L"\\VarFileInfo\\Translation", (LPVOID*)&translate, &dataLength);
 
-    fileInfoData = new char[fileInfoSize];
-
-    if (fileInfoSize && GetFileVersionInfo(moduleName, 0, fileInfoSize, fileInfoData) != 0) {
-        UINT dataLength = 0;
-        LanguageAndCodePage* translate = NULL;
-        BOOL queryResult = VerQueryValue(fileInfoData, L"\\VarFileInfo\\Translation", (LPVOID*)&translate, &dataLength);
-
-        if (queryResult && translate && dataLength) {
-            wchar_t productNameBlock[MAX_PATH];
-            _snwprintf_s(productNameBlock, MAX_PATH, MAX_PATH, L"\\StringFileInfo\\%04x%04x\\ProductName", translate->language, translate->code_page);
-            queryResult = VerQueryValue(fileInfoData, productNameBlock, (LPVOID*)&productName, &dataLength);
-            if (!queryResult || !productName || !dataLength) {
-                productName = (LPTSTR)_T("FlutterApp");
-            }
+    if (queryResult && translate && dataLength) {
+        wchar_t productNameBlock[MAX_PATH];
+        _snwprintf_s(productNameBlock, MAX_PATH, MAX_PATH, L"\\StringFileInfo\\%04x%04x\\ProductName", translate->language, translate->code_page);
+      queryResult = VerQueryValue(fileInfoData, productNameBlock, (LPVOID*)&productName2, &dataLength);
+      if (!queryResult || !productName2 || !dataLength) {
+          productName2 = (LPTSTR)_T("FlutterApp");
         }
     }
+  }
 
-    std::basic_string<TCHAR> copy = std::basic_string<TCHAR>(productName);
-    delete[] fileInfoData;
-    return copy;
+  productName = std::basic_string<TCHAR>(productName2);
+  delete[] fileInfoData;
 }
+
+AutologinPlugin::~AutologinPlugin() {}
 
 std::optional<std::string> getStringArg(
       const std::string &param,
@@ -115,7 +114,7 @@ void AutologinPlugin::HandleMethodCall(
   } else if (method_call.method_name().compare("getLoginData") == 0) {
 
     PCREDENTIALW pcred;
-    BOOL ok = ::CredRead((LPTSTR)(getProductName().c_str()), CRED_TYPE_GENERIC, 0, &pcred);
+    BOOL ok = ::CredRead((LPTSTR)(productName.c_str()), CRED_TYPE_GENERIC, 0, &pcred);
     wprintf (L"CredRead() - errno %d\n", ok ? 0 : ::GetLastError());
 
     if(!ok) {
@@ -180,8 +179,6 @@ void AutologinPlugin::HandleMethodCall(
       return;
     }
 
-    std::basic_string<TCHAR> productName = getProductName();
-
     CREDENTIALW cred = {0};
     cred.Type = CRED_TYPE_GENERIC;
     cred.TargetName = (LPTSTR)(productName.c_str());
@@ -191,7 +188,7 @@ void AutologinPlugin::HandleMethodCall(
     cred.UserName = username;
 
     BOOL ok = ::CredWriteW (&cred, 0);
-    wprintf (L"CredWrite() - errno %d\n", ok ? 0 : ::GetLastError());
+    //wprintf (L"CredWrite() - errno %d\n", ok ? 0 : ::GetLastError());
 
     delete[] username;
     delete[] password;
@@ -204,8 +201,7 @@ void AutologinPlugin::HandleMethodCall(
 
 }  // namespace
 
-void AutoLoginPluginRegisterWithRegistrar(
-    FlutterDesktopPluginRegistrarRef registrar) {
+void AutoLoginPluginRegisterWithRegistrar(FlutterDesktopPluginRegistrarRef registrar) {
   AutologinPlugin::RegisterWithRegistrar(
       flutter::PluginRegistrarManager::GetInstance()
           ->GetRegistrar<flutter::PluginRegistrarWindows>(registrar));
