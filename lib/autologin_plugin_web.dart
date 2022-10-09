@@ -40,7 +40,7 @@ class AutologinPlugin {
       case 'saveLoginData':
         return await saveLoginData(
           username: call.arguments['username'],
-          password: call.arguments['username'],
+          password: call.arguments['password'],
         );
       case 'disableAutoLogIn':
         return await disableAutoLogIn();
