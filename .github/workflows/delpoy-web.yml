@@ -3,27 +3,18 @@ name: Deploy to gh-pages
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Cache libs
-        uses: actions/cache@v2
-        with:
-          path: ~/.pub-cache
-          key: ${{ runner.os }}-pub-cache-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-pub-cache
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '12.x'
-      - uses: subosito/flutter-action@v1
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+          cache: true
       - name: Get libs
         run: flutter pub get
       - name: Build web
