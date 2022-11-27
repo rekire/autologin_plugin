@@ -14,7 +14,7 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 /// A web implementation of the AutologinPlugin plugin.
 class AutologinPlugin {
-  static MethodChannel _channel;
+  static MethodChannel? _channel;
 
   static void registerWith(Registrar registrar) {
     _channel = MethodChannel(
@@ -24,7 +24,7 @@ class AutologinPlugin {
     );
 
     final pluginInstance = AutologinPlugin();
-    _channel.setMethodCallHandler(pluginInstance.handleMethodCall);
+    _channel?.setMethodCallHandler(pluginInstance.handleMethodCall);
   }
 
   /// Handles method calls over the MethodChannel of this plugin.
@@ -57,7 +57,7 @@ class AutologinPlugin {
     PasswordCredential data = await html.window.navigator.credentials?.get({
       'password': true,
     });
-    return [data?.id, data?.password];
+    return [data.id, data.password];
   }
 
   static Future<bool> saveLoginData({
