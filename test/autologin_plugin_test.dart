@@ -1,12 +1,9 @@
-import 'package:flutter/services.dart';
-import 'package:flutter_test/flutter_test.dart';
-
 void main() {
+  // TODO add meaningful tests here
   //const MethodChannel channel = MethodChannel('autologin_plugin');
 
-  TestWidgetsFlutterBinding.ensureInitialized();
+  //TestWidgetsFlutterBinding.ensureInitialized();
 
-  // TODO add meaningful tests here
   //setUp(() {
   //  channel.setMockMethodCallHandler((MethodCall methodCall) async {
   //    return false;
