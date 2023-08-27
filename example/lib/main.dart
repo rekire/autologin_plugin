@@ -29,8 +29,8 @@ class _MyAppState extends State<MyApp> {
       });
       return;
     }
-    Credential credentials = await AutologinPlugin.getLoginData();
-    String username;
+    final credentials = await AutologinPlugin.getLoginData();
+    var username;
     if (credentials != null) {
       username = credentials.username;
     } else {
