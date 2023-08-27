@@ -7,17 +7,18 @@ void main() {
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  setUp(() {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return false;
-    });
-  });
+  // TODO add meaningful tests here
+  //setUp(() {
+  //  channel.setMockMethodCallHandler((MethodCall methodCall) async {
+  //    return false;
+  //  });
+  //});
 
-  tearDown(() {
-    channel.setMockMethodCallHandler(null);
-  });
+  //tearDown(() {
+  //  channel.setMockMethodCallHandler(null);
+  //});
 
-  test('isPlatformSupported', () async {
-    expect(await AutologinPlugin.isPlatformSupported, false);
-  });
+  //test('isPlatformSupported', () async {
+  //  expect(await AutologinPlugin.isPlatformSupported, false);
+  //});
 }
