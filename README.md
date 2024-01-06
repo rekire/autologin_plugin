@@ -20,6 +20,9 @@ directories I had also to define a [`_config.yaml`](https://github.com/rekire/re
 
 If you want to test your own setup use the [Statement List Generator and Tester](https://developers.google.com/digital-asset-links/tools/generator).
 
+As simple check if the linking works fine check [this link](https://rekire.github.io/autologin_plugin/demo), if that opens in chrome the example app
+without an intent chooser then this works.
+
 ### iOS
 On iOS [AutoFill](https://developer.apple.com/videos/play/wwdc2018/204/) is used.
 ### Web

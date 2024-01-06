@@ -42,7 +42,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="rekire.github.io" android:path="/demo" />
+                <data android:scheme="https" android:host="rekire.github.io" android:path="/autologin_plugin/demo" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
