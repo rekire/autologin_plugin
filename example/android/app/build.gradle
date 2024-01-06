@@ -38,18 +38,43 @@ android {
     }
 
     defaultConfig {
-        applicationId "eu.rekisoft.flutter.autologin.autologin_plugin_example"
-        minSdkVersion 16
+        applicationId "eu.rekisoft.flutter.autologin"
+        minSdkVersion flutter.minSdkVersion
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
 
+    final properties = new Properties()
+    final configFile = file("${project.rootDir}/local.properties")
+    if (configFile.exists()) {
+        properties.load(configFile.newDataInputStream())
+    }
+    def keystore = file("${project.rootDir.parent}/android/keystore.jks")
+    def password = System.getenv('KEYSTORE_PASSWORD') ?: properties.getProperty('KEYSTORE_PASSWORD')
+
+    signingConfigs {
+        example {
+            if (keystore.exists() && password != null) {
+                storeFile keystore
+                storePassword password
+                keyAlias 'release'
+                keyPassword password
+            } else {
+                print("Using debug signing. keystore found: ${keystore.exists()}, password found: ${password != null}")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+        }
+        debug {
+            // use real certificate if you can otherwise the default debug certificate will be used
+            if (keystore.exists() && password != null) {
+                signingConfig signingConfigs.example
+            }
         }
     }
 
