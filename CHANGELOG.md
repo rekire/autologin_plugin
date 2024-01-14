@@ -2,6 +2,9 @@
 
 * Update dependencies
 * Add credential manager
+* Migrate to federated plugin structure
+* Improve CI heavily inspired by very_good_flutter_plugin
+* Add editor config for better common formatting
 
 ## 0.0.4
 
