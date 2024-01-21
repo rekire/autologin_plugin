@@ -23,31 +23,13 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private val tasks: MutableList<(ActivityPluginBinding) -> Unit> = mutableListOf()
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "autologin_plugin")
+        channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "autologin_android")
         channel.setMethodCallHandler(this)
 
         debug("onAttachedToEngine")
     }
 
-    // This static function is optional and equivalent to onAttachedToEngine. It supports the old
-    // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
-    // plugin registration via this function while apps migrate to use the new Android APIs
-    // post-flutter-1.12 via https://flutter.dev/go/android-project-migration.
-    //
-    // It is encouraged to share logic between onAttachedToEngine and registerWith to keep
-    // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
-    // depending on the user's project. onAttachedToEngine or registerWith must both be defined
-    // in the same class.
-    companion object {
-        @JvmStatic
-        fun registerWith(registrar: Registrar) {
-            val channel = MethodChannel(registrar.messenger(), "autologin_plugin")
-            debug("registerWith " + (registrar.activity()?.javaClass?.simpleName ?: "unknown"))
-            channel.setMethodCallHandler(AutologinPlugin())
-        }
-    }
-
-    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+    override fun onMethodCall(call: MethodCall, result: Result) {
         fun handleError(exception: Exception?) {
             debug("Error processing...")
             val stackTrace = StringWriter()
@@ -55,36 +37,61 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             if (exception is LoginHelper.GoogleApiError) {
                 result.error(exception.error.toString(), exception.message, stackTrace.toString())
             } else {
-                result.error("-2", exception?.message
-                        ?: "No error details given", stackTrace.toString())
+                result.error(
+                    "-2", exception?.message
+                        ?: "No error details given", stackTrace.toString()
+                )
             }
         }
+        debug("Got call ${call.method}")
         when (call.method) {
+            "performCompatibilityChecks" -> result.success(
+                """{"isPlatformSupported":true,
+"canSafeSecrets":true,
+"canEncryptSecrets":false,
+"hasZeroTouchSupport":false,
+"hasOneClickSupport":false}"""
+            )
+
             "isPlatformSupported" ->
                 tasks.add { binding ->
                     debug("isPlatformSupported()")
                     result.success(LoginHelper.isPlatformSupported(binding))
                 }
-            "getLoginData" ->
+
+            "requestCredentials" ->
                 tasks.add { binding ->
-                    debug("loadLoginData()")
+                    debug("requestCredentials()")
                     LoginHelper.loadLoginData(binding, { username, password ->
-                        result.success(listOf(username, password))
+                        result.success("""{"username":${username.quoted},"password":${password.quoted}}""")
                     }, ::handleError)
                 }
+
             "saveLoginData" -> {
                 operator fun MethodCall.get(arg: String): String = requireNotNull(argument(arg)) { "$arg was null" }
                 tasks.add { binding ->
                     debug("saveLoginData()")
-                    LoginHelper.saveLoginData(binding, call["username"], call["password"], { success -> debug(if(success) "Login data were saved." else "Could not save login data"); result.success(success) }, ::handleError)
+                    LoginHelper.saveLoginData(
+                        binding,
+                        call["username"],
+                        call["password"],
+                        { success ->
+                            debug(if (success) "Login data were saved." else "Could not save login data"); result.success(
+                            success
+                        )
+                        },
+                        ::handleError
+                    )
                 }
             }
+
             "disableAutoLogIn" -> {
                 tasks.add { binding ->
                     debug("disableAutoLogIn()")
                     LoginHelper.disableAutoLogIn(binding, result::success, ::handleError)
                 }
             }
+
             else -> result.notImplemented()
         }
         executeTasks()
@@ -96,6 +103,10 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             tasks.clear()
         }
     }
+
+    // poor mans json encoding util. in other words replace me with gson or similar
+    private val String?.quoted: String?
+        get() = this?.let { """"${replace("\"", "\\\"")}"""" }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)

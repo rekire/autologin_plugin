@@ -39,7 +39,7 @@ android {
 
     defaultConfig {
         applicationId "eu.rekisoft.flutter.autologin"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 21
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    if (!AutologinPlugin.isPlatformSupported) {
+    if (!await AutologinPlugin.isPlatformSupported) {
       setState(() {
         _username = '<This platform is not supported>';
       });
@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.save),
           onPressed: () async {
-            if (!AutologinPlugin.isPlatformSupported) {
+            if (!await AutologinPlugin.isPlatformSupported) {
               // TODO(rekire): replace by toast
               setState(() {
                 _username = 'not supported';

@@ -13,7 +13,7 @@ flutter:
       android:
         package: eu.rekisoft.flutter.autologin
         pluginClass: AutologinPlugin
-        #dartPluginClass: AutologinPlugin
+        dartPluginClass: AutologinAndroid
 
 dependencies:
   autologin_platform_interface:

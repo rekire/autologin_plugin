@@ -18,7 +18,7 @@ abstract class AutologinPlatform extends PlatformInterface {
   static final Object _token = Object();
 
   static AutologinPlatform _instance = MethodChannelAutologin();
-  static bool _isPlatformSupported = false;
+  static bool? _isPlatformSupported;
 
   /// The default instance of [AutologinPlatform] to use.
   ///
@@ -30,14 +30,19 @@ abstract class AutologinPlatform extends PlatformInterface {
   static set instance(AutologinPlatform instance) {
     PlatformInterface.verify(instance, _token);
     _instance = instance;
-    _instance.performCompatibilityChecks().then((result) => _isPlatformSupported = result.isPlatformSupported);
   }
 
   /// Return the [Compatibilities] which depends on the platform or the browser in case of web
   Future<Compatibilities> performCompatibilityChecks();
 
   /// Returns `true` when the current platform is supported.
-  bool get isPlatformSupported => _isPlatformSupported;
+  Future<bool> get isPlatformSupported async {
+    if (_isPlatformSupported == null) {
+      final result = await _instance.performCompatibilityChecks();
+      _isPlatformSupported = result.isPlatformSupported;
+    }
+    return _isPlatformSupported!;
+  }
 
   /// Returns the saved [Credential] when set by [saveCredentials] or is `null` when not found.
   Future<Credential?> requestCredentials();

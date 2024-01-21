@@ -7,7 +7,7 @@ export 'package:autologin_platform_interface/autologin_platform_interface.dart' 
 /// you need to safe before with [saveCredentials].
 class AutologinPlugin {
   /// Returns `true` when the current platform is supported.
-  static bool get isPlatformSupported => AutologinPlatform.instance.isPlatformSupported;
+  static Future<bool> get isPlatformSupported => AutologinPlatform.instance.isPlatformSupported;
 
   /// Return the [Compatibilities] which depends on the platform or the browser in case of web
   static Future<Compatibilities> performCompatibilityChecks() =>

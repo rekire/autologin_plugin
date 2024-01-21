@@ -1,16 +1,19 @@
 import 'dart:convert';
 
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
-import 'package:autologin_platform_interface/src/compatibilities.dart';
-import 'package:autologin_platform_interface/src/credential.dart';
-import 'package:flutter/foundation.dart' show visibleForTesting;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-/// An implementation of [AutologinPlatform] that uses method channels.
-class MethodChannelAutologin extends AutologinPlatform {
+/// The Android implementation of [AutologinPlatform].
+class AutologinAndroid extends AutologinPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('autologin_plugin');
+  final methodChannel = const MethodChannel('autologin_android');
+
+  /// Registers this class as the default instance of [AutologinPlatform]
+  static void registerWith() {
+    AutologinPlatform.instance = AutologinAndroid();
+  }
 
   @override
   Future<Compatibilities> performCompatibilityChecks() async {
