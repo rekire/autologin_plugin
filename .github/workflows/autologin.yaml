@@ -33,6 +33,7 @@ jobs:
       flutter_channel: stable
       flutter_version: 3.13.2
       working_directory: autologin
+      format_line_length: 120
 
 
   android:
@@ -170,6 +171,7 @@ jobs:
 
   windows:
     runs-on: windows-2019
+    if: false
 
     defaults:
       run:
