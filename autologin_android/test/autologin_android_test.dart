@@ -57,17 +57,13 @@ void main() {
       expect(credentials, equals(expectedCredentials));
     });
 
-    test(
-      'saveCredentials returns expected value',
-      () async {
-        final report = await autologin.saveCredentials(expectedCredentials);
-        expect(
-          log,
-          <Matcher>[isMethodCall('saveCredentials', arguments: expectedCredentials.toJson())],
-        );
-        expect(report, equals(true));
-      },
-      skip: true, // fixme
-    );
+    test('saveCredentials returns expected value', () async {
+      final report = await autologin.saveCredentials(expectedCredentials);
+      expect(
+        log,
+        <Matcher>[isMethodCall('saveCredentials', arguments: jsonEncode(expectedCredentials.toJson()))],
+      );
+      expect(report, equals(true));
+    });
   });
 }
