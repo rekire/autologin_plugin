@@ -25,6 +25,9 @@ void main() {
         () => autologinPlatform.performCompatibilityChecks(),
       ).thenAnswer((_) async => compatibilityReport);
       when(
+        () => autologinPlatform.isPlatformSupported,
+      ).thenAnswer((_) async => true);
+      when(
         () => autologinPlatform.requestCredentials(),
       ).thenAnswer((_) async => cache);
       when(
