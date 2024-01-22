@@ -12,12 +12,27 @@ void main() {
   group('Autologin', () {
     late AutologinPlatform autologinPlatform;
     const compatibilityReport = Compatibilities();
+    const sampleCredential = Credential(username: 'foo', password: 'bar');
+
+    setUpAll(() {
+      registerFallbackValue(sampleCredential);
+    });
 
     setUp(() {
       autologinPlatform = MockAutologinPlatform();
+      Credential? cache;
       when(
         () => autologinPlatform.performCompatibilityChecks(),
       ).thenAnswer((_) async => compatibilityReport);
+      when(
+        () => autologinPlatform.requestCredentials(),
+      ).thenAnswer((_) async => cache);
+      when(
+        () => autologinPlatform.saveCredentials(captureAny()),
+      ).thenAnswer((answer) async {
+        cache = answer.positionalArguments.first as Credential;
+        return true;
+      });
       AutologinPlatform.instance = autologinPlatform;
     });
 
@@ -26,9 +41,12 @@ void main() {
         await AutologinPlugin.performCompatibilityChecks(),
         equals(compatibilityReport),
       );
+      expect(
+        await AutologinPlugin.isPlatformSupported,
+        equals(true),
+      );
     });
 
-    // This test is BS, not sure if it is worth to make it green
     test(
       'Credentials functions returns expected values',
       () async {
@@ -36,17 +54,15 @@ void main() {
           await AutologinPlugin.requestCredentials(),
           equals(null),
         );
-        const credential = Credential(username: 'foo', password: 'bar');
         expect(
-          await AutologinPlugin.saveCredentials(credential),
+          await AutologinPlugin.saveCredentials(sampleCredential),
           equals(true),
         );
         expect(
           await AutologinPlugin.requestCredentials(),
-          equals(credential),
+          equals(sampleCredential),
         );
       },
-      skip: true,
     );
   });
 }
