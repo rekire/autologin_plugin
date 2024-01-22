@@ -32,8 +32,8 @@ dependencies:
   #  path: ../autologin_linux
   #autologin_macos:
   #  path: ../autologin_macos
-  #autologin_platform_interface:
-  #  path: ../autologin_platform_interface
+  autologin_platform_interface:
+    path: ../autologin_platform_interface
   #autologin_web:
   #  path: ../autologin_web
   #autologin_windows:
