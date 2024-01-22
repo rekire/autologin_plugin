@@ -12,6 +12,7 @@ on:
   push:
     branches:
       - main
+      - credential_manager
     paths:
       - ".github/workflows/autologin_platform_interface.yaml"
       - "autologin_platform_interface/**"
