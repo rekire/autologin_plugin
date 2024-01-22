@@ -29,20 +29,24 @@ void main() {
     });
 
     // This test is BS, not sure if it is worth to make it green
-    test('Credentials functions returns expected values', () async {
-      expect(
-        await AutologinPlugin.requestCredentials(),
-        equals(null),
-      );
-      const credential = Credential(username: 'foo', password: 'bar');
-      expect(
-        await AutologinPlugin.saveCredentials(credential),
-        equals(true),
-      );
-      expect(
-        await AutologinPlugin.requestCredentials(),
-        equals(credential),
-      );
-    }, skip: true);
+    test(
+      'Credentials functions returns expected values',
+      () async {
+        expect(
+          await AutologinPlugin.requestCredentials(),
+          equals(null),
+        );
+        const credential = Credential(username: 'foo', password: 'bar');
+        expect(
+          await AutologinPlugin.saveCredentials(credential),
+          equals(true),
+        );
+        expect(
+          await AutologinPlugin.requestCredentials(),
+          equals(credential),
+        );
+      },
+      skip: true,
+    );
   });
 }
