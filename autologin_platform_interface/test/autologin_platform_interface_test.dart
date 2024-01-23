@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
-import 'package:autologin_platform_interface/src/compatibilities.dart';
-import 'package:autologin_platform_interface/src/credential.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class AutologinMock extends AutologinPlatform {
