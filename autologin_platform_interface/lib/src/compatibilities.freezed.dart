@@ -21,22 +21,26 @@ Compatibilities _$CompatibilitiesFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Compatibilities {
   bool get isPlatformSupported => throw _privateConstructorUsedError;
+
   bool get canSafeSecrets => throw _privateConstructorUsedError;
+
   bool get canEncryptSecrets => throw _privateConstructorUsedError;
+
   bool get hasZeroTouchSupport => throw _privateConstructorUsedError;
+
   bool get hasOneClickSupport => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
-  $CompatibilitiesCopyWith<Compatibilities> get copyWith =>
-      throw _privateConstructorUsedError;
+  $CompatibilitiesCopyWith<Compatibilities> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CompatibilitiesCopyWith<$Res> {
-  factory $CompatibilitiesCopyWith(
-          Compatibilities value, $Res Function(Compatibilities) then) =
+  factory $CompatibilitiesCopyWith(Compatibilities value, $Res Function(Compatibilities) then) =
       _$CompatibilitiesCopyWithImpl<$Res, Compatibilities>;
+
   @useResult
   $Res call(
       {bool isPlatformSupported,
@@ -47,12 +51,12 @@ abstract class $CompatibilitiesCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CompatibilitiesCopyWithImpl<$Res, $Val extends Compatibilities>
-    implements $CompatibilitiesCopyWith<$Res> {
+class _$CompatibilitiesCopyWithImpl<$Res, $Val extends Compatibilities> implements $CompatibilitiesCopyWith<$Res> {
   _$CompatibilitiesCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -91,11 +95,10 @@ class _$CompatibilitiesCopyWithImpl<$Res, $Val extends Compatibilities>
 }
 
 /// @nodoc
-abstract class _$$CompatibilitiesImplCopyWith<$Res>
-    implements $CompatibilitiesCopyWith<$Res> {
-  factory _$$CompatibilitiesImplCopyWith(_$CompatibilitiesImpl value,
-          $Res Function(_$CompatibilitiesImpl) then) =
+abstract class _$$CompatibilitiesImplCopyWith<$Res> implements $CompatibilitiesCopyWith<$Res> {
+  factory _$$CompatibilitiesImplCopyWith(_$CompatibilitiesImpl value, $Res Function(_$CompatibilitiesImpl) then) =
       __$$CompatibilitiesImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -107,11 +110,9 @@ abstract class _$$CompatibilitiesImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$CompatibilitiesImplCopyWithImpl<$Res>
-    extends _$CompatibilitiesCopyWithImpl<$Res, _$CompatibilitiesImpl>
+class __$$CompatibilitiesImplCopyWithImpl<$Res> extends _$CompatibilitiesCopyWithImpl<$Res, _$CompatibilitiesImpl>
     implements _$$CompatibilitiesImplCopyWith<$Res> {
-  __$$CompatibilitiesImplCopyWithImpl(
-      _$CompatibilitiesImpl _value, $Res Function(_$CompatibilitiesImpl) _then)
+  __$$CompatibilitiesImplCopyWithImpl(_$CompatibilitiesImpl _value, $Res Function(_$CompatibilitiesImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -158,8 +159,7 @@ class _$CompatibilitiesImpl implements _Compatibilities {
       this.hasZeroTouchSupport = false,
       this.hasOneClickSupport = false});
 
-  factory _$CompatibilitiesImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CompatibilitiesImplFromJson(json);
+  factory _$CompatibilitiesImpl.fromJson(Map<String, dynamic> json) => _$$CompatibilitiesImplFromJson(json);
 
   @override
   @JsonKey()
@@ -189,10 +189,8 @@ class _$CompatibilitiesImpl implements _Compatibilities {
             other is _$CompatibilitiesImpl &&
             (identical(other.isPlatformSupported, isPlatformSupported) ||
                 other.isPlatformSupported == isPlatformSupported) &&
-            (identical(other.canSafeSecrets, canSafeSecrets) ||
-                other.canSafeSecrets == canSafeSecrets) &&
-            (identical(other.canEncryptSecrets, canEncryptSecrets) ||
-                other.canEncryptSecrets == canEncryptSecrets) &&
+            (identical(other.canSafeSecrets, canSafeSecrets) || other.canSafeSecrets == canSafeSecrets) &&
+            (identical(other.canEncryptSecrets, canEncryptSecrets) || other.canEncryptSecrets == canEncryptSecrets) &&
             (identical(other.hasZeroTouchSupport, hasZeroTouchSupport) ||
                 other.hasZeroTouchSupport == hasZeroTouchSupport) &&
             (identical(other.hasOneClickSupport, hasOneClickSupport) ||
@@ -202,19 +200,13 @@ class _$CompatibilitiesImpl implements _Compatibilities {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      isPlatformSupported,
-      canSafeSecrets,
-      canEncryptSecrets,
-      hasZeroTouchSupport,
-      hasOneClickSupport);
+      runtimeType, isPlatformSupported, canSafeSecrets, canEncryptSecrets, hasZeroTouchSupport, hasOneClickSupport);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$CompatibilitiesImplCopyWith<_$CompatibilitiesImpl> get copyWith =>
-      __$$CompatibilitiesImplCopyWithImpl<_$CompatibilitiesImpl>(
-          this, _$identity);
+      __$$CompatibilitiesImplCopyWithImpl<_$CompatibilitiesImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -232,21 +224,24 @@ abstract class _Compatibilities implements Compatibilities {
       final bool hasZeroTouchSupport,
       final bool hasOneClickSupport}) = _$CompatibilitiesImpl;
 
-  factory _Compatibilities.fromJson(Map<String, dynamic> json) =
-      _$CompatibilitiesImpl.fromJson;
+  factory _Compatibilities.fromJson(Map<String, dynamic> json) = _$CompatibilitiesImpl.fromJson;
 
   @override
   bool get isPlatformSupported;
+
   @override
   bool get canSafeSecrets;
+
   @override
   bool get canEncryptSecrets;
+
   @override
   bool get hasZeroTouchSupport;
+
   @override
   bool get hasOneClickSupport;
+
   @override
   @JsonKey(ignore: true)
-  _$$CompatibilitiesImplCopyWith<_$CompatibilitiesImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CompatibilitiesImplCopyWith<_$CompatibilitiesImpl> get copyWith => throw _privateConstructorUsedError;
 }

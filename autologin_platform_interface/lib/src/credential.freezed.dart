@@ -21,30 +21,31 @@ Credential _$CredentialFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Credential {
   String? get username => throw _privateConstructorUsedError;
+
   String? get password => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
-  $CredentialCopyWith<Credential> get copyWith =>
-      throw _privateConstructorUsedError;
+  $CredentialCopyWith<Credential> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CredentialCopyWith<$Res> {
-  factory $CredentialCopyWith(
-          Credential value, $Res Function(Credential) then) =
+  factory $CredentialCopyWith(Credential value, $Res Function(Credential) then) =
       _$CredentialCopyWithImpl<$Res, Credential>;
+
   @useResult
   $Res call({String? username, String? password});
 }
 
 /// @nodoc
-class _$CredentialCopyWithImpl<$Res, $Val extends Credential>
-    implements $CredentialCopyWith<$Res> {
+class _$CredentialCopyWithImpl<$Res, $Val extends Credential> implements $CredentialCopyWith<$Res> {
   _$CredentialCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -68,23 +69,19 @@ class _$CredentialCopyWithImpl<$Res, $Val extends Credential>
 }
 
 /// @nodoc
-abstract class _$$CredentialImplCopyWith<$Res>
-    implements $CredentialCopyWith<$Res> {
-  factory _$$CredentialImplCopyWith(
-          _$CredentialImpl value, $Res Function(_$CredentialImpl) then) =
+abstract class _$$CredentialImplCopyWith<$Res> implements $CredentialCopyWith<$Res> {
+  factory _$$CredentialImplCopyWith(_$CredentialImpl value, $Res Function(_$CredentialImpl) then) =
       __$$CredentialImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({String? username, String? password});
 }
 
 /// @nodoc
-class __$$CredentialImplCopyWithImpl<$Res>
-    extends _$CredentialCopyWithImpl<$Res, _$CredentialImpl>
+class __$$CredentialImplCopyWithImpl<$Res> extends _$CredentialCopyWithImpl<$Res, _$CredentialImpl>
     implements _$$CredentialImplCopyWith<$Res> {
-  __$$CredentialImplCopyWithImpl(
-      _$CredentialImpl _value, $Res Function(_$CredentialImpl) _then)
-      : super(_value, _then);
+  __$$CredentialImplCopyWithImpl(_$CredentialImpl _value, $Res Function(_$CredentialImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -110,8 +107,7 @@ class __$$CredentialImplCopyWithImpl<$Res>
 class _$CredentialImpl implements _Credential {
   const _$CredentialImpl({this.username, this.password});
 
-  factory _$CredentialImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CredentialImplFromJson(json);
+  factory _$CredentialImpl.fromJson(Map<String, dynamic> json) => _$$CredentialImplFromJson(json);
 
   @override
   final String? username;
@@ -128,10 +124,8 @@ class _$CredentialImpl implements _Credential {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CredentialImpl &&
-            (identical(other.username, username) ||
-                other.username == username) &&
-            (identical(other.password, password) ||
-                other.password == password));
+            (identical(other.username, username) || other.username == username) &&
+            (identical(other.password, password) || other.password == password));
   }
 
   @JsonKey(ignore: true)
@@ -153,18 +147,17 @@ class _$CredentialImpl implements _Credential {
 }
 
 abstract class _Credential implements Credential {
-  const factory _Credential({final String? username, final String? password}) =
-      _$CredentialImpl;
+  const factory _Credential({final String? username, final String? password}) = _$CredentialImpl;
 
-  factory _Credential.fromJson(Map<String, dynamic> json) =
-      _$CredentialImpl.fromJson;
+  factory _Credential.fromJson(Map<String, dynamic> json) = _$CredentialImpl.fromJson;
 
   @override
   String? get username;
+
   @override
   String? get password;
+
   @override
   @JsonKey(ignore: true)
-  _$$CredentialImplCopyWith<_$CredentialImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CredentialImplCopyWith<_$CredentialImpl> get copyWith => throw _privateConstructorUsedError;
 }

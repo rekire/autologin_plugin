@@ -6,9 +6,7 @@ part of 'compatibilities.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CompatibilitiesImpl _$$CompatibilitiesImplFromJson(
-        Map<String, dynamic> json) =>
-    _$CompatibilitiesImpl(
+_$CompatibilitiesImpl _$$CompatibilitiesImplFromJson(Map<String, dynamic> json) => _$CompatibilitiesImpl(
       isPlatformSupported: json['isPlatformSupported'] as bool? ?? false,
       canSafeSecrets: json['canSafeSecrets'] as bool? ?? false,
       canEncryptSecrets: json['canEncryptSecrets'] as bool? ?? false,
@@ -16,9 +14,7 @@ _$CompatibilitiesImpl _$$CompatibilitiesImplFromJson(
       hasOneClickSupport: json['hasOneClickSupport'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$CompatibilitiesImplToJson(
-        _$CompatibilitiesImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$CompatibilitiesImplToJson(_$CompatibilitiesImpl instance) => <String, dynamic>{
       'isPlatformSupported': instance.isPlatformSupported,
       'canSafeSecrets': instance.canSafeSecrets,
       'canEncryptSecrets': instance.canEncryptSecrets,
