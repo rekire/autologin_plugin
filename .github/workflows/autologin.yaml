@@ -152,7 +152,6 @@ jobs:
 
   web:
     runs-on: ubuntu-latest
-    if: false
 
     defaults:
       run:
