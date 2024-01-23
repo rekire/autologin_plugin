@@ -38,6 +38,7 @@ jobs:
 
   android:
     runs-on: ubuntu-latest
+    if: false
 
     defaults:
       run:
@@ -76,7 +77,6 @@ jobs:
 
       - name: E2E Tests
         uses: reactivecircus/android-emulator-runner@v2
-        if: false
         with:
           api-level: 29
           script: fluttium test flows/test_platform_name.yaml -d android

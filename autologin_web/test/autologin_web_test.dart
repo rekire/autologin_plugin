@@ -12,7 +12,6 @@ void main() {
 
     setUp(() async {
       autologin = AutologinWeb();
-      print('Creating AutologinWeb');
     });
 
     test('can be registered', () {
@@ -32,7 +31,7 @@ void main() {
 
     test('saveCredentials returns expected value', () async {
       final report = await autologin.saveCredentials(expectedCredentials);
-      expect(report, equals(true));
+      expect(report, equals(false)); // fail the test to validate that the CI executes it
     });
   });
 }
