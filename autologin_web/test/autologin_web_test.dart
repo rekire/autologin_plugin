@@ -12,6 +12,7 @@ void main() {
 
     setUp(() async {
       autologin = AutologinWeb();
+      print('Creating AutologinWeb');
     });
 
     test('can be registered', () {
