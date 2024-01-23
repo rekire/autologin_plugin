@@ -66,5 +66,12 @@ void main() {
         equals(credential),
       );
     });
+
+    test('isPlatformSupported returns true', () async {
+      expect(
+        await AutologinPlatform.instance.isPlatformSupported,
+        equals(true),
+      );
+    });
   });
 }
