@@ -1,4 +1,72 @@
 include: package:very_good_analysis/analysis_options.5.1.0.yaml
+
 linter:
   rules:
+    prefer_single_quotes: true
+    always_declare_return_types: true
+    always_put_control_body_on_new_line: true
+    always_use_package_imports: true
+    annotate_overrides: true
+    avoid_bool_literals_in_conditional_expressions: true
+    avoid_multiple_declarations_per_line: true
+    avoid_positional_boolean_parameters: true
+    avoid_redundant_argument_values: true
+    avoid_unnecessary_containers: true
+    curly_braces_in_flow_control_structures: true
+    do_not_use_environment: true
+    lines_longer_than_80_chars: false
+    require_trailing_commas: true
+    flutter_style_todos: true
     public_member_api_docs: false
+    cascade_invocations: false
+    sort_constructors_first: false
+    eol_at_end_of_file: false
+    join_return_with_assignment: false
+    use_if_null_to_convert_nulls_to_bools: false
+    use_setters_to_change_properties: false
+
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/firebase_options.dart"
+    - "**/locale_keys.dart"
+    - "**/*.mocks.dart"
+  errors:
+    invalid_annotation_target: ignore
+
+  # dart code metrics Basic configuration
+  plugins:
+    - dart_code_metrics
+
+dart_code_metrics:
+  anti-patterns:
+    - long-method
+    - long-parameter-list
+  metrics:
+    cyclomatic-complexity: 20
+    maximum-nesting-level: 5
+    number-of-parameters: 6
+    source-lines-of-code: 100
+  metrics-exclude:
+    - test/**
+    - integration_test/**
+  rules-exclude:
+    - test/**
+    - integration_test/**
+  rules:
+    - no-boolean-literal-compare
+    - no-empty-block
+    - prefer-trailing-comma
+    - no-equal-then-else
+    - prefer-first
+    - prefer-last
+    - prefer-match-file-name
+    - always-remove-listener
+    - avoid-unnecessary-setstate
+    - avoid-wrapping-in-padding
+    - prefer-single-widget-per-file:
+        ignore-private-widgets: true
+    - avoid-global-state
