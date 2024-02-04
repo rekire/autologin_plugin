@@ -1,6 +1,11 @@
 package eu.rekisoft.flutter.autologin
 
 import androidx.annotation.NonNull
+import androidx.credentials.*
+import androidx.credentials.exceptions.*
+import eu.rekisoft.flutter.autologin.models.Compatibilities
+import eu.rekisoft.flutter.autologin.models.Credential
+import eu.rekisoft.flutter.autologin.models.toJSON
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -9,6 +14,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
+import kotlinx.coroutines.runBlocking
 import java.io.PrintWriter
 import java.io.StringWriter
 
@@ -22,8 +28,8 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private var binding: ActivityPluginBinding? = null
     private val tasks: MutableList<(ActivityPluginBinding) -> Unit> = mutableListOf()
 
-    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "autologin_android")
+    override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "autologin_android")
         channel.setMethodCallHandler(this)
 
         debug("onAttachedToEngine")
@@ -45,50 +51,45 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
         debug("Got call ${call.method}")
         when (call.method) {
-            "performCompatibilityChecks" -> result.success(
-                """{"isPlatformSupported":true,
-"canSafeSecrets":true,
-"canEncryptSecrets":false,
-"hasZeroTouchSupport":false,
-"hasOneClickSupport":false}"""
-            )
+            "performCompatibilityChecks" -> tasks.add { binding ->
+                result.success(Compatibilities(isPlatformSupported = LoginHelper.isPlatformSupported(binding)).toJSON())
+            }
 
-            "isPlatformSupported" ->
-                tasks.add { binding ->
-                    debug("isPlatformSupported()")
-                    result.success(LoginHelper.isPlatformSupported(binding))
-                }
+            "requestCredentials" -> runBlocking {
+                val credentialManager = CredentialManager.create(binding!!.activity)
+                try {
+                    val getCredRequest = GetCredentialRequest(listOf(GetPasswordOption()))
 
-            "requestCredentials" ->
-                tasks.add { binding ->
-                    debug("requestCredentials()")
-                    LoginHelper.loadLoginData(binding, { username, password ->
-                        result.success("""{"username":${username.quoted},"password":${password.quoted}}""")
-                    }, ::handleError)
-                }
-
-            "saveLoginData" -> {
-                operator fun MethodCall.get(arg: String): String = requireNotNull(argument(arg)) { "$arg was null" }
-                tasks.add { binding ->
-                    debug("saveLoginData()")
-                    LoginHelper.saveLoginData(
-                        binding,
-                        call["username"],
-                        call["password"],
-                        { success ->
-                            debug(if (success) "Login data were saved." else "Could not save login data"); result.success(
-                            success
-                        )
-                        },
-                        ::handleError
-                    )
+                    // Shows the user a dialog allowing them to pick a saved credential
+                    val credential = credentialManager.getCredential(
+                        context = binding!!.activity,
+                        request = getCredRequest
+                    ).credential as PasswordCredential
+                    result.success(Credential(username = credential.id, password = credential.password).toJSON())
+                } catch (e: GetCredentialCancellationException) {
+                    result.error("GetCredentialCancellationException", null, null)
+                } catch (e: NoCredentialException) {
+                    result.error("NoCredentialException", null, null)
+                } catch (e: Exception) {
+                    handleError(e)
                 }
             }
 
-            "disableAutoLogIn" -> {
-                tasks.add { binding ->
-                    debug("disableAutoLogIn()")
-                    LoginHelper.disableAutoLogIn(binding, result::success, ::handleError)
+            "saveCredentials" -> runBlocking {
+                val credentialManager = CredentialManager.create(binding!!.activity)
+                val credentialMap = requireNotNull(call.arguments as? Map<String, String>)
+                val id = requireNotNull(credentialMap["username"])
+                val password = requireNotNull(credentialMap["password"])
+                try {
+                    val credentialResponse = credentialManager.createCredential(
+                        context = binding!!.activity,
+                        request = CreatePasswordRequest(id = id, password = password)
+                    )
+                    result.success((credentialResponse.data != null).toString())
+                } catch (e: CreateCredentialCancellationException) {
+                    result.error("CreateCredentialCancellationException", null, null)
+                } catch (e: Exception) {
+                    handleError(e)
                 }
             }
 
@@ -108,7 +109,7 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private val String?.quoted: String?
         get() = this?.let { """"${replace("\"", "\\\"")}"""" }
 
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
     }
 

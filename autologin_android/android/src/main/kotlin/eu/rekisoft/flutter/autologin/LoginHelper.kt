@@ -66,7 +66,7 @@ object LoginHelper {
         }
     }
 
-    fun saveLoginData(binding: ActivityPluginBinding, email: String, password: String, result: (Boolean) -> Unit, error: (Exception?) -> Unit) {
+    fun saveCredentials(binding: ActivityPluginBinding, email: String, password: String, result: (Boolean) -> Unit, error: (Exception?) -> Unit) {
         val availability = GoogleApiAvailability().isGooglePlayServicesAvailable(binding.activity)
         if (availability == ConnectionResult.SUCCESS) {
             val credential: Credential = Credential.Builder(email)

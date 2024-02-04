@@ -36,7 +36,7 @@ class AutologinAndroid extends AutologinPlatform {
   @override
   Future<bool> saveCredentials(Credential credential) async {
     try {
-      return await methodChannel.invokeMethod<String>('saveCredentials', jsonEncode(credential.toJson())) == 'true';
+      return await methodChannel.invokeMethod<String>('saveCredentials', credential.toJson()) == 'true';
     } on MissingPluginException {
       return false;
     } on PlatformException {
