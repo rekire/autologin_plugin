@@ -18,8 +18,8 @@ flutter:
       #  default_package: autologin_linux
       #macos:
       #  default_package: autologin_macos
-      #web:
-      #  default_package: autologin_web
+      web:
+        default_package: autologin_web
       #windows:
       #  default_package: autologin_windows
 
@@ -34,8 +34,8 @@ dependencies:
   #  path: ../autologin_macos
   autologin_platform_interface:
     path: ../autologin_platform_interface
-  #autologin_web:
-  #  path: ../autologin_web
+  autologin_web:
+    path: ../autologin_web
   #autologin_windows:
   #  path: ../autologin_windows
   flutter:

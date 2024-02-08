@@ -2,11 +2,12 @@ import 'dart:html';
 import 'dart:js';
 
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 /// The Web implementation of [AutologinPlatform].
 class AutologinWeb extends AutologinPlatform {
   /// Registers this class as the default instance of [AutologinPlatform]
-  static void registerWith([Object? registrar]) {
+  static void registerWith(Registrar registrar) {
     AutologinPlatform.instance = AutologinWeb();
   }
 

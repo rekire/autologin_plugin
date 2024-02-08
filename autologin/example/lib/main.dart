@@ -118,7 +118,7 @@ class _DemoPageState extends State<DemoPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (isPlatformSupported == false) const Text('⚠️ Platform not supported ⚠️'),
+        if (isPlatformSupported != true) const Text('⚠️ Platform not supported ⚠️'),
         TextFormField(
           controller: usernameController,
           textInputAction: TextInputAction.next,
