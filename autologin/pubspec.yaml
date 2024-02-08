@@ -1,0 +1,49 @@
+name: autologin
+description: This Plugin helps the developer to auto login into their app as simple as possible.
+version: 0.0.5
+homepage: https://github.com/rekire/autologin_plugin
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        default_package: autologin_android
+      #ios:
+      #  default_package: autologin_ios
+      #linux:
+      #  default_package: autologin_linux
+      #macos:
+      #  default_package: autologin_macos
+      web:
+        default_package: autologin_web
+      #windows:
+      #  default_package: autologin_windows
+
+dependencies:
+  autologin_android:
+    path: ../autologin_android
+  #autologin_ios:
+  #  path: ../autologin_ios
+  #autologin_linux:
+  #  path: ../autologin_linux
+  #autologin_macos:
+  #  path: ../autologin_macos
+  autologin_platform_interface:
+    path: ../autologin_platform_interface
+  autologin_web:
+    path: ../autologin_web
+  #autologin_windows:
+  #  path: ../autologin_windows
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.0
+  plugin_platform_interface: ^2.1.6
+  very_good_analysis: ^5.1.0

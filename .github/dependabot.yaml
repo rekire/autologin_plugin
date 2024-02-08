@@ -1,0 +1,43 @@
+version: 2
+enable-beta-ecosystems: true
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/autologin"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/autologin/example"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/autologin_platform_interface"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/autologin_android"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/autologin_ios"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/autologin_linux"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/autologin_macos"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/autologin_web"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pub"
+    directory: "/autologin_windows"
+    schedule:
+      interval: "daily"

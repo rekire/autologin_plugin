@@ -1,0 +1,25 @@
+name: autologin_example
+description: Demonstrates how to use the autologin plugin.
+version: 0.0.5+5
+publish_to: 'none'
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  autologin:
+    path: ../
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_driver:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  very_good_analysis: ^5.1.0
+
+flutter:
+  uses-material-design: true

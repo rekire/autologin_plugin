@@ -1,0 +1,15 @@
+[
+  {
+    "relation" : [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target" : {
+      "namespace" : "android_app",
+      "package_name" : "eu.rekisoft.flutter.autologin",
+      "sha256_cert_fingerprints" : [
+        "32:E3:8D:6E:04:5B:B0:9A:BE:8B:13:7E:91:6E:89:9E:A9:ED:9F:A0:2E:EE:C0:E2:DA:F6:08:29:5A:D2:0B:68"
+      ]
+    }
+  }
+]
