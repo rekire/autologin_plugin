@@ -20,7 +20,11 @@ class AutologinWeb extends AutologinPlatform {
   Future<Credential?> requestCredentials() async {
     final data = await window.navigator.credentials?.get({
       'password': true,
-    }) as PasswordCredential;
+    }) as PasswordCredential?;
+
+    if (data == null) {
+      return null;
+    }
 
     return Credential(username: data.name, password: data.password);
   }
