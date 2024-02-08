@@ -7,7 +7,7 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 /// The Web implementation of [AutologinPlatform].
 class AutologinWeb extends AutologinPlatform {
   /// Registers this class as the default instance of [AutologinPlatform]
-  static void registerWith(Registrar registrar) {
+  static void registerWith(Registrar? registrar) {
     AutologinPlatform.instance = AutologinWeb();
   }
 

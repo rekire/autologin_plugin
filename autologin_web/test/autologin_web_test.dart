@@ -15,7 +15,7 @@ void main() {
     });
 
     test('can be registered', () {
-      AutologinWeb.registerWith();
+      AutologinWeb.registerWith(null);
       expect(AutologinPlatform.instance, isA<AutologinWeb>());
     });
 
@@ -31,7 +31,7 @@ void main() {
 
     test('saveCredentials returns expected value', () async {
       final report = await autologin.saveCredentials(expectedCredentials);
-      expect(report, equals(false)); // fail the test to validate that the CI executes it
+      expect(report, equals(true));
     });
   });
 }
