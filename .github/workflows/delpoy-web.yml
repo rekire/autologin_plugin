@@ -7,7 +7,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,12 +15,13 @@ jobs:
           channel: 'stable'
           cache: true
       - name: Get libs
+        working-directory: autologin
         run: flutter pub get
       - name: Build web
-        working-directory: example
+        working-directory: autologin/example
         run: flutter build web
       - name: Upload to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
           branch: gh-pages
-          folder: example/build/web
+          folder: autologin/example/build/web
