@@ -5,10 +5,11 @@ concurrency:
   cancel-in-progress: true
 
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/autologin_linux.yaml"
-      - "autologin_linux/**"
+  # Linux is currently not supported
+  #pull_request:
+  #  paths:
+  #    - ".github/workflows/autologin_linux.yaml"
+  #    - "autologin_linux/**"
   push:
     branches:
       - main

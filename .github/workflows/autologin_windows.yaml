@@ -5,10 +5,11 @@ concurrency:
   cancel-in-progress: true
 
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/autologin_windows.yaml"
-      - "autologin_windows/**"
+  # Windows is currently not supported
+  #pull_request:
+  #  paths:
+  #    - ".github/workflows/autologin_windows.yaml"
+  #    - "autologin_windows/**"
   push:
     branches:
       - main

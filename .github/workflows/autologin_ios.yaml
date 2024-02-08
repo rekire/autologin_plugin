@@ -5,10 +5,11 @@ concurrency:
   cancel-in-progress: true
 
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/autologin_ios.yaml"
-      - "autologin_ios/**"
+  # iOS is currently not supported
+  #pull_request:
+  #  paths:
+  #    - ".github/workflows/autologin_ios.yaml"
+  #    - "autologin_ios/**"
   push:
     branches:
       - main
@@ -20,6 +21,7 @@ jobs:
   build:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
     with:
+      coverage_excludes: '*.g.dart *.freezed.dart'
       flutter_channel: stable
       flutter_version: 3.13.2
       working_directory: autologin_ios
