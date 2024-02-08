@@ -61,7 +61,7 @@ void main() {
       final report = await autologin.saveCredentials(expectedCredentials);
       expect(
         log,
-        <Matcher>[isMethodCall('saveCredentials', arguments: jsonEncode(expectedCredentials.toJson()))],
+        <Matcher>[isMethodCall('saveCredentials', arguments: expectedCredentials.toJson())],
       );
       expect(report, equals(true));
     });
