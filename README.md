@@ -6,7 +6,14 @@ You can check it yourself on the [github page](https://rekire.github.io/autologi
 
 ## Supported platforms
 ### Android
-On Android [Smartlock for Passwords](https://developers.google.com/identity/smartlock-passwords/android) is used, so you need the play services.
+On Android CredentialManager is used. The documentation is not very clear, but it seems that with the PlayServices devices back to Android 4.4 are supported.
+There is currently no documentation how or if it works on non Google Play certificated devices.
+
+On Android your MainActivity must be a [`FlutterFragmentActivity`](https://api.flutter.dev/javadoc/io/flutter/app/FlutterFragmentActivity.html).
+
+#### Change your app to use `FlutterFragmentActivity`
+TODO: Explain how to do that. See also the example app. 
+
 #### Important notes on digital asset links
 Digital asset links is a way to link your app with a website also called [App Links](https://developer.android.com/training/app-links/index.html).
 In order to provide a full example, the example app needs to be signed correctly. Right now the signing key is not checked in, but might be the CI

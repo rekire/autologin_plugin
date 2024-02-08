@@ -67,9 +67,6 @@ class _DemoPageState extends State<DemoPage> {
   Future<void> initPlatformState() async {
     final isSupported = await AutologinPlugin.isPlatformSupported;
     setState(() => isPlatformSupported = isSupported);
-    if (isSupported) {
-      await requestCredentials();
-    }
   }
 
   void resetUsernameNote() {

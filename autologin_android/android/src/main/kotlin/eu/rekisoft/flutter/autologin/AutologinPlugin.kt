@@ -1,8 +1,9 @@
 package eu.rekisoft.flutter.autologin
 
-import androidx.annotation.NonNull
+import androidx.activity.ComponentActivity
 import androidx.credentials.*
 import androidx.credentials.exceptions.*
+import androidx.lifecycle.lifecycleScope
 import eu.rekisoft.flutter.autologin.models.Compatibilities
 import eu.rekisoft.flutter.autologin.models.Credential
 import eu.rekisoft.flutter.autologin.models.toJSON
@@ -13,8 +14,10 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry.Registrar
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.PrintWriter
 import java.io.StringWriter
 
@@ -27,6 +30,9 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var channel: MethodChannel
     private var binding: ActivityPluginBinding? = null
     private val tasks: MutableList<(ActivityPluginBinding) -> Unit> = mutableListOf()
+
+    private fun ActivityPluginBinding.launch(block: suspend CoroutineScope.() -> Unit) =
+        (activity as ComponentActivity).lifecycleScope.launch(block = block)
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "autologin_android")
@@ -55,7 +61,7 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 result.success(Compatibilities(isPlatformSupported = LoginHelper.isPlatformSupported(binding)).toJSON())
             }
 
-            "requestCredentials" -> runBlocking {
+            "requestCredentials" -> binding?.launch {
                 val credentialManager = CredentialManager.create(binding!!.activity)
                 try {
                     val getCredRequest = GetCredentialRequest(listOf(GetPasswordOption()))
@@ -75,7 +81,7 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 }
             }
 
-            "saveCredentials" -> runBlocking {
+            "saveCredentials" -> binding?.launch {
                 val credentialManager = CredentialManager.create(binding!!.activity)
                 val credentialMap = requireNotNull(call.arguments as? Map<String, String>)
                 val id = requireNotNull(credentialMap["username"])

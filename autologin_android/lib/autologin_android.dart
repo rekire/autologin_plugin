@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -35,12 +33,6 @@ class AutologinAndroid extends AutologinPlatform {
 
   @override
   Future<bool> saveCredentials(Credential credential) async {
-    try {
-      return await methodChannel.invokeMethod<String>('saveCredentials', credential.toJson()) == 'true';
-    } on MissingPluginException {
-      return false;
-    } on PlatformException {
-      return false;
-    }
+    return await methodChannel.invokeMethod<String>('saveCredentials', credential.toJson()) == 'true';
   }
 }
