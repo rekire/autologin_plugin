@@ -1,6 +1,6 @@
 {
-    "name": "autologin_plugin_example",
-    "short_name": "autologin_plugin_example",
+    "name": "autologin_example",
+    "short_name": "autologin_example",
     "start_url": ".",
     "display": "minimal-ui",
     "background_color": "#0175C2",
