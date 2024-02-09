@@ -1,0 +1,27 @@
+name: autologin_ios
+description: The iOS implementation of the autologin plugin.
+version: 0.0.5
+homepage: https://github.com/rekire/autologin_plugin/tree/main/autologin_ios
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+flutter:
+  plugin:
+    implements: autologin
+    platforms:
+      ios:
+        pluginClass: AutologinPlugin
+        #dartPluginClass: AutologinPlugin
+
+dependencies:
+  flutter:
+    sdk: flutter
+  autologin_platform_interface:
+    path: ../autologin_platform_interface
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  plugin_platform_interface: ^2.0.0
+  very_good_analysis: ^5.1.0
