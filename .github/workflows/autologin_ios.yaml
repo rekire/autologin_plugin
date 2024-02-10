@@ -9,14 +9,14 @@ on:
   #pull_request:
   #  paths:
   #    - ".github/workflows/autologin_ios.yaml"
-  #    - "autologin_ios/**"
+  #    - "autologin_darwin/**"
   push:
     branches:
       - main
       - apple
     paths:
       - ".github/workflows/autologin_ios.yaml"
-      - "autologin_ios/**"
+      - "autologin_darwin/**"
 
 jobs:
   build:
