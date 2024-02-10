@@ -10,9 +10,6 @@ import FlutterMacOS
 
 public class AutologinPlugin: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
-        //let channel = FlutterMethodChannel(
-        //    name: "autologin_plugin",
-        //    binaryMessenger: registrar.messenger)
         // Workaround for https://github.com/flutter/flutter/issues/118103.
 #if os(iOS)
         let messenger = registrar.messenger()

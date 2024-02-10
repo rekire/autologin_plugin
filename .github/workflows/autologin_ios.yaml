@@ -25,5 +25,5 @@ jobs:
       coverage_excludes: '*.g.dart *.freezed.dart'
       flutter_channel: stable
       flutter_version: 3.13.2
-      working_directory: autologin_ios
+      working_directory: autologin_darwin
       format_line_length: 120
