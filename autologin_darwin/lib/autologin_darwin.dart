@@ -16,10 +16,10 @@ class AutologinDarwin extends AutologinPlatform {
   @override
   Future<Compatibilities> performCompatibilityChecks() async {
     return const Compatibilities(
-        isPlatformSupported: true,
-        canSafeSecrets: true,
-        canEncryptSecrets: true,
-        //hasZeroTouchSupport: true,
+      isPlatformSupported: true,
+      canSafeSecrets: true,
+      canEncryptSecrets: true,
+      //hasZeroTouchSupport: true,
     );
   }
 
