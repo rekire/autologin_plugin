@@ -1,0 +1,34 @@
+name: autologin_darwin
+description: The iOS and MacOS implementation of the autologin plugin.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  # Flutter versions prior to 3.7 did not support the
+  # sharedDarwinSource option.
+  flutter: ">=3.7.0"
+
+flutter:
+  plugin:
+    implements: autologin
+    platforms:
+      ios:
+        pluginClass: AutologinPlugin
+        dartPluginClass: AutologinDarwin
+        sharedDarwinSource: true
+      macos:
+        pluginClass: AutologinPlugin
+        dartPluginClass: AutologinDarwin
+        sharedDarwinSource: true
+
+dependencies:
+  autologin_platform_interface:
+    path: ../autologin_platform_interface
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^5.1.0
