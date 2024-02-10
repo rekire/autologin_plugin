@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:autologin/autologin.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -118,7 +119,11 @@ class _DemoPageState extends State<DemoPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (isPlatformSupported != true) const Text('⚠️ Platform not supported ⚠️'),
+        if (isPlatformSupported != true)
+          const Padding(
+            padding: EdgeInsets.only(bottom: 16),
+            child: Text('⚠️ This ${kIsWeb ? 'browser' : 'platform'} is not supported ⚠️'),
+          ),
         TextFormField(
           controller: usernameController,
           textInputAction: TextInputAction.next,
@@ -150,10 +155,12 @@ class _DemoPageState extends State<DemoPage> {
           ),
           onFieldSubmitted: (_) => saveCredentials(),
         ),
+        const SizedBox(height: 16),
         FilledButton(
           onPressed: isPlatformSupported == true ? saveCredentials : null,
           child: const Text('Save credentials'),
         ),
+        const SizedBox(height: 8),
         OutlinedButton(
           onPressed: () {
             usernameController.text = 'Some-Username';
@@ -161,6 +168,7 @@ class _DemoPageState extends State<DemoPage> {
           },
           child: const Text('Enter sample data'),
         ),
+        const SizedBox(height: 8),
         OutlinedButton(
           onPressed: isPlatformSupported == true ? requestCredentials : null,
           child: const Text('Request login data'),
