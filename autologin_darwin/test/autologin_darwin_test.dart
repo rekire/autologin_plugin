@@ -64,11 +64,12 @@ void main() {
     // ignore_for_file: avoid_catching_errors
     test('saveCredentials is not implemented', () async {
       try {
-        final report = await autologin.saveCredentials(expectedCredentials);
+        await autologin.saveCredentials(expectedCredentials);
         fail('Expected UnimplementedError');
       } on UnimplementedError catch (_) {
         // expected for now
       }
+      //final report = await autologin.saveCredentials(expectedCredentials);
       //expect(
       //  log,
       //  <Matcher>[isMethodCall('saveCredentials', arguments: expectedCredentials.toJson())],
