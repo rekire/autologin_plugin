@@ -5,11 +5,10 @@ concurrency:
   cancel-in-progress: true
 
 on:
-  # MacOS is currently not supported
-  #pull_request:
-  #  paths:
-  #    - ".github/workflows/autologin_macos.yaml"
-  #    - "autologin_darwin/**"
+  pull_request:
+    paths:
+      - ".github/workflows/autologin_macos.yaml"
+      - "autologin_darwin/**"
   push:
     branches:
       - main
