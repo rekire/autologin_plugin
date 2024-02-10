@@ -6,9 +6,12 @@
 locale_keys.g.dart             linguist-generated=true
 *.lock                         linguist-generated=true
 *.xcscheme                     linguist-generated=true
+*.xcconfig                     linguist-generated=true
 *.pbxproj                      linguist-generated=true
 *.xib                          linguist-generated=true
+*.xcworkspacedata              linguist-generated=true
 generated_plugin_registrant.cc linguist-generated=true
 generated_plugin_registrant.h  linguist-generated=true
 generated_plugins.cmake        linguist-generated=true
 GeneratedPluginRegistrant.*    linguist-generated=true
+.metadata                      linguist-generated=true
