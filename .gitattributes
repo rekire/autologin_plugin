@@ -1,0 +1,14 @@
+* text=auto eol=lf
+# Collapse auto generated files in diffs
+*.g.dart                       linguist-generated=true
+*.freezed.dart                 linguist-generated=true
+*.mocks.dart                   linguist-generated=true
+locale_keys.g.dart             linguist-generated=true
+*.lock                         linguist-generated=true
+*.xcscheme                     linguist-generated=true
+*.pbxproj                      linguist-generated=true
+*.xib                          linguist-generated=true
+generated_plugin_registrant.cc linguist-generated=true
+generated_plugin_registrant.h  linguist-generated=true
+generated_plugins.cmake        linguist-generated=true
+GeneratedPluginRegistrant.*    linguist-generated=true
