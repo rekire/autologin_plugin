@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -33,8 +35,7 @@ class AutologinDarwin extends AutologinPlatform {
   }
 
   @override
-  Future<bool> saveCredentials(Credential credential) {
-    // TODO(me): implement saveCredentials
-    throw UnimplementedError();
+  Future<bool> saveCredentials(Credential credential) async {
+    return await methodChannel.invokeMethod<String>('saveCredentials', jsonEncode(credential.toJson())) == 'true';
   }
 }

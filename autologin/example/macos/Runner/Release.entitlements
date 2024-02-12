@@ -5,7 +5,6 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>webcredentials:rekire.github.io</string>
-		<string>applinks:eu.rekisoft.playground</string>
 	</array>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
