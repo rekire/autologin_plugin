@@ -31,7 +31,13 @@ As simple check if the linking works fine check [this link](https://rekire.githu
 without an intent chooser then this works.
 
 ### iOS
-On iOS [AutoFill](https://developer.apple.com/videos/play/wwdc2018/204/) is used.
+Shared web credentials are used. In order to make this working you need to setup the associated-domains entitlement. The main documentation is here: https://developer.apple.com/documentation/xcode/supporting-associated-domains
+The minimum apple-app-site-association which must be reachable at `https://<your-domain>/.well-known/apple-app-site-association` must contain something like:
+```json
+{"webcredentials":{"apps":["<your-team-id>.<your-bundle-id>"]}}
+```
+Your team id can be found e.g. in `ios/Runner.xcodeproj/project.pbxproj` look for the key `DEVELOPMENT_TEAM`, the bundle id is there too look for `PRODUCT_BUNDLE_IDENTIFIER`.
+Apple is caching that requests to the file above with their CDN, but you can check the cached value here: `https://app-site-association.cdn-apple.com/a/v1/<your-domain>`
 ### Web
 On Web [Credential Management API](https://developer.mozilla.org/en-US/docs/Web/API/Credential_Management_API), but beware that just Chrome, Edge and Opera support this feature ([Source](https://developer.mozilla.org/en-US/docs/Web/API/PasswordCredential#browser_compatibility)).
 
