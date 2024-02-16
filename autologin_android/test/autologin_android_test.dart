@@ -29,6 +29,10 @@ void main() {
             return jsonEncode(expectedCredentials.toJson());
           case 'saveCredentials':
             return 'true';
+          case 'requestLoginToken':
+            return expectedToken;
+          case 'saveLoginToken':
+            return 'true';
           default:
             return null;
         }
@@ -73,7 +77,7 @@ void main() {
         log,
         <Matcher>[isMethodCall('requestLoginToken', arguments: null)],
       );
-      expect(token, equals(null)); // FIXME(all): should be expectedToken but currently the expected value
+      expect(token, equals(expectedToken));
     });
 
     test('saveLoginToken returns expected value', () async {
@@ -82,7 +86,7 @@ void main() {
         log,
         <Matcher>[isMethodCall('saveLoginToken', arguments: expectedToken)],
       );
-      expect(report, equals(false)); // FIXME(all): should be true but currently the expected value
+      expect(report, equals(true));
     });
   });
 }

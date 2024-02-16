@@ -17,6 +17,7 @@ void main() {
       canEncryptSecrets: true,
     );
     const expectedCredentials = Credential(username: 'foo', password: 'bar');
+    const expectedToken = 'foo-bar';
 
     setUp(() async {
       autologin = AutologinDarwin();
@@ -31,6 +32,10 @@ void main() {
           case 'requestCredentials':
             return jsonEncode(expectedCredentials.toJson());
           case 'saveCredentials':
+            return 'true';
+          case 'requestLoginToken':
+            return expectedToken;
+          case 'saveLoginToken':
             return 'true';
           default:
             return null;
@@ -67,6 +72,24 @@ void main() {
       expect(
         log,
         <Matcher>[isMethodCall('saveCredentials', arguments: jsonEncode(expectedCredentials.toJson()))],
+      );
+      expect(report, equals(true));
+    });
+
+    test('requestLoginToken returns expected value', () async {
+      final token = await autologin.requestLoginToken();
+      expect(
+        log,
+        <Matcher>[isMethodCall('requestLoginToken', arguments: null)],
+      );
+      expect(token, equals(expectedToken));
+    });
+
+    test('saveLoginToken returns expected value', () async {
+      final report = await autologin.saveLoginToken(expectedToken);
+      expect(
+        log,
+        <Matcher>[isMethodCall('saveLoginToken', arguments: expectedToken)],
       );
       expect(report, equals(true));
     });
