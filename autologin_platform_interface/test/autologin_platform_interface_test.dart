@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
