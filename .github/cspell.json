@@ -20,6 +20,8 @@
     "rekire",
     "autologin",
     "assetlinks",
-    "smartlock"
+    "smartlock",
+    "webcredentials",
+    "pbxproj"
   ]
 }

@@ -5,23 +5,21 @@ concurrency:
   cancel-in-progress: true
 
 on:
-  # MacOS is currently not supported
-  #pull_request:
-  #  paths:
-  #    - ".github/workflows/autologin_macos.yaml"
-  #    - "autologin_macos/**"
-  push:
-    branches:
-      - main
+  pull_request:
     paths:
       - ".github/workflows/autologin_macos.yaml"
-      - "autologin_macos/**"
+      - "autologin_darwin/**"
+  push:
+    paths:
+      - ".github/workflows/autologin_macos.yaml"
+      - "autologin_darwin/**"
 
 jobs:
   build:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
     with:
+      coverage_excludes: '*.g.dart *.freezed.dart'
       flutter_channel: stable
       flutter_version: 3.13.2
-      working_directory: autologin_macos
+      working_directory: autologin_darwin
       format_line_length: 120

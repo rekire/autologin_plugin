@@ -13,6 +13,7 @@ void main() {
     late List<MethodCall> log;
     const expectedCompatibilities = Compatibilities(isPlatformSupported: true);
     const expectedCredentials = Credential(username: 'foo', password: 'bar');
+    const expectedToken = 'Example-Token';
 
     setUp(() async {
       autologin = AutologinAndroid();
@@ -27,6 +28,10 @@ void main() {
           case 'requestCredentials':
             return jsonEncode(expectedCredentials.toJson());
           case 'saveCredentials':
+            return 'true';
+          case 'requestLoginToken':
+            return expectedToken;
+          case 'saveLoginToken':
             return 'true';
           default:
             return null;
@@ -62,6 +67,24 @@ void main() {
       expect(
         log,
         <Matcher>[isMethodCall('saveCredentials', arguments: expectedCredentials.toJson())],
+      );
+      expect(report, equals(true));
+    });
+
+    test('requestLoginToken returns expected value', () async {
+      final token = await autologin.requestLoginToken();
+      expect(
+        log,
+        <Matcher>[isMethodCall('requestLoginToken', arguments: null)],
+      );
+      expect(token, equals(expectedToken));
+    });
+
+    test('saveLoginToken returns expected value', () async {
+      final report = await autologin.saveLoginToken(expectedToken);
+      expect(
+        log,
+        <Matcher>[isMethodCall('saveLoginToken', arguments: expectedToken)],
       );
       expect(report, equals(true));
     });

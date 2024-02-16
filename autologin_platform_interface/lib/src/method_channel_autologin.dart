@@ -33,4 +33,14 @@ class MethodChannelAutologin extends AutologinPlatform {
     final result = await methodChannel.invokeMethod<String>('saveCredentials', jsonEncode(credential.toJson()));
     return result == 'true';
   }
+
+  @override
+  Future<String?> requestLoginToken() async {
+    return methodChannel.invokeMethod<String>('requestLoginToken');
+  }
+
+  @override
+  Future<bool> saveLoginToken(String token) async {
+    return await methodChannel.invokeMethod<bool>('saveLoginToken', token) == true;
+  }
 }

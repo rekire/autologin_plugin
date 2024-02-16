@@ -10,9 +10,6 @@ on:
       - ".github/workflows/autologin.yaml"
       - "autologin/**"
   push:
-    branches:
-      - main
-      - credential_manager
     paths:
       - ".github/workflows/autologin.yaml"
       - "autologin/**"

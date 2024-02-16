@@ -34,6 +34,10 @@ void main() {
               } else {
                 return null;
               }
+            case 'requestLoginToken':
+              return mock.requestLoginToken();
+            case 'saveLoginToken':
+              return mock.saveLoginToken(methodCall.arguments.toString());
             default:
               return null;
           }
@@ -69,6 +73,22 @@ void main() {
       expect(
         await methodChannelAutologin.requestCredentials(),
         equals(credential),
+      );
+    });
+
+    test('requestLoginToken returns correct values provided by saveLoginToken', () async {
+      expect(
+        await methodChannelAutologin.requestLoginToken(),
+        equals(null),
+      );
+      const token = 'foo-bar';
+      expect(
+        await methodChannelAutologin.saveLoginToken(token),
+        equals(true),
+      );
+      expect(
+        await methodChannelAutologin.requestLoginToken(),
+        equals(token),
       );
     });
   });

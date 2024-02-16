@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 class AutologinMock extends AutologinPlatform {
   String? credential;
+  String? loginToken;
 
   @override
   Future<Compatibilities> performCompatibilityChecks() async {
@@ -25,6 +26,17 @@ class AutologinMock extends AutologinPlatform {
   @override
   Future<bool> saveCredentials(Credential credential) async {
     this.credential = jsonEncode(credential.toJson());
+    return true;
+  }
+
+  @override
+  Future<String?> requestLoginToken() async {
+    return loginToken;
+  }
+
+  @override
+  Future<bool> saveLoginToken(String token) async {
+    loginToken = token;
     return true;
   }
 }
@@ -71,6 +83,22 @@ void main() {
       expect(
         await AutologinPlatform.instance.isPlatformSupported,
         equals(true),
+      );
+    });
+
+    test('requestLoginToken returns correct values provided by saveLoginToken', () async {
+      expect(
+        await AutologinPlatform.instance.requestLoginToken(),
+        equals(null),
+      );
+      const expectedToken = 'foo-bar';
+      expect(
+        await AutologinPlatform.instance.saveLoginToken(expectedToken),
+        equals(true),
+      );
+      expect(
+        await AutologinPlatform.instance.requestLoginToken(),
+        equals(expectedToken),
       );
     });
   });

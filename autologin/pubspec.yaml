@@ -12,12 +12,12 @@ flutter:
     platforms:
       android:
         default_package: autologin_android
-      #ios:
-      #  default_package: autologin_ios
+      ios:
+        default_package: autologin_darwin
       #linux:
       #  default_package: autologin_linux
-      #macos:
-      #  default_package: autologin_macos
+      macos:
+        default_package: autologin_darwin
       web:
         default_package: autologin_web
       #windows:
@@ -26,12 +26,10 @@ flutter:
 dependencies:
   autologin_android:
     path: ../autologin_android
-  #autologin_ios:
-  #  path: ../autologin_ios
   #autologin_linux:
   #  path: ../autologin_linux
-  #autologin_macos:
-  #  path: ../autologin_macos
+  autologin_darwin:
+    path: ../autologin_darwin
   autologin_platform_interface:
     path: ../autologin_platform_interface
   autologin_web:
