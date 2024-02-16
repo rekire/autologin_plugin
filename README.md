@@ -2,7 +2,7 @@
 
 Experimental autologin plugin for Flutter. This library should log in the user if the login data are already known by the operating system of the device e.g. on the first run.
 
-You can check it yourself on the [github page](https://rekire.github.io/autologin_plugin/index.html) in supported browsers.
+You can check it yourself on the [github page](https://rekire.github.io/autologin_plugin/index.html) in supported browsers (basically all expect Firefox and Safari).
 
 ## Supported platforms
 ### Android
@@ -30,20 +30,34 @@ If you want to test your own setup use the [Statement List Generator and Tester]
 As simple check if the linking works fine check [this link](https://rekire.github.io/autologin_plugin/demo), if that opens in chrome the example app
 without an intent chooser then this works.
 
-### iOS
-Shared web credentials are used. In order to make this working you need to setup the associated-domains entitlement. The main documentation is here: https://developer.apple.com/documentation/xcode/supporting-associated-domains
+### iOS and MacOS
+For storing credentials the shared web credentials are used. In order to make this working you need to setup the
+associated-domains entitlement. The main documentation is here: https://developer.apple.com/documentation/xcode/supporting-associated-domains
 The minimum apple-app-site-association which must be reachable at `https://<your-domain>/.well-known/apple-app-site-association` must contain something like:
 ```json
 {"webcredentials":{"apps":["<your-team-id>.<your-bundle-id>"]}}
 ```
 Your team id can be found e.g. in `ios/Runner.xcodeproj/project.pbxproj` look for the key `DEVELOPMENT_TEAM`, the bundle id is there too look for `PRODUCT_BUNDLE_IDENTIFIER`.
 Apple is caching that requests to the file above with their CDN, but you can check the cached value here: `https://app-site-association.cdn-apple.com/a/v1/<your-domain>`
+If you have not setup your app check https://developer.apple.com/account/resources/identifiers/list
+
+In order to use the zero touch login on iOS and MacOS you need to add the iCloud capability and configure iCloud
+Key-Value Storage in your Xcode project:
+
+1. Open your Xcode project.
+2. Select your project in the Project Navigator to open the project settings. 
+3. Select your target under "Targets." 
+4. Go to the "Signing & Capabilities" tab. 
+5. Click the "+ Capability" button. 
+6. Scroll down and select "iCloud." 
+7. In the iCloud section, enable the "Key-Value storage" checkbox.
+
 ### Web
 On Web [Credential Management API](https://developer.mozilla.org/en-US/docs/Web/API/Credential_Management_API), but beware that just Chrome, Edge and Opera support this feature ([Source](https://developer.mozilla.org/en-US/docs/Web/API/PasswordCredential#browser_compatibility)).
 
 ## TODO
 
-- [ ] Add documentation how to use it. In the mean time you can use the [example app](./example)
+- [ ] Add documentation how to use it. In the mean time you can use the [example app](./autologin/example)
 - [ ] Upload the final version to pub.dev
 - [ ] Windows Support #8
 - [ ] MacOs Support #11

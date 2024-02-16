@@ -39,4 +39,14 @@ class AutologinWeb extends AutologinPlatform {
     );
     return true;
   }
+
+  @override
+  Future<String?> requestLoginToken() async {
+    throw UnsupportedError('The web platform does not support login tokens');
+  }
+
+  @override
+  Future<bool> saveLoginToken(String token) async {
+    throw UnsupportedError('The web platform does not support login tokens');
+  }
 }

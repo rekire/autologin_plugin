@@ -38,4 +38,14 @@ class AutologinDarwin extends AutologinPlatform {
   Future<bool> saveCredentials(Credential credential) async {
     return await methodChannel.invokeMethod<String>('saveCredentials', jsonEncode(credential.toJson())) == 'true';
   }
+
+  @override
+  Future<String?> requestLoginToken() async {
+    return methodChannel.invokeMethod<String>('requestLoginToken');
+  }
+
+  @override
+  Future<bool> saveLoginToken(String token) async {
+    return await methodChannel.invokeMethod<String>('saveLoginToken', token) == 'true';
+  }
 }

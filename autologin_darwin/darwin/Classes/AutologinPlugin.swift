@@ -58,7 +58,7 @@ public class AutologinPlugin: NSObject, FlutterPlugin {
                                                         message: "Could not save credentials: \(error)",
                                                         details: nil))
                                 } else {
-                                    result(FlutterError(code: "INVALID_ARGUMENT", message: "Unable to extract username and password from arguments", details: nil))
+                                    result(true)
                                 }
                             }
                         } else {
@@ -70,6 +70,18 @@ public class AutologinPlugin: NSObject, FlutterPlugin {
                 } else {
                     result(FlutterError(code: "INVALID_ARGUMENT", message: "Unable to convert JSON string to data", details: nil))
                 }
+            } else {
+                result(FlutterError(code: "INVALID_ARGUMENT", message: "Argument must be a string", details: nil))
+            }
+        case "requestLoginToken":
+            let keyValueStore = NSUbiquitousKeyValueStore.default
+            result(keyValueStore.string(forKey: "test-key"))
+        case "saveLoginToken":
+            if let loginToken = call.arguments as? String {
+                let keyValueStore = NSUbiquitousKeyValueStore.default
+                keyValueStore.set(loginToken, forKey: "login-token")
+                keyValueStore.synchronize()
+                result(true)
             } else {
                 result(FlutterError(code: "INVALID_ARGUMENT", message: "Argument must be a string", details: nil))
             }
