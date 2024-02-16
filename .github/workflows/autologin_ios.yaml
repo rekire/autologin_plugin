@@ -10,9 +10,6 @@ on:
       - ".github/workflows/autologin_ios.yaml"
       - "autologin_darwin/**"
   push:
-    branches:
-      - main
-      - apple
     paths:
       - ".github/workflows/autologin_ios.yaml"
       - "autologin_darwin/**"
