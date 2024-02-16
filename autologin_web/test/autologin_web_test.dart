@@ -33,5 +33,15 @@ void main() {
       final report = await autologin.saveCredentials(expectedCredentials);
       expect(report, equals(true));
     });
+
+    test('requestLoginToken returns expected value', () async {
+      final token = await autologin.requestLoginToken();
+      expect(token, equals(null));
+    });
+
+    test('saveLoginToken returns expected value', () async {
+      final report = await autologin.saveLoginToken('foo-bar');
+      expect(report, equals(false));
+    });
   });
 }
