@@ -86,7 +86,7 @@ void main() {
       );
     });
 
-    test('requestLoginToken returns correct values', () async {
+    test('requestLoginToken returns correct values provided by saveLoginToken', () async {
       expect(
         await AutologinPlatform.instance.requestLoginToken(),
         equals(null),
