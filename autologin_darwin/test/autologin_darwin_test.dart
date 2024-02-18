@@ -37,7 +37,7 @@ void main() {
           case 'requestLoginToken':
             return expectedToken;
           case 'saveLoginToken':
-            return 'true';
+            return true;
           default:
             return null;
         }
