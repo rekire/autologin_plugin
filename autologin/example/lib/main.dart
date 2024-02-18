@@ -48,6 +48,7 @@ class _DemoPageState extends State<DemoPage> {
   bool obscurePassword = true;
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  String loginToken = 'Loading...';
 
   @override
   void initState() {
@@ -55,6 +56,19 @@ class _DemoPageState extends State<DemoPage> {
     unawaited(initPlatformState());
     usernameController.addListener(resetUsernameNote);
     passwordController.addListener(resetPasswordNote);
+    AutologinPlugin.requestLoginToken().then((value) async {
+      if (value != null) {
+        setState(() => loginToken = value);
+      } else {
+        final hasZeroTouchSupport = (await AutologinPlugin.performCompatibilityChecks()).hasZeroTouchSupport;
+        setState(() => loginToken = hasZeroTouchSupport ? 'This is the first app start' : 'Platform not supported');
+        if (hasZeroTouchSupport) {
+          await AutologinPlugin.saveLoginToken('First start ${DateTime.now()}');
+        }
+      }
+    }).onError((error, stackTrace) {
+      setState(() => loginToken = error.toString());
+    });
   }
 
   @override
@@ -173,6 +187,8 @@ class _DemoPageState extends State<DemoPage> {
           onPressed: isPlatformSupported == true ? requestCredentials : null,
           child: const Text('Request login data'),
         ),
+        const SizedBox(height: 8),
+        Text('Login-Token: $loginToken'),
       ],
     );
   }

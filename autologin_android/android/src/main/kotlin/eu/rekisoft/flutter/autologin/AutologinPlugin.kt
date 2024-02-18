@@ -60,7 +60,7 @@ class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         debug("Got call ${call.method}")
         when (call.method) {
             "performCompatibilityChecks" -> tasks.add { binding ->
-                result.success(Compatibilities(isPlatformSupported = LoginHelper.isPlatformSupported(binding)).toJSON())
+                result.success(Compatibilities(hasZeroTouchSupport = LoginHelper.hasPlayServices(binding)).toJSON())
             }
 
             "requestCredentials" -> binding?.launch {

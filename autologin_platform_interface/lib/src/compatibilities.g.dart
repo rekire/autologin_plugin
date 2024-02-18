@@ -11,7 +11,6 @@ _$CompatibilitiesImpl _$$CompatibilitiesImplFromJson(Map<String, dynamic> json) 
       canSafeSecrets: json['canSafeSecrets'] as bool? ?? false,
       canEncryptSecrets: json['canEncryptSecrets'] as bool? ?? false,
       hasZeroTouchSupport: json['hasZeroTouchSupport'] as bool? ?? false,
-      hasOneClickSupport: json['hasOneClickSupport'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$CompatibilitiesImplToJson(_$CompatibilitiesImpl instance) => <String, dynamic>{
@@ -19,5 +18,4 @@ Map<String, dynamic> _$$CompatibilitiesImplToJson(_$CompatibilitiesImpl instance
       'canSafeSecrets': instance.canSafeSecrets,
       'canEncryptSecrets': instance.canEncryptSecrets,
       'hasZeroTouchSupport': instance.hasZeroTouchSupport,
-      'hasOneClickSupport': instance.hasOneClickSupport,
     };
