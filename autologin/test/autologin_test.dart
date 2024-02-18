@@ -79,10 +79,9 @@ void main() {
       },
     );
 
-
     test(
       'LoginToken functions returns expected values',
-          () async {
+      () async {
         expect(
           await AutologinPlugin.requestLoginToken(),
           equals(null),
