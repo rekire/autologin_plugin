@@ -27,8 +27,8 @@ public class AutologinPlugin: NSObject, FlutterPlugin {
         switch call.method {
         case "requestCredentials":
             // possible migration: https://developer.apple.com/forums/thread/692844
-            if let domain = call.arguments as? FCString {
-                SecRequestSharedWebCredential(domain, nil) { (credentials, error) in
+            if let domain = call.arguments as? String {
+                SecRequestSharedWebCredential(domain as CFString, nil) { (credentials, error) in
                     if let error = error {
                         result(FlutterError(code: "UNAVAILABLE",
                                             message: "Could not fetch credentials from keychain: \(error)",
