@@ -21,13 +21,13 @@ class AutologinDarwin extends AutologinPlatform {
       isPlatformSupported: true,
       canSafeSecrets: true,
       canEncryptSecrets: true,
-      //hasZeroTouchSupport: true,
+      hasZeroTouchSupport: true,
     );
   }
 
   @override
-  Future<Credential?> requestCredentials() async {
-    final json = await methodChannel.invokeMethod<String>('requestCredentials');
+  Future<Credential?> requestCredentials({String? domain}) async {
+    final json = await methodChannel.invokeMethod<String>('requestCredentials', domain);
     if (json == null) {
       return null;
     }
@@ -46,6 +46,6 @@ class AutologinDarwin extends AutologinPlatform {
 
   @override
   Future<bool> saveLoginToken(String token) async {
-    return await methodChannel.invokeMethod<String>('saveLoginToken', token) == 'true';
+    return await methodChannel.invokeMethod<bool>('saveLoginToken', token) == true;
   }
 }

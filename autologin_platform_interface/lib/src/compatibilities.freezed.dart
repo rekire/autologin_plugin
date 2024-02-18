@@ -28,8 +28,6 @@ mixin _$Compatibilities {
 
   bool get hasZeroTouchSupport => throw _privateConstructorUsedError;
 
-  bool get hasOneClickSupport => throw _privateConstructorUsedError;
-
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -42,12 +40,7 @@ abstract class $CompatibilitiesCopyWith<$Res> {
       _$CompatibilitiesCopyWithImpl<$Res, Compatibilities>;
 
   @useResult
-  $Res call(
-      {bool isPlatformSupported,
-      bool canSafeSecrets,
-      bool canEncryptSecrets,
-      bool hasZeroTouchSupport,
-      bool hasOneClickSupport});
+  $Res call({bool isPlatformSupported, bool canSafeSecrets, bool canEncryptSecrets, bool hasZeroTouchSupport});
 }
 
 /// @nodoc
@@ -67,7 +60,6 @@ class _$CompatibilitiesCopyWithImpl<$Res, $Val extends Compatibilities> implemen
     Object? canSafeSecrets = null,
     Object? canEncryptSecrets = null,
     Object? hasZeroTouchSupport = null,
-    Object? hasOneClickSupport = null,
   }) {
     return _then(_value.copyWith(
       isPlatformSupported: null == isPlatformSupported
@@ -86,10 +78,6 @@ class _$CompatibilitiesCopyWithImpl<$Res, $Val extends Compatibilities> implemen
           ? _value.hasZeroTouchSupport
           : hasZeroTouchSupport // ignore: cast_nullable_to_non_nullable
               as bool,
-      hasOneClickSupport: null == hasOneClickSupport
-          ? _value.hasOneClickSupport
-          : hasOneClickSupport // ignore: cast_nullable_to_non_nullable
-              as bool,
     ) as $Val);
   }
 }
@@ -101,12 +89,7 @@ abstract class _$$CompatibilitiesImplCopyWith<$Res> implements $CompatibilitiesC
 
   @override
   @useResult
-  $Res call(
-      {bool isPlatformSupported,
-      bool canSafeSecrets,
-      bool canEncryptSecrets,
-      bool hasZeroTouchSupport,
-      bool hasOneClickSupport});
+  $Res call({bool isPlatformSupported, bool canSafeSecrets, bool canEncryptSecrets, bool hasZeroTouchSupport});
 }
 
 /// @nodoc
@@ -122,7 +105,6 @@ class __$$CompatibilitiesImplCopyWithImpl<$Res> extends _$CompatibilitiesCopyWit
     Object? canSafeSecrets = null,
     Object? canEncryptSecrets = null,
     Object? hasZeroTouchSupport = null,
-    Object? hasOneClickSupport = null,
   }) {
     return _then(_$CompatibilitiesImpl(
       isPlatformSupported: null == isPlatformSupported
@@ -141,10 +123,6 @@ class __$$CompatibilitiesImplCopyWithImpl<$Res> extends _$CompatibilitiesCopyWit
           ? _value.hasZeroTouchSupport
           : hasZeroTouchSupport // ignore: cast_nullable_to_non_nullable
               as bool,
-      hasOneClickSupport: null == hasOneClickSupport
-          ? _value.hasOneClickSupport
-          : hasOneClickSupport // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -156,8 +134,7 @@ class _$CompatibilitiesImpl implements _Compatibilities {
       {this.isPlatformSupported = false,
       this.canSafeSecrets = false,
       this.canEncryptSecrets = false,
-      this.hasZeroTouchSupport = false,
-      this.hasOneClickSupport = false});
+      this.hasZeroTouchSupport = false});
 
   factory _$CompatibilitiesImpl.fromJson(Map<String, dynamic> json) => _$$CompatibilitiesImplFromJson(json);
 
@@ -173,13 +150,10 @@ class _$CompatibilitiesImpl implements _Compatibilities {
   @override
   @JsonKey()
   final bool hasZeroTouchSupport;
-  @override
-  @JsonKey()
-  final bool hasOneClickSupport;
 
   @override
   String toString() {
-    return 'Compatibilities(isPlatformSupported: $isPlatformSupported, canSafeSecrets: $canSafeSecrets, canEncryptSecrets: $canEncryptSecrets, hasZeroTouchSupport: $hasZeroTouchSupport, hasOneClickSupport: $hasOneClickSupport)';
+    return 'Compatibilities(isPlatformSupported: $isPlatformSupported, canSafeSecrets: $canSafeSecrets, canEncryptSecrets: $canEncryptSecrets, hasZeroTouchSupport: $hasZeroTouchSupport)';
   }
 
   @override
@@ -192,15 +166,13 @@ class _$CompatibilitiesImpl implements _Compatibilities {
             (identical(other.canSafeSecrets, canSafeSecrets) || other.canSafeSecrets == canSafeSecrets) &&
             (identical(other.canEncryptSecrets, canEncryptSecrets) || other.canEncryptSecrets == canEncryptSecrets) &&
             (identical(other.hasZeroTouchSupport, hasZeroTouchSupport) ||
-                other.hasZeroTouchSupport == hasZeroTouchSupport) &&
-            (identical(other.hasOneClickSupport, hasOneClickSupport) ||
-                other.hasOneClickSupport == hasOneClickSupport));
+                other.hasZeroTouchSupport == hasZeroTouchSupport));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, isPlatformSupported, canSafeSecrets, canEncryptSecrets, hasZeroTouchSupport, hasOneClickSupport);
+  int get hashCode =>
+      Object.hash(runtimeType, isPlatformSupported, canSafeSecrets, canEncryptSecrets, hasZeroTouchSupport);
 
   @JsonKey(ignore: true)
   @override
@@ -221,8 +193,7 @@ abstract class _Compatibilities implements Compatibilities {
       {final bool isPlatformSupported,
       final bool canSafeSecrets,
       final bool canEncryptSecrets,
-      final bool hasZeroTouchSupport,
-      final bool hasOneClickSupport}) = _$CompatibilitiesImpl;
+      final bool hasZeroTouchSupport}) = _$CompatibilitiesImpl;
 
   factory _Compatibilities.fromJson(Map<String, dynamic> json) = _$CompatibilitiesImpl.fromJson;
 
@@ -237,9 +208,6 @@ abstract class _Compatibilities implements Compatibilities {
 
   @override
   bool get hasZeroTouchSupport;
-
-  @override
-  bool get hasOneClickSupport;
 
   @override
   @JsonKey(ignore: true)

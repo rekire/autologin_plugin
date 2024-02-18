@@ -13,7 +13,6 @@ class Compatibilities with _$Compatibilities {
     @Default(false) bool canSafeSecrets,
     @Default(false) bool canEncryptSecrets,
     @Default(false) bool hasZeroTouchSupport,
-    @Default(false) bool hasOneClickSupport,
   }) = _Compatibilities;
 
   static Compatibilities? fromJson(String? json) =>

@@ -44,8 +44,9 @@ abstract class AutologinPlatform extends PlatformInterface {
     return _isPlatformSupported!;
   }
 
-  /// Returns the saved [Credential] when set by [saveCredentials] or is `null` when not found.
-  Future<Credential?> requestCredentials();
+  /// Returns the saved [Credential] when set by [saveCredentials] or is `null` when not found. For iOS and MacOS the
+  /// domain is mandatory, on other platforms this field is not used.
+  Future<Credential?> requestCredentials({String? domain});
 
   /// Returns `true` when the [Credential]s could be saved, otherwise `false`.
   Future<bool> saveCredentials(Credential credential);

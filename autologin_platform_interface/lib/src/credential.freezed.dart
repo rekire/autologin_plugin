@@ -24,6 +24,8 @@ mixin _$Credential {
 
   String? get password => throw _privateConstructorUsedError;
 
+  String? get domain => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -36,7 +38,7 @@ abstract class $CredentialCopyWith<$Res> {
       _$CredentialCopyWithImpl<$Res, Credential>;
 
   @useResult
-  $Res call({String? username, String? password});
+  $Res call({String? username, String? password, String? domain});
 }
 
 /// @nodoc
@@ -54,6 +56,7 @@ class _$CredentialCopyWithImpl<$Res, $Val extends Credential> implements $Creden
   $Res call({
     Object? username = freezed,
     Object? password = freezed,
+    Object? domain = freezed,
   }) {
     return _then(_value.copyWith(
       username: freezed == username
@@ -63,6 +66,10 @@ class _$CredentialCopyWithImpl<$Res, $Val extends Credential> implements $Creden
       password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
+              as String?,
+      domain: freezed == domain
+          ? _value.domain
+          : domain // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -75,7 +82,7 @@ abstract class _$$CredentialImplCopyWith<$Res> implements $CredentialCopyWith<$R
 
   @override
   @useResult
-  $Res call({String? username, String? password});
+  $Res call({String? username, String? password, String? domain});
 }
 
 /// @nodoc
@@ -88,6 +95,7 @@ class __$$CredentialImplCopyWithImpl<$Res> extends _$CredentialCopyWithImpl<$Res
   $Res call({
     Object? username = freezed,
     Object? password = freezed,
+    Object? domain = freezed,
   }) {
     return _then(_$CredentialImpl(
       username: freezed == username
@@ -98,6 +106,10 @@ class __$$CredentialImplCopyWithImpl<$Res> extends _$CredentialCopyWithImpl<$Res
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
+      domain: freezed == domain
+          ? _value.domain
+          : domain // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -105,7 +117,7 @@ class __$$CredentialImplCopyWithImpl<$Res> extends _$CredentialCopyWithImpl<$Res
 /// @nodoc
 @JsonSerializable()
 class _$CredentialImpl implements _Credential {
-  const _$CredentialImpl({this.username, this.password});
+  const _$CredentialImpl({this.username, this.password, this.domain});
 
   factory _$CredentialImpl.fromJson(Map<String, dynamic> json) => _$$CredentialImplFromJson(json);
 
@@ -113,10 +125,12 @@ class _$CredentialImpl implements _Credential {
   final String? username;
   @override
   final String? password;
+  @override
+  final String? domain;
 
   @override
   String toString() {
-    return 'Credential(username: $username, password: $password)';
+    return 'Credential(username: $username, password: $password, domain: $domain)';
   }
 
   @override
@@ -125,12 +139,13 @@ class _$CredentialImpl implements _Credential {
         (other.runtimeType == runtimeType &&
             other is _$CredentialImpl &&
             (identical(other.username, username) || other.username == username) &&
-            (identical(other.password, password) || other.password == password));
+            (identical(other.password, password) || other.password == password) &&
+            (identical(other.domain, domain) || other.domain == domain));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, username, password);
+  int get hashCode => Object.hash(runtimeType, username, password, domain);
 
   @JsonKey(ignore: true)
   @override
@@ -147,7 +162,7 @@ class _$CredentialImpl implements _Credential {
 }
 
 abstract class _Credential implements Credential {
-  const factory _Credential({final String? username, final String? password}) = _$CredentialImpl;
+  const factory _Credential({final String? username, final String? password, final String? domain}) = _$CredentialImpl;
 
   factory _Credential.fromJson(Map<String, dynamic> json) = _$CredentialImpl.fromJson;
 
@@ -156,6 +171,9 @@ abstract class _Credential implements Credential {
 
   @override
   String? get password;
+
+  @override
+  String? get domain;
 
   @override
   @JsonKey(ignore: true)

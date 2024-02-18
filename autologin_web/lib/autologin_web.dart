@@ -17,7 +17,7 @@ class AutologinWeb extends AutologinPlatform {
       );
 
   @override
-  Future<Credential?> requestCredentials() async {
+  Future<Credential?> requestCredentials({String? domain}) async {
     final data = await window.navigator.credentials?.get({
       'password': true,
     }) as PasswordCredential?;
