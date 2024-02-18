@@ -25,15 +25,27 @@ flutter:
 
 dependencies:
   autologin_android:
-    path: ../autologin_android
+    git:
+      url: https://github.com/rekire/autologin_plugin.git
+      path: autologin_android
+      ref: 0.0.5
   #autologin_linux:
   #  path: ../autologin_linux
   autologin_darwin:
-    path: ../autologin_darwin
+    git:
+      url: https://github.com/rekire/autologin_plugin.git
+      path: autologin_darwin
+      ref: 0.0.5
   autologin_platform_interface:
-    path: ../autologin_platform_interface
+    git:
+      url: https://github.com/rekire/autologin_plugin.git
+      path: autologin_platform_interface
+      ref: 0.0.5
   autologin_web:
-    path: ../autologin_web
+    git:
+      url: https://github.com/rekire/autologin_plugin.git
+      path: autologin_web
+      ref: 0.0.5
   #autologin_windows:
   #  path: ../autologin_windows
   flutter:
