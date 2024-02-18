@@ -17,7 +17,10 @@ flutter:
 
 dependencies:
   autologin_platform_interface:
-    path: ../autologin_platform_interface
+    git:
+      url: https://github.com/rekire/autologin_plugin.git
+      path: autologin_platform_interface
+      ref: 0.0.5
   flutter:
     sdk: flutter
 
