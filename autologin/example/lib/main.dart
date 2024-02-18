@@ -93,7 +93,7 @@ class _DemoPageState extends State<DemoPage> {
   }
 
   Future<void> requestCredentials() async {
-    final credentials = await AutologinPlugin.requestCredentials();
+    final credentials = await AutologinPlugin.requestCredentials(domain: 'rekire.github.io');
 
     if (mounted) {
       setState(() {
@@ -117,7 +117,7 @@ class _DemoPageState extends State<DemoPage> {
 
   Future<void> saveCredentials() async {
     final success = await AutologinPlugin.saveCredentials(
-      Credential(username: usernameController.text, password: passwordController.text),
+      Credential(username: usernameController.text, password: passwordController.text, domain: 'rekire.github.io'),
     );
 
     if (!success && mounted) {

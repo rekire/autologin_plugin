@@ -13,8 +13,10 @@ class AutologinPlugin {
   static Future<Compatibilities> performCompatibilityChecks() =>
       AutologinPlatform.instance.performCompatibilityChecks();
 
-  /// Returns the saved [Credential] when set by [saveCredentials] or is `null` when not found.
-  static Future<Credential?> requestCredentials() async => AutologinPlatform.instance.requestCredentials();
+  /// Returns the saved [Credential] when set by [saveCredentials] or is `null` when not found. For iOS and MacOS the
+  /// domain is mandatory, on other platforms this field is not used.
+  static Future<Credential?> requestCredentials({String? domain}) async =>
+      AutologinPlatform.instance.requestCredentials(domain: domain);
 
   /// Returns `true` when the [Credential]s could be saved, otherwise `false`.
   static Future<bool> saveCredentials(Credential credential) async =>

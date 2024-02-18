@@ -10,10 +10,12 @@ part 'credential.g.dart';
 @Freezed(fromJson: true, toJson: true)
 class Credential with _$Credential {
   /// Create a new [Credential], the [username] and [password] are both optional, even if this is not useful and
-  /// therefore not recommended to keep both values null.
+  /// therefore not recommended to keep both values null. For iOS and MacOS the [domain] is mandatory, on other
+  /// platforms this field is not used.
   const factory Credential({
     String? username,
     String? password,
+    String? domain,
   }) = _Credential;
 
   /// Get the [Credential] from a JSON string (NOT MAP!)

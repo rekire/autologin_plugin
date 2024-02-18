@@ -23,7 +23,7 @@ class AutologinAndroid extends AutologinPlatform {
   }
 
   @override
-  Future<Credential?> requestCredentials() async {
+  Future<Credential?> requestCredentials({String? domain}) async {
     final json = await methodChannel.invokeMethod<String>('requestCredentials');
     if (json == null) {
       return null;
