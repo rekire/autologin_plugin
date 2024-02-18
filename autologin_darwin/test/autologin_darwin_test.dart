@@ -15,6 +15,7 @@ void main() {
       isPlatformSupported: true,
       canSafeSecrets: true,
       canEncryptSecrets: true,
+      hasZeroTouchSupport: true,
     );
     const expectedCredentials = Credential(username: 'foo', password: 'bar');
     const expectedToken = 'foo-bar';
