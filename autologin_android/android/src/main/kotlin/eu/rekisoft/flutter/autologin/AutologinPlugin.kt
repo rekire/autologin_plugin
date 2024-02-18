@@ -4,6 +4,10 @@ import androidx.activity.ComponentActivity
 import androidx.credentials.*
 import androidx.credentials.exceptions.*
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.auth.blockstore.Blockstore
+import com.google.android.gms.auth.blockstore.RetrieveBytesRequest
+import com.google.android.gms.auth.blockstore.RetrieveBytesResponse
+import com.google.android.gms.auth.blockstore.StoreBytesData
 import eu.rekisoft.flutter.autologin.models.Compatibilities
 import eu.rekisoft.flutter.autologin.models.Credential
 import eu.rekisoft.flutter.autologin.models.toJSON
@@ -16,13 +20,11 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.io.PrintWriter
 import java.io.StringWriter
 
 /** AutologinPlugin */
-public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
+class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -83,20 +85,65 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
             "saveCredentials" -> binding?.launch {
                 val credentialManager = CredentialManager.create(binding!!.activity)
-                val credentialMap = requireNotNull(call.arguments as? Map<String, String>)
-                val id = requireNotNull(credentialMap["username"])
-                val password = requireNotNull(credentialMap["password"])
+                val credentialMap = requireNotNull(call.arguments as? Map<*, *>)
+                val id = requireNotNull(credentialMap["username"] as? String)
+                val password = requireNotNull(credentialMap["password"] as? String)
                 try {
-                    val credentialResponse = credentialManager.createCredential(
+                    credentialManager.createCredential(
                         context = binding!!.activity,
                         request = CreatePasswordRequest(id = id, password = password)
                     )
-                    result.success((credentialResponse.data != null).toString())
-                } catch (e: CreateCredentialCancellationException) {
-                    result.error("CreateCredentialCancellationException", null, null)
+                    result.success(true.toString())
+                } catch (e: CreateCredentialException) {
+                    result.error("CreateCredentialException", e.message, e.errorMessage)
                 } catch (e: Exception) {
                     handleError(e)
                 }
+            }
+
+            "requestLoginToken" -> try {
+                val client = Blockstore.getClient(binding!!.activity)
+
+                val retrieveRequest = RetrieveBytesRequest.Builder()
+                    .setKeys(listOf("login-token"))
+                    .build()
+
+                client.retrieveBytes(retrieveRequest)
+                    .addOnSuccessListener { tokenResult: RetrieveBytesResponse ->
+                        val tokenData = tokenResult.blockstoreDataMap["login-token"]
+                        if (tokenData == null || tokenData.bytes.isEmpty()) {
+                            result.success(null)
+                        } else {
+                            result.success(String(tokenData.bytes))
+                        }
+                    }
+                    .addOnFailureListener { e: Exception ->
+                        result.error(e.javaClass.simpleName, e.message, null)
+                    }
+            } catch (e: Exception) {
+                result.error(e.javaClass.simpleName, e.message, null)
+            }
+
+            "saveLoginToken" -> try {
+                val bytes = requireNotNull(call.arguments as? String).toByteArray()
+
+                val client = Blockstore.getClient(binding!!.activity)
+
+                val storeRequest = StoreBytesData.Builder()
+                    .setBytes(bytes)
+                    .setKey("login-token")
+                    .setShouldBackupToCloud(true)
+                    .build()
+                client.storeBytes(storeRequest)
+                    .addOnSuccessListener { storeResult: Int ->
+                        result.success((storeResult == bytes.size).toString())
+                    }
+                    .addOnFailureListener { e ->
+                        result.error(e.javaClass.simpleName, e.message, null)
+                    }
+
+            } catch (e: Exception) {
+                result.error(e.javaClass.simpleName, e.message, null)
             }
 
             else -> result.notImplemented()
@@ -110,10 +157,6 @@ public class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             tasks.clear()
         }
     }
-
-    // poor mans json encoding util. in other words replace me with gson or similar
-    private val String?.quoted: String?
-        get() = this?.let { """"${replace("\"", "\\\"")}"""" }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
