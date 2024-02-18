@@ -13,6 +13,7 @@ void main() {
     late AutologinPlatform autologinPlatform;
     const compatibilityReport = Compatibilities();
     const sampleCredential = Credential(username: 'foo', password: 'bar');
+    const sampleToken = 'login-token';
 
     setUpAll(() {
       registerFallbackValue(sampleCredential);
@@ -21,6 +22,7 @@ void main() {
     setUp(() {
       autologinPlatform = MockAutologinPlatform();
       Credential? cache;
+      String? cachedToken;
       when(
         () => autologinPlatform.performCompatibilityChecks(),
       ).thenAnswer((_) async => compatibilityReport);
@@ -34,6 +36,15 @@ void main() {
         () => autologinPlatform.saveCredentials(captureAny()),
       ).thenAnswer((answer) async {
         cache = answer.positionalArguments.first as Credential;
+        return true;
+      });
+      when(
+        () => autologinPlatform.requestLoginToken(),
+      ).thenAnswer((answer) async => cachedToken);
+      when(
+        () => autologinPlatform.saveLoginToken(captureAny()),
+      ).thenAnswer((answer) async {
+        cachedToken = answer.positionalArguments.first as String;
         return true;
       });
       AutologinPlatform.instance = autologinPlatform;
@@ -64,6 +75,25 @@ void main() {
         expect(
           await AutologinPlugin.requestCredentials(),
           equals(sampleCredential),
+        );
+      },
+    );
+
+
+    test(
+      'LoginToken functions returns expected values',
+          () async {
+        expect(
+          await AutologinPlugin.requestLoginToken(),
+          equals(null),
+        );
+        expect(
+          await AutologinPlugin.saveLoginToken(sampleToken),
+          equals(true),
+        );
+        expect(
+          await AutologinPlugin.requestLoginToken(),
+          equals(sampleToken),
         );
       },
     );
