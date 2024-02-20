@@ -1,6 +1,6 @@
 name: autologin_android
 description: The Android implementation of the autologin plugin.
-version: 0.0.5
+version: 0.0.6
 homepage: https://github.com/rekire/autologin_plugin/tree/main/autologin_android
 
 environment:

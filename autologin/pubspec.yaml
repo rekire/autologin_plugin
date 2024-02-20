@@ -1,6 +1,6 @@
 name: autologin
 description: This Plugin helps the developer to auto login into their app as simple as possible.
-version: 0.0.5
+version: 0.0.6
 homepage: https://github.com/rekire/autologin_plugin
 publish_to: none
 
@@ -28,7 +28,7 @@ dependencies:
     git:
       url: https://github.com/rekire/autologin_plugin.git
       path: autologin_android
-      ref: 0.0.5
+      ref: 0.0.6
   #autologin_linux:
   #  path: ../autologin_linux
   autologin_darwin:
