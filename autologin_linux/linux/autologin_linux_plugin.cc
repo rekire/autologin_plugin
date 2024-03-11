@@ -7,7 +7,6 @@
 #include <cstring>
 
 const char kChannelName[] = "autologin_linux";
-const char kGetPlatformName[] = "getPlatformName";
 
 struct _FlAutologinPlugin {
   GObject parent_instance;
@@ -23,11 +22,14 @@ G_DEFINE_TYPE(FlAutologinPlugin, fl_autologin_plugin, g_object_get_type())
 // Called when a method call is received from Flutter.
 static void method_call_cb(FlMethodChannel* channel, FlMethodCall* method_call,
                            gpointer user_data) {
+//printf("native: method call\n");
   const gchar* method = fl_method_call_get_name(method_call);
-
+//printf("native: Invoked %s\n", method);
   g_autoptr(FlMethodResponse) response = nullptr;
-  if (strcmp(method, kGetPlatformName) == 0)
-    response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_string("Linux")));
+  if (strcmp(method, "performCompatibilityChecks") == 0) {
+    response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_string("{\"isPlatformSupported\":true,\"canSafeSecrets\":true}")));
+  } else if (strcmp(method, "requestCredentials") == 0)
+    response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_string("{\"username\":\"test\",\"password\":\"test-pwd\"}")));
   else
     response = FL_METHOD_RESPONSE(fl_method_not_implemented_response_new());
 
@@ -56,7 +58,6 @@ FlAutologinPlugin* fl_autologin_plugin_new(FlPluginRegistrar* registrar) {
                             kChannelName, FL_METHOD_CODEC(codec));
   fl_method_channel_set_method_call_handler(self->channel, method_call_cb,
                                             g_object_ref(self), g_object_unref);
-
   return self;
 }
 
