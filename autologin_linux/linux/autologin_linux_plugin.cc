@@ -3,8 +3,28 @@
 #include <flutter_linux/flutter_linux.h>
 #include <gtk/gtk.h>
 #include <sys/utsname.h>
-
+#include <libsecret/secret.h>
 #include <cstring>
+
+const SecretSchema* getAutologinSchema(const char* serviceName){
+    static const SecretSchema autologinSchema = {
+        serviceName, SECRET_SCHEMA_NONE,
+        {
+            {  "username", SECRET_SCHEMA_ATTRIBUTE_STRING },
+            {  "NULL" },
+        },
+	// Fixing compile warning with a zero and NULLs
+	0,    // reserved
+	NULL, // reserved1
+	NULL, // reserved2
+	NULL, // reserved3
+	NULL, // reserved4
+	NULL, // reserved5
+	NULL, // reserved6
+	NULL, // reserved7
+    };
+    return &autologinSchema;
+}
 
 const char kChannelName[] = "autologin_linux";
 
@@ -28,11 +48,48 @@ static void method_call_cb(FlMethodChannel* channel, FlMethodCall* method_call,
   g_autoptr(FlMethodResponse) response = nullptr;
   if (strcmp(method, "performCompatibilityChecks") == 0) {
     response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_string("{\"isPlatformSupported\":true,\"canSafeSecrets\":true}")));
-  } else if (strcmp(method, "requestCredentials") == 0)
-    response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_string("{\"username\":\"test\",\"password\":\"test-pwd\"}")));
-  else
-    response = FL_METHOD_RESPONSE(fl_method_not_implemented_response_new());
+  } else if (strcmp(method, "requestCredentials") == 0) {
+    const char* jsonTemplate = "{\"username\":\"%s\",\"password\":\"%s\"}";
+    GError *error = NULL;
+    GList *items = secret_password_search_sync(getAutologinSchema("eu.rekisoft.flutter.autologin.example"), SECRET_SEARCH_ALL, NULL, &error, NULL);
 
+    if (error != NULL) {
+      g_error("Error retrieving secret: %s", error->message);
+      g_error_free(error);
+      response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+    } else if (g_list_length(items) > 0) {
+
+      /* The attributes used to lookup the password should conform to the schema. */
+      gchar *password = secret_password_lookup_sync(getAutologinSchema("eu.rekisoft.flutter.autologin.example"), NULL, &error, NULL);
+
+      if (error != NULL) {
+        /* ... handle the failure here */
+        printf("Query password failed.\n");
+        g_error_free (error);
+        response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+      } else if (password == NULL) {
+        /* password will be null, if no matching password found */
+        printf("No password found\n");
+        response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+      } else {
+        GHashTable *attributes = secret_retrievable_get_attributes((SecretRetrievable*)items->data);
+        const gchar *username = (const gchar*)g_hash_table_lookup(attributes, "username");
+
+        char *json = (char*)malloc(strlen(jsonTemplate)+strlen(username)+strlen(password)-3);
+        sprintf(json, jsonTemplate, username, password);
+        response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_string(json)));
+
+        free(json);
+        g_hash_table_unref(attributes);
+        g_list_free_full(items, g_object_unref);
+        secret_password_free(password);
+      }
+    } else {
+      response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+    }
+  } else {
+    response = FL_METHOD_RESPONSE(fl_method_not_implemented_response_new());
+  }
   g_autoptr(GError) error = nullptr;
   if (!fl_method_call_respond(method_call, response, &error))
     g_warning("Failed to send method call response: %s", error->message);
