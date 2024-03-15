@@ -42,9 +42,7 @@ G_DEFINE_TYPE(FlAutologinPlugin, fl_autologin_plugin, g_object_get_type())
 // Called when a method call is received from Flutter.
 static void method_call_cb(FlMethodChannel* channel, FlMethodCall* method_call,
                            gpointer user_data) {
-//printf("native: method call\n");
   const gchar* method = fl_method_call_get_name(method_call);
-//printf("native: Invoked %s\n", method);
   g_autoptr(FlMethodResponse) response = nullptr;
   if (strcmp(method, "performCompatibilityChecks") == 0) {
     response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_string("{\"isPlatformSupported\":true,\"canSafeSecrets\":true}")));
@@ -58,7 +56,6 @@ static void method_call_cb(FlMethodChannel* channel, FlMethodCall* method_call,
       g_error_free(error);
       response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
     } else if (g_list_length(items) > 0) {
-
       /* The attributes used to lookup the password should conform to the schema. */
       gchar *password = secret_password_lookup_sync(getAutologinSchema("eu.rekisoft.flutter.autologin.example"), NULL, &error, NULL);
 
@@ -69,7 +66,7 @@ static void method_call_cb(FlMethodChannel* channel, FlMethodCall* method_call,
         response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
       } else if (password == NULL) {
         /* password will be null, if no matching password found */
-        printf("No password found\n");
+        g_print("No password found\n");
         response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
       } else {
         GHashTable *attributes = secret_retrievable_get_attributes((SecretRetrievable*)items->data);
@@ -86,6 +83,37 @@ static void method_call_cb(FlMethodChannel* channel, FlMethodCall* method_call,
       }
     } else {
       response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+    }
+  } else if (strcmp(method, "saveCredentials") == 0) {
+    GError *error = NULL;
+    FlValue *args = fl_method_call_get_args(method_call);
+
+    if (fl_value_get_type(args) != FL_VALUE_TYPE_MAP) {
+      response = FL_METHOD_RESPONSE(fl_method_error_response_new(
+        "Bad arguments", "args given to function is not a map", nullptr));
+    } else {
+      FlValue *usernameArg = fl_value_lookup_string(args, "username");
+      const gchar *username = usernameArg == nullptr ? nullptr : fl_value_get_string(usernameArg);
+      FlValue *passwordArg = fl_value_lookup_string(args, "password");
+      const gchar *password = passwordArg == nullptr ? nullptr : fl_value_get_string(passwordArg);
+      if (username != nullptr && password != nullptr) {
+        //g_print("Username: %s\nPassword: %s\n", username, password);
+        secret_password_store_sync (getAutologinSchema("eu.rekisoft.flutter.autologin.example"),
+			    SECRET_COLLECTION_DEFAULT,
+                            "DemoApp", password, NULL, &error,
+                            "username", username, NULL);
+
+        if (error != NULL) {
+          response = FL_METHOD_RESPONSE(fl_method_error_response_new("Libsecret error", nullptr/*error*/, nullptr));
+          g_error_free(error);
+        } else {
+          g_print("Password saved!\n");
+          response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_string("false")));
+        }
+      } else {
+        response = FL_METHOD_RESPONSE(fl_method_error_response_new(
+           "Bad arguments", "username or password missing", nullptr));
+      }
     }
   } else {
     response = FL_METHOD_RESPONSE(fl_method_not_implemented_response_new());
