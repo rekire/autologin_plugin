@@ -13,6 +13,7 @@ void main() {
     late List<MethodCall> log;
     const expectedCompatibilities = Compatibilities(isPlatformSupported: true);
     const expectedCredentials = Credential(username: 'foo', password: 'bar');
+    const expectedToken = 'Example-Token';
 
     setUp(() async {
       autologin = AutologinLinux();
@@ -28,6 +29,9 @@ void main() {
             return jsonEncode(expectedCredentials.toJson());
           case 'saveCredentials':
             return 'true';
+          case 'requestLoginToken':
+          case 'saveLoginToken':
+            throw Error();
           default:
             return null;
         }
@@ -67,21 +71,13 @@ void main() {
     });
 
     test('requestLoginToken returns nothing', () async {
-      final token = await autologin.requestLoginToken();
-      expect(
-        log,
-        <Matcher>[isMethodCall('requestLoginToken', arguments: null)],
-      );
-      expect(token, equals(null));
+      expect(log, <Matcher>[]);
+      expect(() async => autologin.requestLoginToken(), throwsA(const TypeMatcher<PlatformException>()));
     });
 
     test('saveLoginToken returns expected value', () async {
-      final report = await autologin.saveLoginToken(expectedToken);
-      expect(
-        log,
-        <Matcher>[isMethodCall('saveLoginToken', arguments: expectedToken)],
-      );
-      expect(report, equals(false));
+      expect(log, <Matcher>[]);
+      expect(() async => autologin.saveLoginToken(expectedToken), throwsA(const TypeMatcher<PlatformException>()));
     });
   });
 }
