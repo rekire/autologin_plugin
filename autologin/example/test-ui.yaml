@@ -1,0 +1,14 @@
+description: Test UI works fine
+---
+- expectNotVisible: "This browser is not supported"
+- expectVisible: "Username"
+- expectVisible: "Password"
+- expectVisible: "Save credentials"
+- expectVisible: "Enter sample data"
+- expectVisible: "Request login data"
+- expectNotVisible: "Some-Username"
+- pressOn: "Enter sample data"
+- expectVisible: "Some-Username"
+- expectNotVisible: "Example-P@§\\u0024w0rd!"
+- pressOn: "Show password"
+- expectVisible: "Example-P@§\\u0024w0rd!"

@@ -165,6 +165,7 @@ class _DemoPageState extends State<DemoPage> {
               onPressed: () {
                 setState(() => obscurePassword = !obscurePassword);
               },
+              tooltip: obscurePassword ? 'Show password' : 'Hide password',
             ),
           ),
           onFieldSubmitted: (_) => saveCredentials(),
