@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
-import 'package:flutter/foundation.dart' show visibleForTesting;
+import 'package:flutter/foundation.dart' show protected, visibleForTesting;
 import 'package:flutter/services.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 /// An implementation of [AutologinPlatform] that uses method channels.
 class MethodChannelAutologin extends AutologinPlatform {
   /// The method channel used to interact with the native platform.
+  @protected
   @visibleForTesting
   final methodChannel = const MethodChannel('autologin_plugin');
 
@@ -18,6 +20,9 @@ class MethodChannelAutologin extends AutologinPlatform {
     }
     return Compatibilities.fromJson(json) ?? const Compatibilities();
   }
+
+  @override
+  void setup({String? domain, String? appId, String? appName}) {}
 
   @override
   Future<Credential?> requestCredentials({String? domain}) async {

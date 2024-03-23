@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 
 /// The Darwin implementation of [AutologinPlatform] for iOS and MacOS.
 class AutologinDarwin extends AutologinPlatform {
+  late String _domain;
+
   /// The method channel used to interact with the native platform.
   @visibleForTesting
   final methodChannel = const MethodChannel('autologin_darwin');
@@ -13,6 +15,11 @@ class AutologinDarwin extends AutologinPlatform {
   /// Registers this class as the default instance of [AutologinPlatform]
   static void registerWith() {
     AutologinPlatform.instance = AutologinDarwin();
+  }
+
+  @override
+  void setup({String? domain, String? appId, String? appName}) {
+    _domain = domain!;
   }
 
   @override
@@ -26,8 +33,8 @@ class AutologinDarwin extends AutologinPlatform {
   }
 
   @override
-  Future<Credential?> requestCredentials({String? domain}) async {
-    final json = await methodChannel.invokeMethod<String>('requestCredentials', domain);
+  Future<Credential?> requestCredentials() async {
+    final json = await methodChannel.invokeMethod<String>('requestCredentials', _domain);
     if (json == null) {
       return null;
     }

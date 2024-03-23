@@ -30,6 +30,9 @@ class AutologinWeb extends AutologinPlatform {
   }
 
   @override
+  void setup({String? domain, String? appId, String? appName}) {}
+
+  @override
   Future<bool> saveCredentials(Credential credential) async {
     await window.navigator.credentials?.store(
       PasswordCredential({

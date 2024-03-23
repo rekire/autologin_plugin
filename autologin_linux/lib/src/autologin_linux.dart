@@ -1,12 +1,9 @@
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 
 /// The Linux implementation of [AutologinPlatform].
-class AutologinLinux extends AutologinPlatform {
-  /// The method channel used to interact with the native platform.
-  @visibleForTesting
-  final methodChannel = const MethodChannel('autologin_linux');
+class AutologinLinux extends MethodChannelAutologin {
+  late String _appId;
+  late String _appName;
 
   /// Registers this class as the default instance of [AutologinPlatform]
   static void registerWith() {
@@ -14,17 +11,17 @@ class AutologinLinux extends AutologinPlatform {
   }
 
   @override
-  Future<Compatibilities> performCompatibilityChecks() async {
-    final json = await methodChannel.invokeMethod<String>('performCompatibilityChecks');
-    if (json == null) {
-      return const Compatibilities();
-    }
-    return Compatibilities.fromJson(json) ?? const Compatibilities();
+  void setup({String? domain, String? appId, String? appName}) {
+    _appId = appId!;
+    _appName = appName!;
   }
 
   @override
   Future<Credential?> requestCredentials({String? domain}) async {
-    final json = await methodChannel.invokeMethod<String>('requestCredentials');
+    final json = await methodChannel.invokeMethod<String>(
+      'requestCredentials',
+      {'appId': _appId, 'appName': _appName},
+    );
     if (json == null) {
       return null;
     }
@@ -33,16 +30,14 @@ class AutologinLinux extends AutologinPlatform {
 
   @override
   Future<bool> saveCredentials(Credential credential) async {
-    return await methodChannel.invokeMethod<String>('saveCredentials', credential.toJson()) == 'true';
-  }
-
-  @override
-  Future<String?> requestLoginToken() async {
-    return methodChannel.invokeMethod<String>('requestLoginToken');
-  }
-
-  @override
-  Future<bool> saveLoginToken(String token) async {
-    return await methodChannel.invokeMethod<String>('saveLoginToken', token) == 'true';
+    return await methodChannel.invokeMethod<String>(
+          'saveCredentials',
+          {
+            ...credential.toJson(),
+            'appId': _appId,
+            'appName': _appName,
+          },
+        ) ==
+        'true';
   }
 }

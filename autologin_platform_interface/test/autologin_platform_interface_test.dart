@@ -16,6 +16,9 @@ class AutologinMock extends AutologinPlatform {
   }
 
   @override
+  void setup({String? domain, String? appId, String? appName}) {}
+
+  @override
   Future<Credential?> requestCredentials({String? domain}) async {
     if (credential == null) {
       return null;
