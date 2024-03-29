@@ -14,13 +14,15 @@ certificated devices.
 
 #### Change your app to use `FlutterFragmentActivity`
 The Android implementation uses the [CredentialManager] API to query the credentials. This API requires native
-asynchronous code. This code is written in [Kotlin](https://kotlinlang.org) and uses the
-[Coroutines](https://kotlinlang.org/docs/coroutines-guide.html). Since the CredentialManager starts an System Activity
+asynchronous code. This code is written in [Kotlin](https://kotlinlang.org) and uses
+[Coroutines](https://kotlinlang.org/docs/coroutines-guide.html). Since the CredentialManager starts a System Activity
 the [Activity lifecycle](https://developer.android.com/guide/components/activities/activity-lifecycle) needs to be
 maintained, this is managed with the [Android Jetpack](https://developer.android.com/jetpack)'s
-[`Lifecycle`](https://developer.android.com/reference/androidx/lifecycle/Lifecycle) API. The simplest way to add to your
-MainActivity the [`LiveCycleOwner` interface](https://developer.android.com/reference/androidx/lifecycle/LifecycleOwner)
-is to change the base class of your MainActivity to
+[`Lifecycle`](https://developer.android.com/reference/androidx/lifecycle/Lifecycle) API.
+
+The simplest way to add to your MainActivity the
+[`LiveCycleOwner` interface](https://developer.android.com/reference/androidx/lifecycle/LifecycleOwner) is to change the
+base class of your MainActivity to
 [`FlutterFragmentActivity`](https://api.flutter.dev/javadoc/io/flutter/embedding/android/FlutterFragmentActivity.html).
 If you MainActivity is empty you can directly reference the base class in your [AndroidManifest], then you can **delete
 your MainActivity** entirely. In that case you can simply replace in your AndroidManifest (the default path is
@@ -47,8 +49,11 @@ As simple check if the linking works fine check [this link](https://rekire.githu
 opens in chrome the example app without an intent chooser then this works.
 
 ### iOS and MacOS
-For storing credentials the shared web credentials are used. In order to make this working you need to setup the
-associated-domains entitlement. The main documentation can be found on the
+For storing credentials the
+[Shared Web Credentials](https://developer.apple.com/documentation/security/shared_web_credentials) are used. In order
+to make this working you need to setup the [Associated Domains
+Entitlement](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_associated-domains).
+The main documentation can be found on the
 [Apple Developer site](https://developer.apple.com/documentation/xcode/supporting-associated-domains). At least the 
 `apple-app-site-association` file must be reachable at `https://<your-domain>/.well-known/apple-app-site-association`
 and must contain something like:
@@ -60,8 +65,9 @@ id is there too look for `PRODUCT_BUNDLE_IDENTIFIER`. Apple is caching that requ
 but you can check the cached value here: `https://app-site-association.cdn-apple.com/a/v1/<your-domain>`
 If you have not setup your app check https://developer.apple.com/account/resources/identifiers/list
 
-In order to use the zero touch login on iOS and MacOS you need to add the iCloud capability and configure iCloud
-Key-Value Storage in your Xcode project:
+In order to use the zero touch login on iOS and MacOS you need to add the iCloud capability and configure [iCloud
+Key-Value Storage](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_ubiquity-kvstore-identifier)
+in your Xcode project. Here is a step per step guide:
 
 1. Open your Xcode project.
 2. Select your project in the Project Navigator to open the project settings. 
