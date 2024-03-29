@@ -33,8 +33,15 @@ class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private var binding: ActivityPluginBinding? = null
     private val tasks: MutableList<(ActivityPluginBinding) -> Unit> = mutableListOf()
 
-    private fun ActivityPluginBinding.launch(block: suspend CoroutineScope.() -> Unit) =
+    private fun ActivityPluginBinding.launch(block: suspend CoroutineScope.() -> Unit) {
+        if (activity !is ComponentActivity) {
+            val actual = activity.javaClass.name
+            val expected = ComponentActivity::class.java.name
+            val link = "https://github.com/rekire/autologin_plugin?tab=readme-ov-file#android"
+            throw ClassCastException("Your activity is from type $actual, but it should be $expected. See $link")
+        }
         (activity as ComponentActivity).lifecycleScope.launch(block = block)
+    }
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "autologin_android")
