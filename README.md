@@ -98,7 +98,7 @@ Autologin is not supported yet, since I am not aware of any API for that.
 - [ ] Add documentation how to use it. In the mean time you can use the [example app](./autologin/example)
 - [ ] Upload the final version to pub.dev
 - [ ] Windows Support #8
-- [ ] Build and sign the Android sample app and publish it as artifact (ideally via Github Action)
+- [ ] Build and sign the Android sample app and publish it as artifact (ideally via GitHub Action)
 
 [CredentialManager]: https://developer.android.com/reference/kotlin/androidx/credentials/CredentialManager
 [AndroidManifest]: https://developer.android.com/guide/topics/manifest/manifest-intro
