@@ -18,14 +18,14 @@ class AutologinLinux extends MethodChannelAutologin {
 
   @override
   Future<Credential?> requestCredentials({String? domain}) async {
-    final json = await methodChannel.invokeMethod<String>(
+    final json = await methodChannel.invokeMethod<Map<String, dynamic>>(
       'requestCredentials',
       {'appId': _appId, 'appName': _appName},
     );
     if (json == null) {
       return null;
     }
-    return Credential.fromJson(json);
+    return Credential.fromMap(json);
   }
 
   @override

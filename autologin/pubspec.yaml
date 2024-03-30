@@ -28,28 +28,27 @@ dependencies:
     git:
       url: https://github.com/rekire/autologin_plugin.git
       path: autologin_android
-      ref: 1.0.0
+      ref: 0.1.0
   autologin_darwin:
     git:
       url: https://github.com/rekire/autologin_plugin.git
       path: autologin_darwin
-      ref: 1.0.0
+      ref: 0.1.0
   autologin_linux:
     git:
       url: https://github.com/rekire/autologin_plugin.git
       path: autologin_linux
-      ref: 1.0.0
+      ref: 0.1.0
   autologin_platform_interface:
-    path: ../autologin_platform_interface
     git:
       url: https://github.com/rekire/autologin_plugin.git
       path: autologin_platform_interface
-      ref: 1.0.0
+      ref: 0.1.0
   autologin_web:
     git:
       url: https://github.com/rekire/autologin_plugin.git
       path: autologin_web
-      ref: 1.0.0
+      ref: 0.1.0
   #autologin_windows:
   #  path: ../autologin_windows
   flutter:

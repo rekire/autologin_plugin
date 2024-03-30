@@ -4,6 +4,7 @@ import 'package:autologin_platform_interface/autologin_platform_interface.dart';
 class AutologinAndroid extends MethodChannelAutologin {
   /// Registers this class as the default instance of [AutologinPlatform]
   static void registerWith() {
+    print('register on dart');
     AutologinPlatform.instance = AutologinAndroid();
   }
 }

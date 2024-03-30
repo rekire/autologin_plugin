@@ -6,6 +6,7 @@ part 'compatibilities.freezed.dart';
 
 part 'compatibilities.g.dart';
 
+/// The [Compatibilities] of the current Platform.
 @Freezed(fromJson: true, toJson: true)
 class Compatibilities with _$Compatibilities {
   const factory Compatibilities({
@@ -15,6 +16,6 @@ class Compatibilities with _$Compatibilities {
     @Default(false) bool hasZeroTouchSupport,
   }) = _Compatibilities;
 
-  static Compatibilities? fromJson(String? json) =>
-      json == null ? null : _$CompatibilitiesFromJson(jsonDecode(json) as Map<String, Object?>);
+  /// Get the [Compatibilities] from a Map.
+  static Compatibilities? fromMap(Map<String, Object?>? map) => map == null ? null : _$CompatibilitiesFromJson(map);
 }

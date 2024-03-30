@@ -14,11 +14,11 @@ class MethodChannelAutologin extends AutologinPlatform {
 
   @override
   Future<Compatibilities> performCompatibilityChecks() async {
-    final json = await methodChannel.invokeMethod<String>('performCompatibilityChecks');
-    if (json == null) {
+    final map = await methodChannel.invokeMethod<Map<Object?, Object?>>('performCompatibilityChecks');
+    if (map == null) {
       return const Compatibilities();
     }
-    return Compatibilities.fromJson(json) ?? const Compatibilities();
+    return Compatibilities.fromMap(map.map((key, value) => MapEntry(key.toString(), value))) ?? const Compatibilities();
   }
 
   @override
@@ -26,17 +26,16 @@ class MethodChannelAutologin extends AutologinPlatform {
 
   @override
   Future<Credential?> requestCredentials({String? domain}) async {
-    final json = await methodChannel.invokeMethod<String>('requestCredentials');
-    if (json == null) {
+    final map = await methodChannel.invokeMethod<Map<Object?, Object?>>('requestCredentials');
+    if (map == null) {
       return null;
     }
-    return Credential.fromJson(json);
+    return Credential.fromMap(map.map((key, value) => MapEntry(key.toString(), value)));
   }
 
   @override
   Future<bool> saveCredentials(Credential credential) async {
-    final result = await methodChannel.invokeMethod<String>('saveCredentials', jsonEncode(credential.toJson()));
-    return result == 'true';
+    return await methodChannel.invokeMethod<bool>('saveCredentials', credential.toJson()) == true;
   }
 
   @override

@@ -1,6 +1,6 @@
 name: autologin_example
 description: Demonstrates how to use the autologin plugin.
-version: 0.0.6+6
+version: 0.1.0
 publish_to: 'none'
 
 environment:

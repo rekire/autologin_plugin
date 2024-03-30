@@ -25,6 +25,11 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
+  autologin_test_utils:
+    git:
+      url: https://github.com/rekire/autologin_plugin.git
+      path: autologin_test_utils
+      ref: 0.2.0
   flutter_test:
     sdk: flutter
   plugin_platform_interface: ^2.0.0

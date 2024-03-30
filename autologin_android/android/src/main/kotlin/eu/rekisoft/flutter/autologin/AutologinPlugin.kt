@@ -1,5 +1,6 @@
 package eu.rekisoft.flutter.autologin
 
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.credentials.*
 import androidx.credentials.exceptions.*
@@ -8,9 +9,10 @@ import com.google.android.gms.auth.blockstore.Blockstore
 import com.google.android.gms.auth.blockstore.RetrieveBytesRequest
 import com.google.android.gms.auth.blockstore.RetrieveBytesResponse
 import com.google.android.gms.auth.blockstore.StoreBytesData
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import eu.rekisoft.flutter.autologin.models.Compatibilities
 import eu.rekisoft.flutter.autologin.models.Credential
-import eu.rekisoft.flutter.autologin.models.toJSON
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -25,6 +27,8 @@ import java.io.StringWriter
 
 /** AutologinPlugin */
 class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
+    val debugCalls = false
+
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -44,30 +48,25 @@ class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "autologin_android")
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "autologin_plugin")
         channel.setMethodCallHandler(this)
 
         debug("onAttachedToEngine")
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
-        fun handleError(exception: Exception?) {
+        fun handleError(exception: Exception) {
             debug("Error processing...")
             val stackTrace = StringWriter()
-            exception?.printStackTrace(PrintWriter(stackTrace))
-            if (exception is LoginHelper.GoogleApiError) {
-                result.error(exception.error.toString(), exception.message, stackTrace.toString())
-            } else {
-                result.error(
-                    "-2", exception?.message
-                        ?: "No error details given", stackTrace.toString()
-                )
-            }
+            exception.printStackTrace(PrintWriter(stackTrace))
+            result.error(exception::class.java.simpleName, exception.message, stackTrace.toString())
         }
         debug("Got call ${call.method}")
         when (call.method) {
             "performCompatibilityChecks" -> tasks.add { binding ->
-                result.success(Compatibilities(hasZeroTouchSupport = LoginHelper.hasPlayServices(binding)).toJSON())
+                val hasPlayServices =
+                    GoogleApiAvailability().isGooglePlayServicesAvailable(binding.activity) == ConnectionResult.SUCCESS
+                result.success(Compatibilities(hasZeroTouchSupport = hasPlayServices).toMap())
             }
 
             "requestCredentials" -> binding?.launch {
@@ -80,7 +79,7 @@ class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                         context = binding!!.activity,
                         request = getCredRequest
                     ).credential as PasswordCredential
-                    result.success(Credential(username = credential.id, password = credential.password).toJSON())
+                    result.success(Credential(username = credential.id, password = credential.password).toMap())
                 } catch (e: GetCredentialCancellationException) {
                     result.error("GetCredentialCancellationException", null, null)
                 } catch (e: NoCredentialException) {
@@ -187,5 +186,9 @@ class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onDetachedFromActivityForConfigChanges() {
         binding = null
+    }
+
+    private fun debug(msg: String) {
+        if (debugCalls) Log.d("AutoLogin", msg)
     }
 }

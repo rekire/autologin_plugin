@@ -93,7 +93,7 @@ class _DemoPageState extends State<DemoPage> {
   }
 
   Future<void> requestCredentials() async {
-    final credentials = await AutologinPlugin.requestCredentials(domain: 'rekire.github.io');
+    final credentials = await AutologinPlugin.requestCredentials();
 
     if (mounted) {
       setState(() {
