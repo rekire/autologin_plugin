@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class AutologinMock extends AutologinPlatform {
-  String? credential;
+  Map<String, dynamic>? credential;
   String? loginToken;
 
   @override
@@ -23,12 +21,12 @@ class AutologinMock extends AutologinPlatform {
     if (credential == null) {
       return null;
     }
-    return Credential.fromJson(credential);
+    return Credential.fromMap(credential);
   }
 
   @override
   Future<bool> saveCredentials(Credential credential) async {
-    this.credential = jsonEncode(credential.toJson());
+    this.credential = credential.toJson();
     return true;
   }
 

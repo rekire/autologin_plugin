@@ -21,8 +21,7 @@ class AutologinPlugin {
       AutologinPlatform.instance.performCompatibilityChecks();
 
   /// Returns the saved [Credential] when set by [saveCredentials] or is `null` when not found.
-  static Future<Credential?> requestCredentials() async =>
-      AutologinPlatform.instance.requestCredentials();
+  static Future<Credential?> requestCredentials() async => AutologinPlatform.instance.requestCredentials();
 
   /// Returns `true` when the [Credential]s could be saved, otherwise `false`.
   static Future<bool> saveCredentials(Credential credential) async =>

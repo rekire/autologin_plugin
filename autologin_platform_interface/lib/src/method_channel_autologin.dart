@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
 import 'package:flutter/foundation.dart' show protected, visibleForTesting;
 import 'package:flutter/services.dart';
