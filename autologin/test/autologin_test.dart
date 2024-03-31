@@ -21,7 +21,6 @@ void main() {
 
     setUp(() {
       autologinPlatform = MockAutologinPlatform();
-      autologinPlatform.setup(); // just for code coverage
       Credential? cache;
       String? cachedToken;
       when(
@@ -52,6 +51,7 @@ void main() {
     });
 
     test('performCompatibilityChecks returns expected compatibilities', () async {
+      AutologinPlugin.setup(); // just for code coverage
       expect(
         await AutologinPlugin.performCompatibilityChecks(),
         equals(compatibilityReport),
