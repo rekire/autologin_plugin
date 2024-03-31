@@ -24,16 +24,13 @@ void main() {
           log.add(methodCall);
           switch (methodCall.method) {
             case 'performCompatibilityChecks':
-              return jsonEncode((await mock.performCompatibilityChecks()).toJson());
+              return (await mock.performCompatibilityChecks()).toJson();
             case 'saveCredentials':
-              return (await mock.saveCredentials(Credential.fromJson(methodCall.arguments.toString())!)).toString();
+              final castedMap = methodCall.arguments as Map<Object?, Object?>;
+              final map = castedMap.map((key, value) => MapEntry(key.toString(), value));
+              return mock.saveCredentials(Credential.fromMap(map)!);
             case 'requestCredentials':
-              final json = (await mock.requestCredentials())?.toJson();
-              if (json != null) {
-                return jsonEncode(json);
-              } else {
-                return null;
-              }
+              return (await mock.requestCredentials())?.toJson();
             case 'requestLoginToken':
               return mock.requestLoginToken();
             case 'saveLoginToken':
