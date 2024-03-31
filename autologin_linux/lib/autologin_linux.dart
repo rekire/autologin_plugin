@@ -34,13 +34,13 @@ class AutologinLinux extends MethodChannelAutologin {
   Future<bool> saveCredentials(Credential credential) async {
     _validateArguments();
     return await methodChannel.invokeMethod<bool>(
-      'saveCredentials',
-      {
-        ...credential.toJson(),
-        'appId': _appId,
-        'appName': _appName,
-      },
-    ) ==
+          'saveCredentials',
+          {
+            ...credential.toJson(),
+            'appId': _appId,
+            'appName': _appName,
+          },
+        ) ==
         true;
   }
 
