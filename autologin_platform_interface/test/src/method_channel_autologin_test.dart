@@ -16,6 +16,7 @@ void main() {
 
     setUp(() async {
       methodChannelAutologin = MethodChannelAutologin();
+      methodChannelAutologin.setup(); // just for code coverage
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
         methodChannelAutologin.methodChannel,
         (methodCall) async {

@@ -32,16 +32,7 @@ class AutologinLinux extends MethodChannelAutologin {
 
   @override
   Future<bool> saveCredentials(Credential credential) async {
-    _validateArguments();
-    return await methodChannel.invokeMethod<String>(
-          'saveCredentials',
-          {
-            ...credential.toJson(),
-            'appId': _appId,
-            'appName': _appName,
-          },
-        ) ==
-        'true';
+    return false;
   }
 
   void _validateArguments() {
