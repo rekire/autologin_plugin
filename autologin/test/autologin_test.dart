@@ -21,6 +21,7 @@ void main() {
 
     setUp(() {
       autologinPlatform = MockAutologinPlatform();
+      autologinPlatform.setup(); // just for code coverage
       Credential? cache;
       String? cachedToken;
       when(
