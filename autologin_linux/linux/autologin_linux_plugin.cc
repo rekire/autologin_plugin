@@ -26,7 +26,7 @@ const SecretSchema* getAutologinSchema(const char* serviceName){
     return &autologinSchema;
 }
 
-const char kChannelName[] = "autologin_linux";
+const char kChannelName[] = "autologin_plugin";
 
 struct _FlAutologinPlugin {
   GObject parent_instance;
@@ -43,46 +43,66 @@ G_DEFINE_TYPE(FlAutologinPlugin, fl_autologin_plugin, g_object_get_type())
 static void method_call_cb(FlMethodChannel* channel, FlMethodCall* method_call,
                            gpointer user_data) {
   const gchar* method = fl_method_call_get_name(method_call);
+  g_print("Got native call for %s\n", method);
   g_autoptr(FlMethodResponse) response = nullptr;
   if (strcmp(method, "performCompatibilityChecks") == 0) {
-    response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_string("{\"isPlatformSupported\":true,\"canSafeSecrets\":true}")));
+    g_autoptr(FlValue) map = fl_value_new_map();
+    fl_value_set_string_take(map, "isPlatformSupported", fl_value_new_bool(TRUE));
+    fl_value_set_string_take(map, "canSafeSecrets", fl_value_new_bool(TRUE));
+    response = FL_METHOD_RESPONSE(fl_method_success_response_new(map));
   } else if (strcmp(method, "requestCredentials") == 0) {
-    const char* jsonTemplate = "{\"username\":\"%s\",\"password\":\"%s\"}";
-    GError *error = NULL;
-    GList *items = secret_password_search_sync(getAutologinSchema("eu.rekisoft.flutter.autologin.example"), SECRET_SEARCH_ALL, NULL, &error, NULL);
+    FlValue *args = fl_method_call_get_args(method_call);
 
-    if (error != NULL) {
-      g_error("Error retrieving secret: %s", error->message);
-      g_error_free(error);
-      response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
-    } else if (g_list_length(items) > 0) {
-      /* The attributes used to lookup the password should conform to the schema. */
-      gchar *password = secret_password_lookup_sync(getAutologinSchema("eu.rekisoft.flutter.autologin.example"), NULL, &error, NULL);
-
-      if (error != NULL) {
-        /* ... handle the failure here */
-        printf("Query password failed.\n");
-        g_error_free (error);
-        response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
-      } else if (password == NULL) {
-        /* password will be null, if no matching password found */
-        g_print("No password found\n");
-        response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
-      } else {
-        GHashTable *attributes = secret_retrievable_get_attributes((SecretRetrievable*)items->data);
-        const gchar *username = (const gchar*)g_hash_table_lookup(attributes, "username");
-
-        char *json = (char*)malloc(strlen(jsonTemplate)+strlen(username)+strlen(password)-3);
-        sprintf(json, jsonTemplate, username, password);
-        response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_string(json)));
-
-        free(json);
-        g_hash_table_unref(attributes);
-        g_list_free_full(items, g_object_unref);
-        secret_password_free(password);
-      }
+    if (fl_value_get_type(args) != FL_VALUE_TYPE_MAP) {
+      response = FL_METHOD_RESPONSE(fl_method_error_response_new(
+        "Bad arguments", "args given to function is not a map", nullptr));
     } else {
-      response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+      FlValue *appIdArg = fl_value_lookup_string(args, "appId");
+      const gchar *appId = appIdArg == nullptr ? nullptr : fl_value_get_string(appIdArg);
+      FlValue *appNameArg = fl_value_lookup_string(args, "appName");
+      const gchar *appName = appNameArg == nullptr ? nullptr : fl_value_get_string(appNameArg);
+      if (appId == nullptr || appName == nullptr) {
+        response = FL_METHOD_RESPONSE(fl_method_error_response_new(
+          "Bad arguments", "appId or appName are missing. A check on dart has failed please file a bug.", nullptr));
+      } else {
+        g_print("Found appId: %s, appName: %s\n", appId, appName);
+
+        GError *error = NULL;
+// FIXME the line below crashs
+        GList *items = secret_password_search_sync(getAutologinSchema(appId), SECRET_SEARCH_ALL, NULL, &error, NULL);
+
+        if (error != NULL) {
+          g_error("Error retrieving secret: %s", error->message);
+          g_error_free(error);
+          response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+        } else if (g_list_length(items) > 0) {
+          /* The attributes used to lookup the password should conform to the schema. */
+          gchar *password = secret_password_lookup_sync(getAutologinSchema(appId), NULL, &error, NULL);
+
+          if (error != NULL) {
+            /* ... handle the failure here */
+            printf("Query password failed.\n");
+            g_error_free (error);
+            response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+          } else if (password == NULL) {
+            /* password will be null, if no matching password found */
+            g_print("No password found\n");
+            response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+          } else {
+            GHashTable *attributes = secret_retrievable_get_attributes((SecretRetrievable*)items->data);
+            const gchar *username = (const gchar*)g_hash_table_lookup(attributes, "username");
+
+            g_autoptr(FlValue) map = fl_value_new_map();
+            fl_value_set_string_take(map, "username", fl_value_new_string(username));
+            fl_value_set_string_take(map, "password", fl_value_new_string(password));
+            response = FL_METHOD_RESPONSE(fl_method_success_response_new(map));
+
+            g_hash_table_unref(attributes);
+            g_list_free_full(items, g_object_unref);
+            secret_password_free(password);
+          }
+        }
+      }
     }
   } else if (strcmp(method, "saveCredentials") == 0) {
     GError *error = NULL;
