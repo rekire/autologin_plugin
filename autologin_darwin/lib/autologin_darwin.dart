@@ -1,16 +1,8 @@
-import 'dart:convert';
-
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 
 /// The Darwin implementation of [AutologinPlatform] for iOS and MacOS.
-class AutologinDarwin extends AutologinPlatform {
+class AutologinDarwin extends MethodChannelAutologin {
   late String _domain;
-
-  /// The method channel used to interact with the native platform.
-  @visibleForTesting
-  final methodChannel = const MethodChannel('autologin_darwin');
 
   /// Registers this class as the default instance of [AutologinPlatform]
   static void registerWith() {
@@ -34,25 +26,10 @@ class AutologinDarwin extends AutologinPlatform {
 
   @override
   Future<Credential?> requestCredentials() async {
-    final json = await methodChannel.invokeMethod<String>('requestCredentials', _domain);
-    if (json == null) {
+    final map = await methodChannel.invokeMethod<Map<Object?, Object?>>('requestCredentials', _domain);
+    if (map == null) {
       return null;
     }
-    return Credential.fromJson(json);
-  }
-
-  @override
-  Future<bool> saveCredentials(Credential credential) async {
-    return await methodChannel.invokeMethod<String>('saveCredentials', jsonEncode(credential.toJson())) == 'true';
-  }
-
-  @override
-  Future<String?> requestLoginToken() async {
-    return methodChannel.invokeMethod<String>('requestLoginToken');
-  }
-
-  @override
-  Future<bool> saveLoginToken(String token) async {
-    return await methodChannel.invokeMethod<bool>('saveLoginToken', token) == true;
+    return Credential.fromMap(map.map((key, value) => MapEntry(key.toString(), value)));
   }
 }

@@ -23,7 +23,7 @@ class MethodChannelAutologin extends AutologinPlatform {
   void setup({String? domain, String? appId, String? appName}) {}
 
   @override
-  Future<Credential?> requestCredentials({String? domain}) async {
+  Future<Credential?> requestCredentials() async {
     final map = await methodChannel.invokeMethod<Map<Object?, Object?>>('requestCredentials');
     if (map == null) {
       return null;

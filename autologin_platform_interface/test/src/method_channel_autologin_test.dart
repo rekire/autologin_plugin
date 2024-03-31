@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:autologin_platform_interface/src/compatibilities.dart';
 import 'package:autologin_platform_interface/src/credential.dart';
 import 'package:autologin_platform_interface/src/method_channel_autologin.dart';

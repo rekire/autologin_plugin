@@ -32,20 +32,17 @@ class SharedTests {
     });
   }
 
-  void clearCallLog() {
-    print('clearCallLog $log');
-    log.clear();
-  }
+  void clearCallLog() => log.clear();
 
-  Future<void> performCompatibilityChecksReturnsExpectedValue() async {
+  Future<void> performCompatibilityChecksReturnsExpectedValue({bool usingMethodChannel = true}) async {
     final report = await platform.performCompatibilityChecks();
-    expect(log, [isMethodCall('performCompatibilityChecks', arguments: null)]);
+    expect(log, [if (usingMethodChannel) isMethodCall('performCompatibilityChecks', arguments: null)]);
     expect(report, equals(expectedCompatibilities));
   }
 
-  Future<void> requestCredentialsReturnsExpectedValue() async {
+  Future<void> requestCredentialsReturnsExpectedValue({dynamic platformArgs}) async {
     final credentials = await platform.requestCredentials();
-    expect(log, [isMethodCall('requestCredentials', arguments: null)]);
+    expect(log, [isMethodCall('requestCredentials', arguments: platformArgs)]);
     expect(credentials, equals(expectedCredentials));
   }
 
@@ -61,15 +58,16 @@ class SharedTests {
     expect(token, equals(expectedToken));
   }
 
-  Future<void> saveLoginTokenReturnsExpectedValue() async {
+  Future<void> saveLoginTokenReturnsTrue() async {
     final report = await platform.saveLoginToken(expectedToken);
     expect(log, <Matcher>[isMethodCall('saveLoginToken', arguments: expectedToken)]);
     expect(report, equals(true));
   }
 
-  Future<void> requestLoginTokenThrowsException() async {
-    expect(() async => platform.requestLoginToken(), throwsA(const TypeMatcher<PlatformException>()));
-    expect(log, <Matcher>[isMethodCall('saveLoginToken', arguments: null)]);
+  Future<void> saveLoginTokenReturnsFalse() async {
+    final report = await platform.saveLoginToken(expectedToken);
+    expect(log, <Matcher>[isMethodCall('saveLoginToken', arguments: expectedToken)]);
+    expect(report, equals(false));
   }
 
   Future<void> saveLoginTokenThrowsException() async {

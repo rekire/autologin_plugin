@@ -30,7 +30,7 @@ void main() {
 
     test('requestCredentials returns expected value', utils.requestCredentialsReturnsExpectedValue);
 
-    test('saveLoginToken returns expected value', utils.saveLoginTokenReturnsExpectedValue);
+    test('saveLoginToken returns true', utils.saveLoginTokenReturnsTrue);
 
     test('requestLoginToken returns expected value', utils.requestLoginTokenReturnsExpectedValue);
   });
