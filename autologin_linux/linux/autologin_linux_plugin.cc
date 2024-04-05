@@ -5,24 +5,19 @@
 #include <sys/utsname.h>
 #include <libsecret/secret.h>
 #include <cstring>
+#include <string.h>
 
 const SecretSchema *getSchema(const char *serviceName) {
-  static const SecretSchema autologinSchema = {
-    serviceName, SECRET_SCHEMA_NONE,
-    {
-      {"username", SECRET_SCHEMA_ATTRIBUTE_STRING},
-      {"nullptr"},
-    },
-    // Fixing compile warning with a zero and nullptrs
-    0,    // reserved
-    nullptr, // reserved1
-    nullptr, // reserved2
-    nullptr, // reserved3
-    nullptr, // reserved4
-    nullptr, // reserved5
-    nullptr, // reserved6
-    nullptr, // reserved7
-  };
+  static SecretSchema autologinSchema;
+
+  autologinSchema.name = serviceName;
+  autologinSchema.flags = SECRET_SCHEMA_NONE;
+
+  autologinSchema.attributes[0].name = "username";
+  autologinSchema.attributes[0].type = SECRET_SCHEMA_ATTRIBUTE_STRING;
+
+  autologinSchema.attributes[1].name = NULL;
+
   return &autologinSchema;
 }
 
@@ -73,16 +68,14 @@ static void method_call_cb(FlMethodChannel *channel, FlMethodCall *method_call, 
           )
         );
       } else {
-        g_print("Found appId: %s, appName: %s\n", appId, appName);
+        //g_print("Found appId: %s, appName: %s\n", appId, appName);
 
         GError *error = nullptr;
-// FIXME the line below crashs
         GList *items = secret_password_search_sync(getSchema(appId), SECRET_SEARCH_ALL, nullptr, &error, nullptr);
-
-        if (error != nullptr) {
+	if (error != nullptr) {
           g_error("Error retrieving secret: %s", error->message);
           g_error_free(error);
-          response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+          response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_null()));
         } else if (g_list_length(items) > 0) {
           /* The attributes used to lookup the password should conform to the schema. */
           gchar *password = secret_password_lookup_sync(getSchema(appId), nullptr, &error, nullptr);
@@ -91,11 +84,11 @@ static void method_call_cb(FlMethodChannel *channel, FlMethodCall *method_call, 
             /* ... handle the failure here */
             g_error("Query password failed: %s\n", error->message);
             g_error_free(error);
-            response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+            response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_null()));
           } else if (password == nullptr) {
             /* password will be null, if no matching password found */
             g_print("No password found\n");
-            response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+            response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_null()));
           } else {
             GHashTable *attributes = secret_retrievable_get_attributes((SecretRetrievable *) items->data);
             const gchar *username = (const gchar *) g_hash_table_lookup(attributes, "username");
@@ -110,7 +103,10 @@ static void method_call_cb(FlMethodChannel *channel, FlMethodCall *method_call, 
             g_list_free_full(items, g_object_unref);
             secret_password_free(password);
           }
-        }
+        } else {
+          g_print("Found no credentials\n");
+          response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_null()));
+	}
       }
     }
 
@@ -146,7 +142,7 @@ static void method_call_cb(FlMethodChannel *channel, FlMethodCall *method_call, 
           response = FL_METHOD_RESPONSE(fl_method_error_response_new("Libsecret error", error->message, nullptr));
           g_error_free(error);
         } else {
-          g_print("Password saved!\n");
+          //g_print("Password saved!\n");
           response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_bool(TRUE)));
         }
       }
