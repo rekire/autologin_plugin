@@ -30,7 +30,7 @@ class AutologinWeb extends AutologinPlatform {
       return null;
     }
 
-    return Credential(username: data.name, password: data.password);
+    return Credential(username: data.id, password: data.password);
   }
 
   @override
