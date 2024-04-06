@@ -1748,6 +1748,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 autologin
 autologin_android
+autologin_darwin
+autologin_linux
 autologin_platform_interface
 autologin_web
 
