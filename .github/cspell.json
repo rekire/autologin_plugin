@@ -22,6 +22,10 @@
     "assetlinks",
     "smartlock",
     "webcredentials",
-    "pbxproj"
+    "pbxproj",
+    "Jetpack",
+    "libsecret",
+    "Keepass",
+    "GitHub"
   ]
 }

@@ -1,10 +1,11 @@
 name: autologin_web
 description: The web implementation of the autologin plugin.
-version: 0.0.5
+version: 0.1.0
 homepage: https://github.com/rekire/autologin_plugin/tree/main/autologin_web
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=1.10.0"
 
 flutter:
   plugin:
@@ -15,11 +16,7 @@ flutter:
         fileName: autologin_web.dart
 
 dependencies:
-  autologin_platform_interface:
-    git:
-      url: https://github.com/rekire/autologin_plugin.git
-      path: autologin_platform_interface
-      ref: 0.0.5
+  autologin_platform_interface: 0.1.0
   flutter:
     sdk: flutter
   flutter_web_plugins:

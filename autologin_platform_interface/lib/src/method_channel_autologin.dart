@@ -1,37 +1,39 @@
-import 'dart:convert';
-
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
-import 'package:flutter/foundation.dart' show visibleForTesting;
+import 'package:flutter/foundation.dart' show protected, visibleForTesting;
 import 'package:flutter/services.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 /// An implementation of [AutologinPlatform] that uses method channels.
 class MethodChannelAutologin extends AutologinPlatform {
   /// The method channel used to interact with the native platform.
+  @protected
   @visibleForTesting
   final methodChannel = const MethodChannel('autologin_plugin');
 
   @override
   Future<Compatibilities> performCompatibilityChecks() async {
-    final json = await methodChannel.invokeMethod<String>('performCompatibilityChecks');
-    if (json == null) {
+    final map = await methodChannel.invokeMethod<Map<Object?, Object?>>('performCompatibilityChecks');
+    if (map == null) {
       return const Compatibilities();
     }
-    return Compatibilities.fromJson(json) ?? const Compatibilities();
+    return Compatibilities.fromMap(map.map((key, value) => MapEntry(key.toString(), value))) ?? const Compatibilities();
   }
 
   @override
-  Future<Credential?> requestCredentials({String? domain}) async {
-    final json = await methodChannel.invokeMethod<String>('requestCredentials');
-    if (json == null) {
+  void setup({String? domain, String? appId, String? appName}) {}
+
+  @override
+  Future<Credential?> requestCredentials() async {
+    final map = await methodChannel.invokeMethod<Map<Object?, Object?>>('requestCredentials');
+    if (map == null) {
       return null;
     }
-    return Credential.fromJson(json);
+    return Credential.fromMap(map.map((key, value) => MapEntry(key.toString(), value)));
   }
 
   @override
   Future<bool> saveCredentials(Credential credential) async {
-    final result = await methodChannel.invokeMethod<String>('saveCredentials', jsonEncode(credential.toJson()));
-    return result == 'true';
+    return await methodChannel.invokeMethod<bool>('saveCredentials', credential.toJson()) == true;
   }
 
   @override

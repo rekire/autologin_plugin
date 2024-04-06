@@ -1,7 +1,7 @@
 name: autologin_darwin
 description: The iOS and MacOS implementation of the autologin plugin.
-version: 0.1.0+1
-publish_to: none
+version: 0.1.0
+homepage: https://github.com/rekire/autologin_plugin/tree/main/autologin_darwin
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -23,15 +23,16 @@ flutter:
         sharedDarwinSource: true
 
 dependencies:
-  autologin_platform_interface:
-    git:
-      url: https://github.com/rekire/autologin_plugin.git
-      path: autologin_platform_interface
-      ref: 0.0.5
+  autologin_platform_interface: 0.1.0
   flutter:
     sdk: flutter
 
 dev_dependencies:
+  autologin_test_utils:
+    git:
+      url: https://github.com/rekire/autologin_plugin.git
+      path: autologin_test_utils
+      ref: 0.1.0
   flutter_test:
     sdk: flutter
   very_good_analysis: ^5.1.0

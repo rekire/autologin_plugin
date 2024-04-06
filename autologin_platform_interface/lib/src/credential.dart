@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'credential.freezed.dart';
@@ -18,7 +16,6 @@ class Credential with _$Credential {
     String? domain,
   }) = _Credential;
 
-  /// Get the [Credential] from a JSON string (NOT MAP!)
-  static Credential? fromJson(String? json) =>
-      json == null ? null : _$CredentialFromJson(jsonDecode(json) as Map<String, Object?>);
+  /// Get the [Credential] from a Map.
+  static Credential? fromMap(Map<String, Object?>? map) => map == null ? null : _$CredentialFromJson(map);
 }

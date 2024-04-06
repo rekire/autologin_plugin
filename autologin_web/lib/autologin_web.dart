@@ -12,12 +12,16 @@ class AutologinWeb extends AutologinPlatform {
   }
 
   @override
-  Future<Compatibilities> performCompatibilityChecks() async => Compatibilities(
-        isPlatformSupported: window.navigator.credentials != null && context.hasProperty('PasswordCredential'),
-      );
+  Future<Compatibilities> performCompatibilityChecks() async {
+    final canSafeSecrets = window.navigator.credentials != null && context.hasProperty('PasswordCredential');
+    return Compatibilities(
+      isPlatformSupported: canSafeSecrets,
+      canSafeSecrets: canSafeSecrets,
+    );
+  }
 
   @override
-  Future<Credential?> requestCredentials({String? domain}) async {
+  Future<Credential?> requestCredentials() async {
     final data = await window.navigator.credentials?.get({
       'password': true,
     }) as PasswordCredential?;
@@ -26,8 +30,11 @@ class AutologinWeb extends AutologinPlatform {
       return null;
     }
 
-    return Credential(username: data.name, password: data.password);
+    return Credential(username: data.id, password: data.password);
   }
+
+  @override
+  void setup({String? domain, String? appId, String? appName}) {}
 
   @override
   Future<bool> saveCredentials(Credential credential) async {
@@ -47,6 +54,6 @@ class AutologinWeb extends AutologinPlatform {
 
   @override
   Future<bool> saveLoginToken(String token) async {
-    throw UnsupportedError('The web platform does not support login tokens');
+    return false;
   }
 }

@@ -51,6 +51,7 @@ void main() {
     });
 
     test('performCompatibilityChecks returns expected compatibilities', () async {
+      AutologinPlugin.setup(); // just for code coverage
       expect(
         await AutologinPlugin.performCompatibilityChecks(),
         equals(compatibilityReport),

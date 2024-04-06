@@ -56,6 +56,11 @@ class _DemoPageState extends State<DemoPage> {
     unawaited(initPlatformState());
     usernameController.addListener(resetUsernameNote);
     passwordController.addListener(resetPasswordNote);
+    AutologinPlugin.setup(
+      domain: 'rekire.github.io',
+      appId: 'eu.rekisoft.flutter.autologin',
+      appName: 'Autologin Demo',
+    );
     AutologinPlugin.requestLoginToken().then((value) async {
       if (value != null) {
         setState(() => loginToken = value);
@@ -93,7 +98,7 @@ class _DemoPageState extends State<DemoPage> {
   }
 
   Future<void> requestCredentials() async {
-    final credentials = await AutologinPlugin.requestCredentials(domain: 'rekire.github.io');
+    final credentials = await AutologinPlugin.requestCredentials();
 
     if (mounted) {
       setState(() {
@@ -165,6 +170,7 @@ class _DemoPageState extends State<DemoPage> {
               onPressed: () {
                 setState(() => obscurePassword = !obscurePassword);
               },
+              tooltip: obscurePassword ? 'Show password' : 'Hide password',
             ),
           ),
           onFieldSubmitted: (_) => saveCredentials(),

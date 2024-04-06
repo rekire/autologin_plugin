@@ -49,3 +49,6 @@ app.*.map.json
 .fluttium_*_launcher.dart
 
 autologin_windows/flutter/ephemeral
+
+test
+pubspec_overrides.yaml
