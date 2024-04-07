@@ -29,16 +29,23 @@ void main() {
 
     test(
       'performCompatibilityChecks returns expected value',
-      () => utils.performCompatibilityChecksReturnsExpectedValue(usingMethodChannel: false),
+      () => utils.performCompatibilityChecksReturnsExpectedValue(
+        usingMethodChannel: false,
+      ),
     );
 
     test(
       'requestCredentials returns expected value',
-      () => utils.requestCredentialsReturnsExpectedValue(platformArgs: 'example-domain'),
+      () => utils.requestCredentialsReturnsExpectedValue(
+        platformArgs: 'example-domain',
+      ),
     );
 
     test('saveLoginToken returns true', utils.saveLoginTokenReturnsTrue);
 
-    test('requestLoginToken returns expected value', utils.requestLoginTokenReturnsExpectedValue);
+    test(
+      'requestLoginToken returns expected value',
+      utils.requestLoginTokenReturnsExpectedValue,
+    );
   });
 }

@@ -1,5 +1,5 @@
 name: autologin_linux
-description: Linux implementation of the autologin plugin
+description: The Platform implementation of the autologin plugin for Linux.
 version: 0.1.0
 homepage: https://github.com/rekire/autologin_plugin/tree/main/autologin_linux
 

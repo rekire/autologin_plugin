@@ -11,8 +11,11 @@ class Credential with _$Credential {
   /// therefore not recommended to keep both values null. For iOS and MacOS the [domain] is mandatory, on other
   /// platforms this field is not used.
   const factory Credential({
+    /// The nullable username.
     String? username,
+    /// The nullable password.
     String? password,
+    /// The domain of the credential, only used on iOS and MacOS.
     String? domain,
   }) = _Credential;
 

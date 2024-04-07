@@ -3,8 +3,10 @@ import 'package:autologin_platform_interface/src/credential.dart';
 import 'package:autologin_platform_interface/src/method_channel_autologin.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-export 'package:autologin_platform_interface/src/compatibilities.dart' show Compatibilities;
-export 'package:autologin_platform_interface/src/credential.dart' show Credential;
+export 'package:autologin_platform_interface/src/compatibilities.dart'
+    show Compatibilities;
+export 'package:autologin_platform_interface/src/credential.dart'
+    show Credential;
 export 'package:autologin_platform_interface/src/method_channel_autologin.dart' show MethodChannelAutologin;
 
 /// The interface that implementations of autologin must implement.

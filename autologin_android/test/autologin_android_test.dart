@@ -26,12 +26,21 @@ void main() {
       expect(AutologinPlatform.instance, isA<AutologinAndroid>());
     });
 
-    test('performCompatibilityChecks returns expected value', utils.performCompatibilityChecksReturnsExpectedValue);
+    test(
+      'performCompatibilityChecks returns expected value',
+      utils.performCompatibilityChecksReturnsExpectedValue,
+    );
 
-    test('requestCredentials returns expected value', utils.requestCredentialsReturnsExpectedValue);
+    test(
+      'requestCredentials returns expected value',
+      utils.requestCredentialsReturnsExpectedValue,
+    );
 
     test('saveLoginToken returns true', utils.saveLoginTokenReturnsTrue);
 
-    test('requestLoginToken returns expected value', utils.requestLoginTokenReturnsExpectedValue);
+    test(
+      'requestLoginToken returns expected value',
+      utils.requestLoginTokenReturnsExpectedValue,
+    );
   });
 }

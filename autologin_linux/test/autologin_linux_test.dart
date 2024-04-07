@@ -25,7 +25,10 @@ void main() {
       expect(AutologinPlatform.instance, isA<AutologinLinux>());
     });
 
-    test('performCompatibilityChecks returns expected value', utils.performCompatibilityChecksReturnsExpectedValue);
+    test(
+      'performCompatibilityChecks returns expected value',
+      utils.performCompatibilityChecksReturnsExpectedValue,
+    );
 
     test(
       'requestCredentials returns expected value',
@@ -40,8 +43,9 @@ void main() {
     test(
       'requestCredentials throws helpful errors',
       () async {
-        const expectedMessage = "For the Linux platform you need to call AutologinPlugin.setup(appId: 'your.app.id', "
-            "appName: 'Your app name') before this call";
+        const expectedMessage = 'For the Linux platform you need to call '
+            "AutologinPlugin.setup(appId: 'your.app.id', appName: 'Your app "
+            "name') before this call";
 
         // All arguments missing
         autologin.setup();
@@ -52,7 +56,8 @@ void main() {
               (e) =>
                   e is PlatformException &&
                   e.message == expectedMessage &&
-                  e.details == "The missing arguments are 'appId' and 'appName'.",
+                  e.details ==
+                      "The missing arguments are 'appId' and 'appName'.",
             ),
           ),
         );
@@ -91,7 +96,8 @@ void main() {
       'saveCredentials returns expected value',
       () async {
         autologin.setup(appId: 'demo.id', appName: 'Test app');
-        final report = await autologin.saveCredentials(SharedTests.expectedCredentials);
+        final report =
+            await autologin.saveCredentials(SharedTests.expectedCredentials);
         expect(report, equals(true));
         expect(utils.log, [
           isMethodCall(
@@ -109,8 +115,9 @@ void main() {
     test(
       'saveCredentials throws helpful errors',
       () async {
-        const expectedMessage = "For the Linux platform you need to call AutologinPlugin.setup(appId: 'your.app.id', "
-            "appName: 'Your app name') before this call";
+        const expectedMessage = 'For the Linux platform you need to call '
+            "AutologinPlugin.setup(appId: 'your.app.id', appName: 'Your app "
+            "name') before this call";
 
         // All arguments missing
         autologin.setup();
@@ -121,7 +128,8 @@ void main() {
               (e) =>
                   e is PlatformException &&
                   e.message == expectedMessage &&
-                  e.details == "The missing arguments are 'appId' and 'appName'.",
+                  e.details ==
+                      "The missing arguments are 'appId' and 'appName'.",
             ),
           ),
         );
@@ -160,7 +168,10 @@ void main() {
 
     test('requestLoginToken returns nothing', () async {
       final token = await autologin.requestLoginToken();
-      expect(utils.log, <Matcher>[isMethodCall('requestLoginToken', arguments: null)]);
+      expect(
+        utils.log,
+        <Matcher>[isMethodCall('requestLoginToken', arguments: null)],
+      );
       expect(token, equals(null));
     });
   });

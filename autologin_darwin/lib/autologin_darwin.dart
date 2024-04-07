@@ -26,10 +26,15 @@ class AutologinDarwin extends MethodChannelAutologin {
 
   @override
   Future<Credential?> requestCredentials() async {
-    final map = await methodChannel.invokeMethod<Map<Object?, Object?>>('requestCredentials', _domain);
+    final map = await methodChannel.invokeMethod<Map<Object?, Object?>>(
+      'requestCredentials',
+      _domain,
+    );
     if (map == null) {
       return null;
     }
-    return Credential.fromMap(map.map((key, value) => MapEntry(key.toString(), value)));
+    return Credential.fromMap(
+      map.map((key, value) => MapEntry(key.toString(), value)),
+    );
   }
 }
