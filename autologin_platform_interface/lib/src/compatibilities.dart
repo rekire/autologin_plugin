@@ -24,5 +24,6 @@ class Compatibilities with _$Compatibilities {
   }) = _Compatibilities;
 
   /// Get the [Compatibilities] from a Map.
-  static Compatibilities? fromMap(Map<String, Object?>? map) => map == null ? null : _$CompatibilitiesFromJson(map);
+  static Compatibilities? fromMap(Map<String, Object?>? map) =>
+      map == null ? null : _$CompatibilitiesFromJson(map);
 }
