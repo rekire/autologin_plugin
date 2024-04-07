@@ -1,5 +1,7 @@
-## 0.1.0
+##  0.1.1
+* Extend the documentation
 
+## 0.1.0
 * Add Linux support
 * Duplicating (test) code
 * Use the same method channel structure for all platforms with maps instead of json
@@ -7,12 +9,10 @@
 * Fix getting username for web
 
 ## 0.0.6
-
 * Fix build issues on Android
 * Migrate to plugins block
 
 ## 0.0.5
-
 * Migrated to federated plugin structure
 * Migrated on Android to the CredentialManager API
 * Added on Android zero touch login options by using the BlockManager to sync a login token across all (Google PlayService compatible) devices of a user

@@ -1,4 +1,4 @@
-The Android implementation of [`autologin`](https://pub.dev/packages/autologin].
+The Android implementation of [`autologin`](https://pub.dev/packages/autologin).
 
 On Android [CredentialManager] is used. The documentation is not very clear,
 but it seems that with the PlayServices devices back to Android 4.4 are
@@ -6,6 +6,7 @@ supported. There is currently no documentation how or if it works on non Google
 Play certificated devices.
 
 # Usage
+
 This package is [endorsed][endorsed_link], which means you can simply use
 `autologin` normally. This package will be automatically included in your app
 when you do, so you do not need to add it to your pubspec.yaml.
@@ -14,7 +15,9 @@ However, if you import this package to use any of its APIs directly, you should
 add it to your pubspec.yaml as usual.
 
 # Installation
+
 ## Change your app to use `FlutterFragmentActivity`
+
 The Android implementation uses the [CredentialManager] API to query the
 credentials. This API requires native asynchronous code. This code is written in
 [Kotlin] and uses [Coroutines]. Since the CredentialManager starts a System
@@ -33,6 +36,7 @@ case you can simply replace in your AndroidManifest (the default path is
 `android:name="io.flutter.embedding.android.FlutterFragmentActivity"`.
 
 ## Important notes on digital asset links
+
 Digital asset links is a way to link your app with a website also called
 [App Links]. In order to provide a full example, the example app needs to be
 signed correctly. Right now the signing key is not checked in, but might be the
