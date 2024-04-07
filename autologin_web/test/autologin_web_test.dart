@@ -7,7 +7,8 @@ void main() {
 
   group('AutologinWeb', () {
     late AutologinWeb autologin;
-    const expectedCompatibilities = Compatibilities(isPlatformSupported: true, canSafeSecrets: true);
+    const expectedCompatibilities =
+        Compatibilities(isPlatformSupported: true, canSafeSecrets: true);
     const expectedCredentials = Credential(username: 'foo', password: 'bar');
 
     setUp(() async {

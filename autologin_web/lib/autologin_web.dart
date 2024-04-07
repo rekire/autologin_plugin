@@ -13,7 +13,8 @@ class AutologinWeb extends AutologinPlatform {
 
   @override
   Future<Compatibilities> performCompatibilityChecks() async {
-    final canSafeSecrets = window.navigator.credentials != null && context.hasProperty('PasswordCredential');
+    final canSafeSecrets = window.navigator.credentials != null &&
+        context.hasProperty('PasswordCredential');
     return Compatibilities(
       isPlatformSupported: canSafeSecrets,
       canSafeSecrets: canSafeSecrets,
