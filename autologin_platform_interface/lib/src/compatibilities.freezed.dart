@@ -20,31 +20,42 @@ Compatibilities _$CompatibilitiesFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Compatibilities {
+  /// `true` when the current platform is supported. Default value is `false`.
   bool get isPlatformSupported => throw _privateConstructorUsedError;
 
+  /// `true` when secrets can be stored. Default value is `false`.
   bool get canSafeSecrets => throw _privateConstructorUsedError;
 
+  /// `true` when the secrets can be encrypted. Default value is `false`.
   bool get canEncryptSecrets => throw _privateConstructorUsedError;
 
+  /// `true` when zero touch logins is supported. Default value is `false`.
   bool get hasZeroTouchSupport => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $CompatibilitiesCopyWith<Compatibilities> get copyWith => throw _privateConstructorUsedError;
+  $CompatibilitiesCopyWith<Compatibilities> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CompatibilitiesCopyWith<$Res> {
-  factory $CompatibilitiesCopyWith(Compatibilities value, $Res Function(Compatibilities) then) =
+  factory $CompatibilitiesCopyWith(
+          Compatibilities value, $Res Function(Compatibilities) then) =
       _$CompatibilitiesCopyWithImpl<$Res, Compatibilities>;
 
   @useResult
-  $Res call({bool isPlatformSupported, bool canSafeSecrets, bool canEncryptSecrets, bool hasZeroTouchSupport});
+  $Res call(
+      {bool isPlatformSupported,
+      bool canSafeSecrets,
+      bool canEncryptSecrets,
+      bool hasZeroTouchSupport});
 }
 
 /// @nodoc
-class _$CompatibilitiesCopyWithImpl<$Res, $Val extends Compatibilities> implements $CompatibilitiesCopyWith<$Res> {
+class _$CompatibilitiesCopyWithImpl<$Res, $Val extends Compatibilities>
+    implements $CompatibilitiesCopyWith<$Res> {
   _$CompatibilitiesCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -83,19 +94,27 @@ class _$CompatibilitiesCopyWithImpl<$Res, $Val extends Compatibilities> implemen
 }
 
 /// @nodoc
-abstract class _$$CompatibilitiesImplCopyWith<$Res> implements $CompatibilitiesCopyWith<$Res> {
-  factory _$$CompatibilitiesImplCopyWith(_$CompatibilitiesImpl value, $Res Function(_$CompatibilitiesImpl) then) =
+abstract class _$$CompatibilitiesImplCopyWith<$Res>
+    implements $CompatibilitiesCopyWith<$Res> {
+  factory _$$CompatibilitiesImplCopyWith(_$CompatibilitiesImpl value,
+          $Res Function(_$CompatibilitiesImpl) then) =
       __$$CompatibilitiesImplCopyWithImpl<$Res>;
 
   @override
   @useResult
-  $Res call({bool isPlatformSupported, bool canSafeSecrets, bool canEncryptSecrets, bool hasZeroTouchSupport});
+  $Res call(
+      {bool isPlatformSupported,
+      bool canSafeSecrets,
+      bool canEncryptSecrets,
+      bool hasZeroTouchSupport});
 }
 
 /// @nodoc
-class __$$CompatibilitiesImplCopyWithImpl<$Res> extends _$CompatibilitiesCopyWithImpl<$Res, _$CompatibilitiesImpl>
+class __$$CompatibilitiesImplCopyWithImpl<$Res>
+    extends _$CompatibilitiesCopyWithImpl<$Res, _$CompatibilitiesImpl>
     implements _$$CompatibilitiesImplCopyWith<$Res> {
-  __$$CompatibilitiesImplCopyWithImpl(_$CompatibilitiesImpl _value, $Res Function(_$CompatibilitiesImpl) _then)
+  __$$CompatibilitiesImplCopyWithImpl(
+      _$CompatibilitiesImpl _value, $Res Function(_$CompatibilitiesImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -136,17 +155,25 @@ class _$CompatibilitiesImpl implements _Compatibilities {
       this.canEncryptSecrets = false,
       this.hasZeroTouchSupport = false});
 
-  factory _$CompatibilitiesImpl.fromJson(Map<String, dynamic> json) => _$$CompatibilitiesImplFromJson(json);
+  factory _$CompatibilitiesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CompatibilitiesImplFromJson(json);
 
+  /// `true` when the current platform is supported. Default value is `false`.
   @override
   @JsonKey()
   final bool isPlatformSupported;
+
+  /// `true` when secrets can be stored. Default value is `false`.
   @override
   @JsonKey()
   final bool canSafeSecrets;
+
+  /// `true` when the secrets can be encrypted. Default value is `false`.
   @override
   @JsonKey()
   final bool canEncryptSecrets;
+
+  /// `true` when zero touch logins is supported. Default value is `false`.
   @override
   @JsonKey()
   final bool hasZeroTouchSupport;
@@ -163,22 +190,25 @@ class _$CompatibilitiesImpl implements _Compatibilities {
             other is _$CompatibilitiesImpl &&
             (identical(other.isPlatformSupported, isPlatformSupported) ||
                 other.isPlatformSupported == isPlatformSupported) &&
-            (identical(other.canSafeSecrets, canSafeSecrets) || other.canSafeSecrets == canSafeSecrets) &&
-            (identical(other.canEncryptSecrets, canEncryptSecrets) || other.canEncryptSecrets == canEncryptSecrets) &&
+            (identical(other.canSafeSecrets, canSafeSecrets) ||
+                other.canSafeSecrets == canSafeSecrets) &&
+            (identical(other.canEncryptSecrets, canEncryptSecrets) ||
+                other.canEncryptSecrets == canEncryptSecrets) &&
             (identical(other.hasZeroTouchSupport, hasZeroTouchSupport) ||
                 other.hasZeroTouchSupport == hasZeroTouchSupport));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, isPlatformSupported, canSafeSecrets, canEncryptSecrets, hasZeroTouchSupport);
+  int get hashCode => Object.hash(runtimeType, isPlatformSupported,
+      canSafeSecrets, canEncryptSecrets, hasZeroTouchSupport);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$CompatibilitiesImplCopyWith<_$CompatibilitiesImpl> get copyWith =>
-      __$$CompatibilitiesImplCopyWithImpl<_$CompatibilitiesImpl>(this, _$identity);
+      __$$CompatibilitiesImplCopyWithImpl<_$CompatibilitiesImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -195,21 +225,27 @@ abstract class _Compatibilities implements Compatibilities {
       final bool canEncryptSecrets,
       final bool hasZeroTouchSupport}) = _$CompatibilitiesImpl;
 
-  factory _Compatibilities.fromJson(Map<String, dynamic> json) = _$CompatibilitiesImpl.fromJson;
+  factory _Compatibilities.fromJson(Map<String, dynamic> json) =
+      _$CompatibilitiesImpl.fromJson;
 
+  /// `true` when the current platform is supported. Default value is `false`.
   @override
   bool get isPlatformSupported;
 
+  /// `true` when secrets can be stored. Default value is `false`.
   @override
   bool get canSafeSecrets;
 
+  /// `true` when the secrets can be encrypted. Default value is `false`.
   @override
   bool get canEncryptSecrets;
 
+  /// `true` when zero touch logins is supported. Default value is `false`.
   @override
   bool get hasZeroTouchSupport;
 
   @override
   @JsonKey(ignore: true)
-  _$$CompatibilitiesImplCopyWith<_$CompatibilitiesImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$CompatibilitiesImplCopyWith<_$CompatibilitiesImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

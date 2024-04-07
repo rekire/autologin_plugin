@@ -20,21 +20,26 @@ Credential _$CredentialFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Credential {
+  /// The nullable username.
   String? get username => throw _privateConstructorUsedError;
 
+  /// The nullable password.
   String? get password => throw _privateConstructorUsedError;
 
+  /// The domain of the credential, only used on iOS and MacOS.
   String? get domain => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $CredentialCopyWith<Credential> get copyWith => throw _privateConstructorUsedError;
+  $CredentialCopyWith<Credential> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CredentialCopyWith<$Res> {
-  factory $CredentialCopyWith(Credential value, $Res Function(Credential) then) =
+  factory $CredentialCopyWith(
+          Credential value, $Res Function(Credential) then) =
       _$CredentialCopyWithImpl<$Res, Credential>;
 
   @useResult
@@ -42,7 +47,8 @@ abstract class $CredentialCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CredentialCopyWithImpl<$Res, $Val extends Credential> implements $CredentialCopyWith<$Res> {
+class _$CredentialCopyWithImpl<$Res, $Val extends Credential>
+    implements $CredentialCopyWith<$Res> {
   _$CredentialCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -76,8 +82,10 @@ class _$CredentialCopyWithImpl<$Res, $Val extends Credential> implements $Creden
 }
 
 /// @nodoc
-abstract class _$$CredentialImplCopyWith<$Res> implements $CredentialCopyWith<$Res> {
-  factory _$$CredentialImplCopyWith(_$CredentialImpl value, $Res Function(_$CredentialImpl) then) =
+abstract class _$$CredentialImplCopyWith<$Res>
+    implements $CredentialCopyWith<$Res> {
+  factory _$$CredentialImplCopyWith(
+          _$CredentialImpl value, $Res Function(_$CredentialImpl) then) =
       __$$CredentialImplCopyWithImpl<$Res>;
 
   @override
@@ -86,9 +94,12 @@ abstract class _$$CredentialImplCopyWith<$Res> implements $CredentialCopyWith<$R
 }
 
 /// @nodoc
-class __$$CredentialImplCopyWithImpl<$Res> extends _$CredentialCopyWithImpl<$Res, _$CredentialImpl>
+class __$$CredentialImplCopyWithImpl<$Res>
+    extends _$CredentialCopyWithImpl<$Res, _$CredentialImpl>
     implements _$$CredentialImplCopyWith<$Res> {
-  __$$CredentialImplCopyWithImpl(_$CredentialImpl _value, $Res Function(_$CredentialImpl) _then) : super(_value, _then);
+  __$$CredentialImplCopyWithImpl(
+      _$CredentialImpl _value, $Res Function(_$CredentialImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -119,12 +130,18 @@ class __$$CredentialImplCopyWithImpl<$Res> extends _$CredentialCopyWithImpl<$Res
 class _$CredentialImpl implements _Credential {
   const _$CredentialImpl({this.username, this.password, this.domain});
 
-  factory _$CredentialImpl.fromJson(Map<String, dynamic> json) => _$$CredentialImplFromJson(json);
+  factory _$CredentialImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CredentialImplFromJson(json);
 
+  /// The nullable username.
   @override
   final String? username;
+
+  /// The nullable password.
   @override
   final String? password;
+
+  /// The domain of the credential, only used on iOS and MacOS.
   @override
   final String? domain;
 
@@ -138,8 +155,10 @@ class _$CredentialImpl implements _Credential {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CredentialImpl &&
-            (identical(other.username, username) || other.username == username) &&
-            (identical(other.password, password) || other.password == password) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.password, password) ||
+                other.password == password) &&
             (identical(other.domain, domain) || other.domain == domain));
   }
 
@@ -162,20 +181,28 @@ class _$CredentialImpl implements _Credential {
 }
 
 abstract class _Credential implements Credential {
-  const factory _Credential({final String? username, final String? password, final String? domain}) = _$CredentialImpl;
+  const factory _Credential(
+      {final String? username,
+      final String? password,
+      final String? domain}) = _$CredentialImpl;
 
-  factory _Credential.fromJson(Map<String, dynamic> json) = _$CredentialImpl.fromJson;
+  factory _Credential.fromJson(Map<String, dynamic> json) =
+      _$CredentialImpl.fromJson;
 
+  /// The nullable username.
   @override
   String? get username;
 
+  /// The nullable password.
   @override
   String? get password;
 
+  /// The domain of the credential, only used on iOS and MacOS.
   @override
   String? get domain;
 
   @override
   @JsonKey(ignore: true)
-  _$$CredentialImplCopyWith<_$CredentialImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$CredentialImplCopyWith<_$CredentialImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

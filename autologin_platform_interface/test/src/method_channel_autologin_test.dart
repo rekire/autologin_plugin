@@ -17,7 +17,8 @@ void main() {
     setUp(() async {
       methodChannelAutologin = MethodChannelAutologin();
       methodChannelAutologin.setup(); // just for code coverage
-      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(
         methodChannelAutologin.methodChannel,
         (methodCall) async {
           log.add(methodCall);
@@ -26,7 +27,8 @@ void main() {
               return (await mock.performCompatibilityChecks()).toJson();
             case 'saveCredentials':
               final castedMap = methodCall.arguments as Map<Object?, Object?>;
-              final map = castedMap.map((key, value) => MapEntry(key.toString(), value));
+              final map = castedMap
+                  .map((key, value) => MapEntry(key.toString(), value));
               return mock.saveCredentials(Credential.fromMap(map)!);
             case 'requestCredentials':
               return (await mock.requestCredentials())?.toJson();
@@ -56,7 +58,9 @@ void main() {
       );
     });
 
-    test('requestCredentials returns correct values provided by saveCredentials', () async {
+    test(
+        'requestCredentials returns correct values provided by saveCredentials',
+        () async {
       expect(
         await methodChannelAutologin.requestCredentials(),
         equals(null),
@@ -72,7 +76,8 @@ void main() {
       );
     });
 
-    test('requestLoginToken returns correct values provided by saveLoginToken', () async {
+    test('requestLoginToken returns correct values provided by saveLoginToken',
+        () async {
       expect(
         await methodChannelAutologin.requestLoginToken(),
         equals(null),

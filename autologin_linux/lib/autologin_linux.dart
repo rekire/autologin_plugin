@@ -6,7 +6,7 @@ class AutologinLinux extends MethodChannelAutologin {
   String? _appId;
   String? _appName;
 
-  /// Registers this class as the default instance of [AutologinPlatform]
+  /// Registers this class as the default instance of [AutologinPlatform].
   static void registerWith() {
     AutologinPlatform.instance = AutologinLinux();
   }
@@ -27,7 +27,9 @@ class AutologinLinux extends MethodChannelAutologin {
     if (json == null) {
       return null;
     }
-    return Credential.fromMap(json.map((key, value) => MapEntry(key.toString(), value)));
+    return Credential.fromMap(
+      json.map((key, value) => MapEntry(key.toString(), value)),
+    );
   }
 
   @override
@@ -53,11 +55,15 @@ class AutologinLinux extends MethodChannelAutologin {
       missingArgs.add("'appName'");
     }
     if (missingArgs.isNotEmpty) {
-      const expectedCall = "AutologinPlugin.setup(appId: 'your.app.id', appName: 'Your app name')";
+      const expectedCall = "AutologinPlugin.setup(appId: 'your.app.id', "
+          "appName: 'Your app name')";
       throw PlatformException(
         code: 'MissingArgument',
-        message: 'For the Linux platform you need to call $expectedCall before this call',
-        details: 'The missing argument${missingArgs.length > 1 ? 's are' : ' is'} ${missingArgs.join(' and ')}.',
+        message: 'For the Linux platform you need to call $expectedCall before '
+            'this call',
+        details: 'The missing argument'
+            '${missingArgs.length > 1 ? 's are' : ' is'} '
+            '${missingArgs.join(' and ')}.',
       );
     }
   }

@@ -4,7 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-class MockAutologinPlatform extends Mock with MockPlatformInterfaceMixin implements AutologinPlatform {}
+class MockAutologinPlatform extends Mock
+    with MockPlatformInterfaceMixin
+    implements AutologinPlatform {}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -50,7 +52,8 @@ void main() {
       AutologinPlatform.instance = autologinPlatform;
     });
 
-    test('performCompatibilityChecks returns expected compatibilities', () async {
+    test('performCompatibilityChecks returns expected compatibilities',
+        () async {
       AutologinPlugin.setup(); // just for code coverage
       expect(
         await AutologinPlugin.performCompatibilityChecks(),
