@@ -16,7 +16,7 @@ flutter:
         dartPluginClass: AutologinLinux
 
 dependencies:
-  autologin_platform_interface: 0.1.0
+  autologin_platform_interface: ^0.1.0
   flutter:
     sdk: flutter
 
