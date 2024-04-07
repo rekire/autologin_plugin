@@ -4,30 +4,26 @@ Autologin plugin for Flutter. This library should log in the user if the login
 data are already known by the operating system of the device e.g. on the first
 run.
 
-You can check it yourself on the [GitHub page][web-demo] in supported (Chromium
-based) browsers.
-
-
 <p>
-  <img src="https://github.com/rekire/autologin_plugin/blob/main/autologin/android-demo.gif?raw=true"
+  <img src="https://github.com/rekire/autologin_plugin/blob/main/docs/android-demo.gif?raw=true"
    alt="An animated image of the Android login flow with autologin" height="400"/>
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/rekire/autologin_plugin/blob/main/autologin/ios-demo.gif?raw=true"
+  <img src="https://github.com/rekire/autologin_plugin/blob/main/docs/ios-demo.gif?raw=true"
     alt="An animated image of the iOS login flow with autologin" height="400"/>
 </p>
 
-You can check it yourself on the [GitHub page][web-demo] in supported (Chromium
-based) browsers.
+You can check the web example app on the [GitHub page][web-demo] in supported
+(Chromium based) browsers.
 
 ## Features and compatibilities
 
 You can safe and request Credentials and store and read Login Tokens for
 automatic logins without any user interaction.
 
-|                 | Android | iOS | MacOS | Web |
-|-----------------|---------|-----|-------|-----|
-| **Credentials** | ✅       | ✅   | ✅*    | ✅** |
-| **LoginToken**  | ✅       | ✅   | ✅     |     |
+|                 | [Android] | [iOS] | [MacOS] | [Web] |
+|-----------------|-----------|-------|---------|-------|
+| **Credentials** | ✅         | ✅     | ✅*      | ✅**   |
+| **LoginToken**  | ✅         | ✅     | ✅       |       |
 
 *) It seems that saving is just supported on iOS  
 **) Just on chromium based browsers
@@ -151,10 +147,14 @@ Autologin is not supported yet, since I am not aware of any API for that.
 - [ ] Build and sign the Android sample app and publish it as artifact (ideally
   via GitHub Action and as instant app)
 
+[web-demo]: https://rekire.github.io/autologin_plugin/
+[Android]: ./autologin_android
+[iOS]: ./autologin_darwin
+[MacOS]: ./autologin_darwin
+[Web]: ./autologin_web
 [CredentialManager]: https://developer.android.com/reference/kotlin/androidx/credentials/CredentialManager
 [AndroidManifest]: https://developer.android.com/guide/topics/manifest/manifest-intro
 [App Links]: https://developer.android.com/training/app-links/index.html
-[web-demo]: https://rekire.github.io/autologin_plugin/
 [Kotlin]: https://kotlinlang.org
 [Coroutines]: https://kotlinlang.org/docs/coroutines-guide.html
 [activity-lifecycle]: https://developer.android.com/guide/components/activities/activity-lifecycle
