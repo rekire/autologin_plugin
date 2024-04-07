@@ -77,8 +77,9 @@ also to define a [`_config.yaml`][config-yaml].
 If you want to test your own setup use the
 [Statement List Generator and Tester][asset-links-generator].
 
-As simple check if the linking works fine check [this link][test-deeplink], if
-that opens in chrome the example app without an intent chooser then this works.
+As simple check if the linking works fine check [this link][test-deeplink] **on
+your Android phone**, if that opens in Chrome the Example App without an Intent
+Chooser then this works correctly.
 
 ### iOS and MacOS
 
@@ -157,7 +158,7 @@ Autologin is not supported yet, since I am not aware of any API for that.
 [App Links]: https://developer.android.com/training/app-links/index.html
 [Kotlin]: https://kotlinlang.org
 [Coroutines]: https://kotlinlang.org/docs/coroutines-guide.html
-[activity-lifecycle]: https://developer.android.com/guide/components/activities/activity-lifecycle
+[Activity Lifecycle]: https://developer.android.com/guide/components/activities/activity-lifecycle
 [Android Jetpack]: https://developer.android.com/jetpack
 [lifecycle-api]: https://developer.android.com/reference/androidx/lifecycle/Lifecycle
 [LifecycleOwner]: https://developer.android.com/reference/androidx/lifecycle/LifecycleOwner

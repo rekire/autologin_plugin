@@ -12,7 +12,7 @@ This package is [endorsed][endorsed_link], which means you can simply use
 when you do, so you do not need to add it to your pubspec.yaml.
 
 However, if you import this package to use any of its APIs directly, you should
-add it to your pubspec.yaml as usual.
+add it to your `pubspec.yaml` as usual.
 
 # Installation
 
@@ -56,8 +56,9 @@ also to define a [`_config.yaml`][config-yaml].
 If you want to test your own setup use the
 [Statement List Generator and Tester][asset-links-generator].
 
-As simple check if the linking works fine check [this link][test-deeplink], if
-that opens in chrome the example app without an intent chooser then this works.
+As simple check if the linking works fine check [this link][test-deeplink] **on
+your Android phone**, if that opens in Chrome the Example App without an Intent
+Chooser then this works correctly.
 
 
 [endorsed_link]: https://flutter.dev/docs/development/packages-and-plugins/developing-packages#endorsed-federated-plugin
@@ -66,6 +67,7 @@ that opens in chrome the example app without an intent chooser then this works.
 [App Links]: https://developer.android.com/training/app-links/index.html
 [Kotlin]: https://kotlinlang.org
 [Coroutines]: https://kotlinlang.org/docs/coroutines-guide.html
+[Activity Lifecycle]: https://developer.android.com/guide/components/activities/activity-lifecycle
 [Android Jetpack]: https://developer.android.com/jetpack
 [lifecycle-api]: https://developer.android.com/reference/androidx/lifecycle/Lifecycle
 [LifecycleOwner]: https://developer.android.com/reference/androidx/lifecycle/LifecycleOwner
