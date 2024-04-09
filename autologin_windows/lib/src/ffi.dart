@@ -1,7 +1,6 @@
 import 'dart:ffi';
 
-//import 'package:autologin_platform_interface/autologin_platform_interface.dart';
-import 'package:autologin_platform_interface/src/credential.dart';
+import 'package:autologin_platform_interface/autologin_platform_interface.dart';
 import 'package:ffi/ffi.dart';
 
 // Documentation from https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credentialw
@@ -193,6 +192,7 @@ bool credWrite(String username, String password, String appName) {
 /// The credential set used is the one associated with the logon session of the
 /// current token. The token must not have the user's SID disabled.
 Credential? credRead(String appName) {
+  // ignore: omit_local_variable_types
   final Pointer<Pointer<WinapiCredential>> retrievedCredential = calloc();
   final credRead = DynamicLibrary.open('Advapi32.dll')
       .lookupFunction<CredReadNative, CredReadDart>('CredReadW');
