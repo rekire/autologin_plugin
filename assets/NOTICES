@@ -1752,6 +1752,7 @@ autologin_darwin
 autologin_linux
 autologin_platform_interface
 autologin_web
+autologin_windows
 
 MIT License
 
@@ -4299,6 +4300,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --------------------------------------------------------------------------------
 characters
+ffi
 
 Copyright 2019, the Dart project authors. 
 
