@@ -134,14 +134,6 @@ in your Xcode project. Here is a step per step guide:
 6. Scroll down and select "iCloud."
 7. In the iCloud section, enable the "Key-Value storage" checkbox.
 
-### Web
-
-On Web [Credential Management API][Credential_Management_API], but
-be aware that just Chrome, Edge and Opera support this feature
-([Source][Credential_Management_Support]).
-
-Autologin is not supported yet, since I am not aware of any API for that.
-
 ### Linux
 
 On Linux the [D-Bus] is used to save an query the password of your app. The
@@ -149,7 +141,16 @@ native code uses for that like the [flutter_secure_storage] plugin [libsecret].
 Based on a [Blog entry][avaldes-blog] you can store your secrets also directly
 in [KeepassXC], however I was unable to test this integration.
 
-Autologin is not supported yet, since I am not aware of any API for that.
+### Web
+
+On Web [Credential Management API][Credential_Management_API], but
+be aware that just Chrome, Edge and Opera support this feature
+([Source][Credential_Management_Support]).
+
+### Windows
+
+On Windows the APIs [`CredRead`][CredRead] and [`CredWrite`][CredWrite] are
+used. Like on Linux that API is used without any user interface.
 
 ## TODO
 
@@ -189,3 +190,5 @@ Autologin is not supported yet, since I am not aware of any API for that.
 [libsecret]: https://gnome.pages.gitlab.gnome.org/libsecret/
 [avaldes-blog]: https://avaldes.co/2020/01/28/secret-service-keepassxc.html
 [KeepassXC]: https://keepassxc.org/
+[CredRead]: https://learn.microsoft.com/windows/win32/api/wincred/nf-wincred-credreadw
+[CredWrite]: https://learn.microsoft.com/windows/win32/api/wincred/nf-wincred-credwritew
