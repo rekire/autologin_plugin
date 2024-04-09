@@ -24,14 +24,14 @@ You can check the web example app on the [GitHub page][web-demo] in supported
 You can safe and request Credentials and store and read Login Tokens for
 automatic logins without any user interaction.
 
-|                 | [Android] | [iOS] | [MacOS] | [Windows] | [Linux] | [Web] |
-|-----------------|-----------|-------|---------|-----------|---------|-------|
-| **Credentials** | ✅         | ✅     | ✅*      | ✅**       | ✅       | ✅***  |
-| **LoginToken**  | ✅         | ✅     | ✅       |           |         |       |
+|                 | [Android] | [iOS] | [Linux] | [MacOS] | [Web] | [Windows] |
+|-----------------|-----------|-------|---------|---------|-------|-----------|
+| **Credentials** | ✅         | ✅     | ✅       | ✅*      | ✅**   | ✅***      |
+| **LoginToken**  | ✅         | ✅     | ✅       |         |       |           |
 
 *) It seems that saving is just supported on iOS  
-**) The documentation of the API mentions that a "pro" version is required  
-***) Just on chromium based browsers
+**) Just on chromium based browsers  
+***) The documentation of the API mentions that a "Pro" Version is required
 
 The technical implementation details can be found in the corresponding package.
 
@@ -70,7 +70,7 @@ saved with `AutologinPlugin.saveLoginToken('yourToken');`.
 [web-demo]: https://rekire.github.io/autologin_plugin/
 [Android]: https://pub.dev/packages/autologin_android
 [iOS]: https://pub.dev/packages/autologin_darwin
-[MacOS]: https://pub.dev/packages/autologin_darwin
-[Windows]: https://pub.dev/packages/autologin_windows
 [Linux]: https://pub.dev/packages/autologin_linux
+[MacOS]: https://pub.dev/packages/autologin_darwin
 [Web]: https://pub.dev/packages/autologin_web
+[Windows]: https://pub.dev/packages/autologin_windows

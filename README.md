@@ -29,14 +29,14 @@ You can check the web example app on the [GitHub page][web-demo] in supported
 You can safe and request Credentials and store and read Login Tokens for
 automatic logins without any user interaction.
 
-|                 | [Android] | [iOS] | [MacOS] | [Windows] | [Linux] | [Web] |
-|-----------------|-----------|-------|---------|-----------|---------|-------|
-| **Credentials** | ✅         | ✅     | ✅*      | ✅**       | ✅       | ✅***  |
-| **LoginToken**  | ✅         | ✅     | ✅       |           |         |       |
+|                 | [Android] | [iOS] | [Linux] | [MacOS] | [Web] | [Windows] |
+|-----------------|-----------|-------|---------|---------|-------|-----------|
+| **Credentials** | ✅         | ✅     | ✅       | ✅*      | ✅**   | ✅***      |
+| **LoginToken**  | ✅         | ✅     | ✅       |         |       |           |
 
 *) It seems that saving is just supported on iOS  
-**) The documentation of the API mentions that a "pro" version is required  
-***) Just on chromium based browsers
+**) Just on chromium based browsers  
+***) The documentation of the API mentions that a "Pro" Version is required
 
 ## Supported platforms
 
@@ -161,10 +161,10 @@ Autologin is not supported yet, since I am not aware of any API for that.
 [web-demo]: https://rekire.github.io/autologin_plugin/
 [Android]: ./autologin_android
 [iOS]: ./autologin_darwin
-[MacOS]: ./autologin_darwin
-[Windows]: ./autologin_windows
 [Linux]: ./autologin_linux
+[MacOS]: ./autologin_darwin
 [Web]: ./autologin_web
+[Windows]: ./autologin_windows
 [CredentialManager]: https://developer.android.com/reference/kotlin/androidx/credentials/CredentialManager
 [AndroidManifest]: https://developer.android.com/guide/topics/manifest/manifest-intro
 [App Links]: https://developer.android.com/training/app-links/index.html
