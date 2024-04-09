@@ -8,7 +8,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('AutologinDarwin', () {
-    final autologin = AutologinWindows()..setup(appName: 'demo app');
+    final autologin = AutologinWindows();
     final utils = SharedTests(
       compatibilities: const Compatibilities(
         isPlatformSupported: true,
@@ -18,7 +18,7 @@ void main() {
       platform: autologin,
     );
 
-    setUp(utils.clearCallLog);
+    setUp(() => autologin.setup(appName: 'demo app'));
 
     test('can be registered', () {
       AutologinWindows.registerWith();
@@ -38,6 +38,11 @@ void main() {
       expect(result, equals(SharedTests.expectedCredentials));
     });
 
+    test('verify that non existing accounts return null', () async {
+      autologin.setup(appName: 'none existing app');
+      expect(await autologin.requestCredentials(), equals(null));
+    });
+
     test('saveLoginToken returns true', () async {
       final report = await autologin.saveCredentials(
         SharedTests.expectedCredentials,
@@ -48,6 +53,14 @@ void main() {
     test(
       'requestLoginToken returns expected value',
       () async => expect(await autologin.requestLoginToken(), equals(null)),
+    );
+
+    test(
+      'verify that save token fails',
+      () async => expect(
+        await autologin.saveLoginToken(SharedTests.expectedToken),
+        equals(false),
+      ),
     );
   });
 }
