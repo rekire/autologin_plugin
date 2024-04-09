@@ -33,9 +33,9 @@ void main() {
     );
 
     test('requestCredentials returns expected value', () async {
+      await autologin.saveCredentials(SharedTests.expectedCredentials);
       final result = await autologin.requestCredentials();
-      // this ffi call is expected to fail in this test
-      expect(result, equals(null));
+      expect(result, equals(SharedTests.expectedCredentials));
     });
 
     test('saveLoginToken returns true', () async {
