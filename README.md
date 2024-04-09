@@ -1,8 +1,17 @@
 # Autologin plugin for Flutter
 
-Autologin plugin for Flutter. This library should log in the user if the login
-data are already known by the operating system of the device e.g. on the first
-run.
+![Build status](https://github.com/rekire/autologin_plugin/actions/workflows/autologin.yaml/badge.svg)
+[![Pub Version](https://img.shields.io/pub/v/autologin)](https://pub.dev/packages/autologin)
+
+This Flutter package helps the user to login quickly. When the user has saved
+in the platform specific password manager credentials will be filled out by a
+simple confirmation or account chooser depending on the platform. You can also
+save the users credentials with a simply API call. On supported platforms those
+credentials will be synced on all your devices.
+
+On Android and Apple devices you can also store a login token to sign in
+seamlessly without any interaction. So when your user uses your app on a new
+device for the first time your user will be already signed in.
 
 <p>
   <img src="https://github.com/rekire/autologin_plugin/blob/main/docs/android-demo.gif?raw=true"
@@ -20,13 +29,14 @@ You can check the web example app on the [GitHub page][web-demo] in supported
 You can safe and request Credentials and store and read Login Tokens for
 automatic logins without any user interaction.
 
-|                 | [Android] | [iOS] | [MacOS] | [Web] |
-|-----------------|-----------|-------|---------|-------|
-| **Credentials** | ✅         | ✅     | ✅*      | ✅**   |
-| **LoginToken**  | ✅         | ✅     | ✅       |       |
+|                 | [Android] | [iOS] | [Linux] | [MacOS] | [Web] | [Windows] |
+|-----------------|-----------|-------|---------|---------|-------|-----------|
+| **Credentials** | ✅         | ✅     | ✅       | ✅*      | ✅**   | ✅***      |
+| **LoginToken**  | ✅         | ✅     | ✅       |         |       |           |
 
 *) It seems that saving is just supported on iOS  
-**) Just on chromium based browsers
+**) Just on chromium based browsers  
+***) The documentation of the API mentions that a "Pro" Version is required
 
 ## Supported platforms
 
@@ -124,14 +134,6 @@ in your Xcode project. Here is a step per step guide:
 6. Scroll down and select "iCloud."
 7. In the iCloud section, enable the "Key-Value storage" checkbox.
 
-### Web
-
-On Web [Credential Management API][Credential_Management_API], but
-be aware that just Chrome, Edge and Opera support this feature
-([Source][Credential_Management_Support]).
-
-Autologin is not supported yet, since I am not aware of any API for that.
-
 ### Linux
 
 On Linux the [D-Bus] is used to save an query the password of your app. The
@@ -139,7 +141,16 @@ native code uses for that like the [flutter_secure_storage] plugin [libsecret].
 Based on a [Blog entry][avaldes-blog] you can store your secrets also directly
 in [KeepassXC], however I was unable to test this integration.
 
-Autologin is not supported yet, since I am not aware of any API for that.
+### Web
+
+On Web [Credential Management API][Credential_Management_API], but
+be aware that just Chrome, Edge and Opera support this feature
+([Source][Credential_Management_Support]).
+
+### Windows
+
+On Windows the APIs [`CredRead`][CredRead] and [`CredWrite`][CredWrite] are
+used. Like on Linux that API is used without any user interface.
 
 ## TODO
 
@@ -151,8 +162,10 @@ Autologin is not supported yet, since I am not aware of any API for that.
 [web-demo]: https://rekire.github.io/autologin_plugin/
 [Android]: ./autologin_android
 [iOS]: ./autologin_darwin
+[Linux]: ./autologin_linux
 [MacOS]: ./autologin_darwin
 [Web]: ./autologin_web
+[Windows]: ./autologin_windows
 [CredentialManager]: https://developer.android.com/reference/kotlin/androidx/credentials/CredentialManager
 [AndroidManifest]: https://developer.android.com/guide/topics/manifest/manifest-intro
 [App Links]: https://developer.android.com/training/app-links/index.html
@@ -177,3 +190,5 @@ Autologin is not supported yet, since I am not aware of any API for that.
 [libsecret]: https://gnome.pages.gitlab.gnome.org/libsecret/
 [avaldes-blog]: https://avaldes.co/2020/01/28/secret-service-keepassxc.html
 [KeepassXC]: https://keepassxc.org/
+[CredRead]: https://learn.microsoft.com/windows/win32/api/wincred/nf-wincred-credreadw
+[CredWrite]: https://learn.microsoft.com/windows/win32/api/wincred/nf-wincred-credwritew

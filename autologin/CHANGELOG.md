@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Add Windows support
+
 ##  0.1.1
 * Extend the documentation
 

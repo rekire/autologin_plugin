@@ -1,7 +1,7 @@
-name: autologin_linux
-description: The platform implementation of the autologin plugin for Linux.
-version: 0.1.1
-homepage: https://github.com/rekire/autologin_plugin/tree/main/autologin_linux
+name: autologin_windows
+description: The platform implementation of the autologin plugin for Windows.
+version: 0.2.0
+homepage: https://github.com/rekire/autologin_plugin/tree/main/autologin_windows
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -11,12 +11,12 @@ flutter:
   plugin:
     implements: autologin
     platforms:
-      linux:
-        pluginClass: AutologinPlugin
-        dartPluginClass: AutologinLinux
+      windows:
+        dartPluginClass: AutologinWindows
 
 dependencies:
   autologin_platform_interface: ^0.1.0
+  ffi: ^2.1.0
   flutter:
     sdk: flutter
 
