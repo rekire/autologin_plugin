@@ -3,7 +3,8 @@ description: The platform implementation of the autologin plugin for Windows.
 version: 0.2.0
 
 environment:
-  sdk: ">=3.3.0 <4.0.0"
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.3.0"
 
 flutter:
   plugin:
