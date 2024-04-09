@@ -1,8 +1,17 @@
 # Autologin plugin for Flutter
 
-Autologin plugin for Flutter. This library should log in the user if the login
-data are already known by the operating system of the device e.g. on the first
-run.
+![Build status](https://github.com/rekire/autologin_plugin/actions/workflows/autologin.yaml/badge.svg)
+[![Pub Version](https://img.shields.io/pub/v/autologin)](https://pub.dev/packages/autologin)
+
+This Flutter package helps the user to login quickly. When the user has saved
+in the platform specific password manager credentials will be filled out by a
+simple confirmation or account chooser depending on the platform. You can also
+save the users credentials with a simply API call. On supported platforms those
+credentials will be synced on all your devices.
+
+On Android and Apple devices you can also store a login token to sign in
+seamlessly without any interaction. So when your user uses your app on a new
+device for the first time your user will be already signed in.
 
 <p>
   <img src="https://github.com/rekire/autologin_plugin/blob/main/docs/android-demo.gif?raw=true"
@@ -20,13 +29,14 @@ You can check the web example app on the [GitHub page][web-demo] in supported
 You can safe and request Credentials and store and read Login Tokens for
 automatic logins without any user interaction.
 
-|                 | [Android] | [iOS] | [MacOS] | [Web] |
-|-----------------|-----------|-------|---------|-------|
-| **Credentials** | ✅         | ✅     | ✅*      | ✅**   |
-| **LoginToken**  | ✅         | ✅     | ✅       |       |
+|                 | [Android] | [iOS] | [MacOS] | [Windows] | [Linux] | [Web] |
+|-----------------|-----------|-------|---------|-----------|---------|-------|
+| **Credentials** | ✅         | ✅     | ✅*      | ✅**       | ✅       | ✅***  |
+| **LoginToken**  | ✅         | ✅     | ✅       |           |         |       |
 
 *) It seems that saving is just supported on iOS  
-**) Just on chromium based browsers
+**) The documentation of the API mentions that a "pro" version is required  
+***) Just on chromium based browsers
 
 ## Supported platforms
 
@@ -152,6 +162,8 @@ Autologin is not supported yet, since I am not aware of any API for that.
 [Android]: ./autologin_android
 [iOS]: ./autologin_darwin
 [MacOS]: ./autologin_darwin
+[Windows]: ./autologin_windows
+[Linux]: ./autologin_linux
 [Web]: ./autologin_web
 [CredentialManager]: https://developer.android.com/reference/kotlin/androidx/credentials/CredentialManager
 [AndroidManifest]: https://developer.android.com/guide/topics/manifest/manifest-intro

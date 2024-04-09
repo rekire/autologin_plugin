@@ -1,0 +1,30 @@
+name: autologin_windows
+description: The platform implementation of the autologin plugin for Windows.
+version: 0.2.0
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+flutter:
+  plugin:
+    implements: autologin
+    platforms:
+      windows:
+        #pluginClass: AutologinWindows
+        dartPluginClass: AutologinWindows
+
+dependencies:
+  autologin_platform_interface: ^0.1.0
+  ffi: ^2.1.2
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  autologin_test_utils:
+    git:
+      url: https://github.com/rekire/autologin_plugin.git
+      path: autologin_test_utils
+      ref: 0.1.1
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^5.1.0
