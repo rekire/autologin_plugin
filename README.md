@@ -32,7 +32,7 @@ automatic logins without any user interaction.
 |                 | [Android] | [iOS] | [Linux] | [MacOS] | [Web] | [Windows] |
 |-----------------|-----------|-------|---------|---------|-------|-----------|
 | **Credentials** | ✅         | ✅     | ✅       | ✅*      | ✅**   | ✅***      |
-| **LoginToken**  | ✅         | ✅     | ✅       |         |       |           |
+| **LoginToken**  | ✅         | ✅     |         | ✅        |       |           |
 
 *) It seems that saving is just supported on iOS  
 **) Just on chromium based browsers  
