@@ -1,9 +1,4 @@
-/// The public interface of the AutologinPlugin. For a quick synchronous check
-/// you can check [isPlatformSupported]. When you need a full report of the
-/// [Compatibilities] you can [performCompatibilityChecks]. You can check the
-/// [Compatibilities] class for the details. With [requestCredentials] your
-/// saved [Credential]s can be requested which you need to safe before with
-/// [saveCredentials].
+/// The public interface of the AutologinPlugin.
 library;
 
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
