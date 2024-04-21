@@ -1,3 +1,6 @@
+/// The Android implementation of [AutologinPlatform].
+library;
+
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
 
 /// The Android implementation of [AutologinPlatform].

@@ -1,3 +1,6 @@
+/// The Linux implementation of [AutologinPlatform].
+library;
+
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
 import 'package:flutter/services.dart';
 

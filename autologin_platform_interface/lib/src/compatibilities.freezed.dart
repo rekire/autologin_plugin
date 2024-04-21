@@ -12,7 +12,7 @@ part of 'compatibilities.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Compatibilities _$CompatibilitiesFromJson(Map<String, dynamic> json) {
   return _Compatibilities.fromJson(json);
@@ -32,8 +32,11 @@ mixin _$Compatibilities {
   /// `true` when zero touch logins is supported. Default value is `false`.
   bool get hasZeroTouchSupport => throw _privateConstructorUsedError;
 
+  /// Serializes this Compatibilities to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
+  /// Create a copy of Compatibilities
+  /// with the given fields replaced by the non-null parameter values.
   @JsonKey(ignore: true)
   $CompatibilitiesCopyWith<Compatibilities> get copyWith =>
       throw _privateConstructorUsedError;
@@ -203,6 +206,8 @@ class _$CompatibilitiesImpl implements _Compatibilities {
   int get hashCode => Object.hash(runtimeType, isPlatformSupported,
       canSafeSecrets, canEncryptSecrets, hasZeroTouchSupport);
 
+  /// Create a copy of Compatibilities
+  /// with the given fields replaced by the non-null parameter values.
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
@@ -244,6 +249,8 @@ abstract class _Compatibilities implements Compatibilities {
   @override
   bool get hasZeroTouchSupport;
 
+  /// Create a copy of Compatibilities
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(ignore: true)
   _$$CompatibilitiesImplCopyWith<_$CompatibilitiesImpl> get copyWith =>

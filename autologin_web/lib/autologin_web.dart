@@ -1,3 +1,6 @@
+/// The Web implementation of [AutologinPlatform].
+library;
+
 import 'dart:html';
 import 'dart:js';
 

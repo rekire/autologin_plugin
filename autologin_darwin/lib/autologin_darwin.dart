@@ -1,3 +1,6 @@
+/// The Darwin implementation of [AutologinPlatform] for iOS and MacOS.
+library;
+
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
 
 /// The Darwin implementation of [AutologinPlatform] for iOS and MacOS.

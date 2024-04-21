@@ -1,3 +1,12 @@
+/// The interface that implementations of autologin must implement.
+///
+/// Platform implementations should extend this class rather than implement it
+/// as `Autologin`. Extending this class (using `extends`) ensures that the
+/// subclass will get the default implementation, while platform implementations
+/// that `implements` this interface will be broken by newly added
+/// [AutologinPlatform] methods.
+library;
+
 import 'package:autologin_platform_interface/src/compatibilities.dart';
 import 'package:autologin_platform_interface/src/credential.dart';
 import 'package:autologin_platform_interface/src/method_channel_autologin.dart';

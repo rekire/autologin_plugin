@@ -1,3 +1,8 @@
+## 1.0.0
+
+* First official stable version
+* Improved documentation to have a full documentation coverage
+
 ## 0.1.1
 
 * Extend the documentation

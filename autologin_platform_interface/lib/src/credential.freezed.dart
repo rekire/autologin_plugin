@@ -12,7 +12,7 @@ part of 'credential.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Credential _$CredentialFromJson(Map<String, dynamic> json) {
   return _Credential.fromJson(json);
@@ -29,8 +29,11 @@ mixin _$Credential {
   /// The domain of the credential, only used on iOS and MacOS.
   String? get domain => throw _privateConstructorUsedError;
 
+  /// Serializes this Credential to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
+  /// Create a copy of Credential
+  /// with the given fields replaced by the non-null parameter values.
   @JsonKey(ignore: true)
   $CredentialCopyWith<Credential> get copyWith =>
       throw _privateConstructorUsedError;
@@ -41,7 +44,6 @@ abstract class $CredentialCopyWith<$Res> {
   factory $CredentialCopyWith(
           Credential value, $Res Function(Credential) then) =
       _$CredentialCopyWithImpl<$Res, Credential>;
-
   @useResult
   $Res call({String? username, String? password, String? domain});
 }
@@ -53,7 +55,6 @@ class _$CredentialCopyWithImpl<$Res, $Val extends Credential>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -87,7 +88,6 @@ abstract class _$$CredentialImplCopyWith<$Res>
   factory _$$CredentialImplCopyWith(
           _$CredentialImpl value, $Res Function(_$CredentialImpl) then) =
       __$$CredentialImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({String? username, String? password, String? domain});
@@ -166,6 +166,8 @@ class _$CredentialImpl implements _Credential {
   @override
   int get hashCode => Object.hash(runtimeType, username, password, domain);
 
+  /// Create a copy of Credential
+  /// with the given fields replaced by the non-null parameter values.
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
@@ -201,6 +203,8 @@ abstract class _Credential implements Credential {
   @override
   String? get domain;
 
+  /// Create a copy of Credential
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(ignore: true)
   _$$CredentialImplCopyWith<_$CredentialImpl> get copyWith =>
