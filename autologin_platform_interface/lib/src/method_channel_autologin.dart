@@ -1,7 +1,6 @@
 import 'package:autologin_platform_interface/autologin_platform_interface.dart';
 import 'package:flutter/foundation.dart' show protected, visibleForTesting;
 import 'package:flutter/services.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 /// An implementation of [AutologinPlatform] that uses method channels.
 class MethodChannelAutologin extends AutologinPlatform {
@@ -48,13 +47,14 @@ class MethodChannelAutologin extends AutologinPlatform {
   }
 
   @override
-  Future<String?> requestLoginToken() async {
-    return methodChannel.invokeMethod<String>('requestLoginToken');
-  }
+  Future<String?> requestLoginToken() async =>
+    methodChannel.invokeMethod<String>('requestLoginToken');
 
   @override
-  Future<bool> saveLoginToken(String token) async {
-    return await methodChannel.invokeMethod<bool>('saveLoginToken', token) ==
-        true;
-  }
+  Future<bool> saveLoginToken(String token) async =>
+      await methodChannel.invokeMethod<bool>('saveLoginToken', token) == true;
+
+  @override
+  Future<bool> deleteLoginToken() async =>
+      await methodChannel.invokeMethod<bool>('deleteLoginToken') == true;
 }

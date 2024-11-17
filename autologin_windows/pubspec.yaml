@@ -1,6 +1,6 @@
 name: autologin_windows
 description: The platform implementation of the autologin plugin for Windows.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/rekire/autologin_plugin/tree/main/autologin_windows
 
 environment:
