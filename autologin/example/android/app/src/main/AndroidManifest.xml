@@ -1,4 +1,9 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    android:targetSandboxVersion="2">
+
+    <dist:module dist:instant="true" />
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
@@ -42,8 +47,9 @@
 
                 <data
                     android:host="rekire.github.io"
-                    android:path="/autologin_plugin/demo"
-                    android:scheme="https" />
+                    android:path="/autologin_plugin/demo" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

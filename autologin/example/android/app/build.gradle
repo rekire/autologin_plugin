@@ -1,7 +1,7 @@
 plugins {
-    id "com.android.application"
-    id "kotlin-android"
-    id "dev.flutter.flutter-gradle-plugin"
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'dev.flutter.flutter-gradle-plugin'
 }
 
 def localProperties = new Properties()
@@ -19,7 +19,7 @@ if (flutterVersionCode == null) {
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
+    flutterVersionName = '1.0.1-snapshot'
 }
 
 android {
@@ -35,7 +35,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "eu.rekisoft.flutter.autologin"
+        applicationId 'eu.rekisoft.flutter.autologin'
         minSdkVersion 21
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
@@ -47,30 +47,43 @@ android {
     if (configFile.exists()) {
         properties.load(configFile.newDataInputStream())
     }
-    def keystore = file("${project.rootDir.parent}/android/keystore.jks")
-    def password = System.getenv('KEYSTORE_PASSWORD') ?: properties.getProperty('KEYSTORE_PASSWORD')
+    def devKeystore = file("${project.rootDir.parent}/android/keystore.jks")
+    def devPassword = properties.getProperty('DEV_KEYSTORE_PASSWORD')
+    def uploadKeystore = file("${project.rootDir.parent}/android/upload.jks")
+    def uploadPassword = System.getenv('UPLOAD_KEYSTORE_PASSWORD') ?: properties.getProperty('UPLOAD_KEYSTORE_PASSWORD')
 
     signingConfigs {
-        example {
-            if (keystore.exists() && password != null) {
-                storeFile keystore
-                storePassword password
-                keyAlias 'release'
-                keyPassword password
+        upload {
+            if (uploadKeystore.exists() && uploadPassword != null) {
+                storeFile uploadKeystore
+                storePassword uploadPassword
+                keyAlias 'upload'
+                keyPassword uploadPassword
             } else {
-                print("Using debug signing. keystore found: ${keystore.exists()}, password found: ${password != null}")
+                throw Exception("Signing not possible: Keystore is ${uploadKeystore.exists()?'':'not '}found and password is ${uploadPassword == null?'not ':''}set")
+            }
+        }
+        dev {
+            if (devKeystore.exists() && devPassword != null) {
+                storeFile devKeystore
+                storePassword devPassword
+                keyAlias 'release'
+                keyPassword devPassword
+            } else {
+                print("Using debug signing. Keystore is ${devKeystore.exists()?'':'not '}found and password is ${devPassword == null?'not ':''}set")
             }
         }
     }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
+            if (uploadKeystore.exists() && uploadPassword != null) {
+                signingConfig signingConfigs.upload
+            }
         }
         debug {
-            // use real certificate if you can otherwise the default debug certificate will be used
-            if (keystore.exists() && password != null) {
-                signingConfig signingConfigs.example
+            if (devKeystore.exists() && devPassword != null) {
+                signingConfig signingConfigs.dev
             }
         }
     }
@@ -81,6 +94,31 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    packagingOptions {
+        exclude '.readme'
+        exclude 'LICENSE.txt'
+        exclude 'README.txt'
+        exclude '**/README.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude '**/LICENSE'
+        exclude '**/LICENSE*'
+        exclude '**/LICENSE*'
+        exclude '**/NOTICE'
+        exclude '**/NOTICE*'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/*.kotlin_module'
+        exclude 'META-INF/*.version'
+        exclude 'kotlin/**'
+        exclude '**.properties'
+        exclude 'androidsupportmultidexversion.txt'
+        exclude 'javax/**'
+        exclude 'androidx/test/**'
+        exclude 'junit/**'
+        exclude 'DebugProbesKt.bin'
+        exclude 'kotlin-tooling-metadata.json'
+    }
 }
 
 flutter {
@@ -88,5 +126,6 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.22"
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.22'
+    implementation 'com.google.android.gms:play-services-instantapps:17.0.0'
 }

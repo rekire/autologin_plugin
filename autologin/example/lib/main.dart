@@ -65,8 +65,14 @@ class _DemoPageState extends State<DemoPage> {
       if (value != null) {
         setState(() => loginToken = value);
       } else {
-        final hasZeroTouchSupport = (await AutologinPlugin.performCompatibilityChecks()).hasZeroTouchSupport;
-        setState(() => loginToken = hasZeroTouchSupport ? 'This is the first app start' : 'Platform not supported');
+        final hasZeroTouchSupport =
+            (await AutologinPlugin.performCompatibilityChecks())
+                .hasZeroTouchSupport;
+        setState(
+          () => loginToken = hasZeroTouchSupport
+              ? 'This is the first app start'
+              : 'Platform not supported',
+        );
         if (hasZeroTouchSupport) {
           await AutologinPlugin.saveLoginToken('First start ${DateTime.now()}');
         }
@@ -103,15 +109,19 @@ class _DemoPageState extends State<DemoPage> {
     if (mounted) {
       setState(() {
         if (credentials?.username != null) {
-          usernameController.text = credentials!.username!;
-          usernameNote = null;
+          usernameNote = usernameController.text == credentials!.username!
+              ? 'Got the same username as already set'
+              : null;
+          usernameController.text = credentials.username!;
         } else {
           usernameController.text = '';
           usernameNote = 'API did not provide a username';
         }
         if (credentials?.password != null) {
-          passwordController.text = credentials!.password!;
-          passwordNote = null;
+          passwordNote = passwordController.text == credentials!.password!
+              ? 'Got the same password as already set'
+              : null;
+          passwordController.text = credentials.password!;
         } else {
           passwordController.text = '';
           passwordNote = 'API did not provide a password';
@@ -122,7 +132,11 @@ class _DemoPageState extends State<DemoPage> {
 
   Future<void> saveCredentials() async {
     final success = await AutologinPlugin.saveCredentials(
-      Credential(username: usernameController.text, password: passwordController.text, domain: 'rekire.github.io'),
+      Credential(
+        username: usernameController.text,
+        password: passwordController.text,
+        domain: 'rekire.github.io',
+      ),
     );
 
     if (!success && mounted) {
@@ -141,7 +155,9 @@ class _DemoPageState extends State<DemoPage> {
         if (isPlatformSupported != true)
           const Padding(
             padding: EdgeInsets.only(bottom: 16),
-            child: Text('⚠️ This ${kIsWeb ? 'browser' : 'platform'} is not supported ⚠️'),
+            child: Text(
+              '⚠️ This ${kIsWeb ? 'browser' : 'platform'} is not supported ⚠️',
+            ),
           ),
         TextFormField(
           controller: usernameController,
@@ -166,7 +182,9 @@ class _DemoPageState extends State<DemoPage> {
             labelText: 'Password',
             helperText: passwordNote,
             suffixIcon: IconButton(
-              icon: Icon(obscurePassword ? Icons.visibility : Icons.visibility_off),
+              icon: Icon(
+                obscurePassword ? Icons.visibility : Icons.visibility_off,
+              ),
               onPressed: () {
                 setState(() => obscurePassword = !obscurePassword);
               },
