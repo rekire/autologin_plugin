@@ -106,7 +106,7 @@ void main() {
         );
         expect(
           await AutologinPlugin.deleteLoginToken(),
-          equals(sampleToken),
+          equals(true),
         );
         expect(
           await AutologinPlugin.requestLoginToken(),
