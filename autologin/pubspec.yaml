@@ -33,6 +33,21 @@ dependencies:
   flutter:
     sdk: flutter
 
+# only while development
+dependency_overrides:
+  autologin_android:
+    path: ../autologin_android
+  autologin_darwin:
+    path: ../autologin_darwin
+  autologin_linux:
+    path: ../autologin_linux
+  autologin_platform_interface:
+    path: ../autologin_platform_interface
+  autologin_web:
+    path: ../autologin_web
+  autologin_windows:
+    path: ../autologin_windows
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

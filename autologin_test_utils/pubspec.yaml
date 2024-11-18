@@ -14,5 +14,10 @@ dependencies:
   flutter_test:
     sdk: flutter
 
+# only while development
+dependency_overrides:
+  autologin_platform_interface:
+    path: ../autologin_platform_interface
+
 dev_dependencies:
   very_good_analysis: ^5.1.0

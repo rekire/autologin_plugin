@@ -20,6 +20,11 @@ dependencies:
   flutter:
     sdk: flutter
 
+# only while development
+dependency_overrides:
+  autologin_platform_interface:
+    path: ../autologin_platform_interface
+
 dev_dependencies:
   autologin_test_utils:
     git:
