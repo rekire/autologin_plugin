@@ -48,7 +48,7 @@ class MethodChannelAutologin extends AutologinPlatform {
 
   @override
   Future<String?> requestLoginToken() async =>
-    methodChannel.invokeMethod<String>('requestLoginToken');
+      methodChannel.invokeMethod<String>('requestLoginToken');
 
   @override
   Future<bool> saveLoginToken(String token) async =>
