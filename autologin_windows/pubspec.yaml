@@ -15,7 +15,7 @@ flutter:
         dartPluginClass: AutologinWindows
 
 dependencies:
-  autologin_platform_interface: ^1.0.0
+  autologin_platform_interface: ^1.0.1
   ffi: ^2.1.0
   flutter:
     sdk: flutter

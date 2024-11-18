@@ -1,6 +1,6 @@
 name: autologin_test_utils
 description: Shared code for tests to avoid to duplicating test code.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/rekire/autologin_plugin/tree/main/autologin_test_utils
 publish_to: none
 
@@ -8,7 +8,7 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  autologin_platform_interface: ^1.0.0
+  autologin_platform_interface: ^1.0.1
   flutter:
     sdk: flutter
   flutter_test:
