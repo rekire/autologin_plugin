@@ -49,6 +49,12 @@ void main() {
         cachedToken = answer.positionalArguments.first as String;
         return true;
       });
+      when(
+        () => autologinPlatform.deleteLoginToken(),
+      ).thenAnswer((answer) async {
+        cachedToken = null;
+        return true;
+      });
       AutologinPlatform.instance = autologinPlatform;
     });
 
