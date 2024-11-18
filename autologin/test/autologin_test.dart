@@ -98,6 +98,14 @@ void main() {
           await AutologinPlugin.requestLoginToken(),
           equals(sampleToken),
         );
+        expect(
+          await AutologinPlugin.deleteLoginToken(),
+          equals(sampleToken),
+        );
+        expect(
+          await AutologinPlugin.requestLoginToken(),
+          equals(null),
+        );
       },
     );
   });
