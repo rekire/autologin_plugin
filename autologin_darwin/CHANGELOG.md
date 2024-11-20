@@ -1,6 +1,7 @@
 ## 1.0.1
 
-* Add API to delete saved autologin tokens 
+* Add API to delete saved autologin tokens
+* Add Swift Package Manager support
 
 ## 1.0.0
 
