@@ -1,3 +1,8 @@
+## 1.0.1
+
+* Add API to delete saved autologin tokens (supported on Android, iOS and macOS)
+* Extend example app for publishing on Google Play
+
 ## 1.0.0
 
 * First official stable version
@@ -7,7 +12,7 @@
 
 * Add Windows support
 
-##  0.1.1
+## 0.1.1
 * Extend the documentation
 
 ## 0.1.0
