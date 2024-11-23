@@ -7,10 +7,27 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  autologin:
-    path: ../
+  autologin: ^1.0.0
   flutter:
     sdk: flutter
+
+# This block is just to make sure that when you build the example app you
+# use the current development version. You should not use it in your app.
+dependency_overrides:
+  autologin:
+    path: ..
+  autologin_android:
+    path: ../../autologin_android
+  autologin_darwin:
+    path: ../../autologin_darwin
+  autologin_linux:
+    path: ../../autologin_linux
+  autologin_platform_interface:
+    path: ../../autologin_platform_interface
+  autologin_web:
+    path: ../../autologin_web
+  autologin_windows:
+    path: ../../autologin_windows
 
 dev_dependencies:
   flutter_driver:

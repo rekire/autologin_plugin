@@ -2,9 +2,10 @@ name: autologin_web
 description: The platform implementation of the autologin plugin for web.
 version: 1.0.1
 homepage: https://github.com/rekire/autologin_plugin/tree/main/autologin_web
+resolution: workspace
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.5.0 <4.0.0'
   flutter: ">=1.20.0"
 
 flutter:
@@ -21,11 +22,6 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-
-# only while development
-dependency_overrides:
-  autologin_platform_interface:
-    path: ../autologin_platform_interface
 
 dev_dependencies:
   flutter_test:

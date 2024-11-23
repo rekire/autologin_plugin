@@ -1,0 +1,19 @@
+# This is the workspace file, this links the sub packages together so that you
+# just need to run dart pub get once for all packages while development.
+name: autologin_plugin
+description: This Plugin helps the developer to auto login into their app as simple as possible.
+version: 1.0.1
+homepage: https://github.com/rekire/autologin_plugin
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=1.20.0"
+
+workspace:
+  - autologin
+  - autologin_android
+  - autologin_darwin
+  - autologin_linux
+  - autologin_platform_interface
+  - autologin_web
+  - autologin_windows
