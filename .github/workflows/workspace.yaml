@@ -94,8 +94,9 @@ jobs:
       - name: 📦 Install Dependencies
         run: |
           flutter pub global activate very_good_cli
+          echo 'Testing with parent directory...'
+          cd ..
           flutter pub get
-          #cd ..
           #very_good packages get --recursive --ignore=${{inputs.package_get_excludes}}
 
       - name: ⚙️ Run Setup
