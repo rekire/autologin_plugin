@@ -39,4 +39,7 @@ class AutologinWindows extends AutologinPlatform {
 
   @override
   Future<bool> saveLoginToken(String token) async => false;
+
+  @override
+  Future<bool> deleteLoginToken() async => false;
 }
