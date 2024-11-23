@@ -16,7 +16,7 @@ on:
 
 jobs:
   build:
-    uses: .github/workflows/workspace.yaml
+    uses: ./.github/workflows/workspace.yaml
     with:
       flutter_channel: stable
       flutter_version: 3.24.1
