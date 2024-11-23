@@ -16,7 +16,7 @@ on:
 
 jobs:
   build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    uses: .github/workflows/workspace.yaml
     with:
       flutter_channel: stable
       flutter_version: 3.24.1
