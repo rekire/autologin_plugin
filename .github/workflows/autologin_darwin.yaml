@@ -21,6 +21,6 @@ jobs:
       coverage_excludes: '*.g.dart *.freezed.dart'
       flutter_channel: stable
       flutter_version: 3.24.1
-      analyze_directories: autologin_android/lib autologin_android/test
-      test_directory: autologin_android/test
+      analyze_directories: autologin_darwin/lib autologin_darwin/test
+      test_directory: autologin_darwin/test
       working_directory: autologin_darwin
