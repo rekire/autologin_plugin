@@ -59,13 +59,13 @@ on:
         required: false
         type: string
         default: "!*"
+      test_directory:
+        required: false
+        type: string
+        default: "test"
     secrets:
       ssh_key:
         required: false
-    test_directory:
-      required: false
-      type: string
-      default: "test"
 
 jobs:
   build:
