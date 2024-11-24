@@ -87,4 +87,7 @@ abstract class AutologinPlatform extends PlatformInterface {
   /// can be a refresh token or anything else which you can use to identify the
   /// user. For security reasons you should not store credentials.
   Future<bool> saveLoginToken(String token);
+
+  /// Delete the saved login token, returns `true` when successful.
+  Future<bool> deleteLoginToken();
 }

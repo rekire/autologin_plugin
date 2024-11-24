@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'autologin_darwin'
-  s.version          = '0.0.5'
+  s.version          = '1.0.1'
   s.summary          = 'The iOS and MacOS implementation of the autologin plugin.'
   s.description      = <<-DESC
   The iOS and MacOS implementation of the autologin plugin.
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'BSD', :file => '../LICENSE' }
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.source_files = 'autologin_darwin/Sources/autologin_darwin/**/*.swift'
 
   s.swift_version = '5.0'
 

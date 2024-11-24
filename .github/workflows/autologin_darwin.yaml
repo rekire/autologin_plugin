@@ -1,4 +1,4 @@
-name: autologin_macos
+name: autologin_darwin
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -7,18 +7,19 @@ concurrency:
 on:
   pull_request:
     paths:
-      - ".github/workflows/autologin_macos.yaml"
+      - ".github/workflows/autologin_darwin.yaml"
       - "autologin_darwin/**"
   push:
     paths:
-      - ".github/workflows/autologin_macos.yaml"
+      - ".github/workflows/autologin_darwin.yaml"
       - "autologin_darwin/**"
 
 jobs:
   build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    uses: ./.github/workflows/workspace.yaml
     with:
       coverage_excludes: '*.g.dart *.freezed.dart'
       flutter_channel: stable
       flutter_version: 3.24.1
-      working_directory: autologin_darwin
+      analyze_directories: autologin_darwin/lib autologin_darwin/test
+      test_directory: autologin_darwin/test

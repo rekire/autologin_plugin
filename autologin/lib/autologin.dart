@@ -54,4 +54,8 @@ class AutologinPlugin {
   /// user. For security reasons you should not store credentials.
   static Future<bool> saveLoginToken(String token) async =>
       AutologinPlatform.instance.saveLoginToken(token);
+
+  /// Delete the saved login token, returns `true` when successful.
+  static Future<bool> deleteLoginToken() async =>
+      AutologinPlatform.instance.deleteLoginToken();
 }

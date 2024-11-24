@@ -49,6 +49,12 @@ void main() {
         cachedToken = answer.positionalArguments.first as String;
         return true;
       });
+      when(
+        () => autologinPlatform.deleteLoginToken(),
+      ).thenAnswer((answer) async {
+        cachedToken = null;
+        return true;
+      });
       AutologinPlatform.instance = autologinPlatform;
     });
 
@@ -97,6 +103,14 @@ void main() {
         expect(
           await AutologinPlugin.requestLoginToken(),
           equals(sampleToken),
+        );
+        expect(
+          await AutologinPlugin.deleteLoginToken(),
+          equals(true),
+        );
+        expect(
+          await AutologinPlugin.requestLoginToken(),
+          equals(null),
         );
       },
     );

@@ -75,6 +75,11 @@ public class AutologinPlugin: NSObject, FlutterPlugin {
             } else {
                 result(FlutterError(code: "INVALID_ARGUMENT", message: "Argument must be a string", details: nil))
             }
+        case "deleteLoginToken":
+            let keyValueStore = NSUbiquitousKeyValueStore.default
+            keyValueStore.removeObject(forKey: "login-token")
+            keyValueStore.synchronize()
+            result(true)
         default:
             result(FlutterMethodNotImplemented)
         }

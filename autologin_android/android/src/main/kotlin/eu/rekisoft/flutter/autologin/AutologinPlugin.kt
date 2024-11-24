@@ -6,6 +6,7 @@ import androidx.credentials.*
 import androidx.credentials.exceptions.*
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.blockstore.Blockstore
+import com.google.android.gms.auth.blockstore.DeleteBytesRequest
 import com.google.android.gms.auth.blockstore.RetrieveBytesRequest
 import com.google.android.gms.auth.blockstore.RetrieveBytesResponse
 import com.google.android.gms.auth.blockstore.StoreBytesData
@@ -147,7 +148,22 @@ class AutologinPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     .addOnFailureListener { e ->
                         result.error(e.javaClass.simpleName, e.message, null)
                     }
+            } catch (e: Exception) {
+                result.error(e.javaClass.simpleName, e.message, null)
+            }
 
+            "deleteLoginToken" -> try {
+                val client = Blockstore.getClient(binding!!.activity)
+
+                val deleteRequest = DeleteBytesRequest.Builder().build()
+
+                client.deleteBytes(deleteRequest)
+                    .addOnSuccessListener {
+                        result.success("true")
+                    }
+                    .addOnFailureListener { e ->
+                        result.error(e.javaClass.simpleName, e.message, null)
+                    }
             } catch (e: Exception) {
                 result.error(e.javaClass.simpleName, e.message, null)
             }

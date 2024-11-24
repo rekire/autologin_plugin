@@ -1,3 +1,8 @@
+## 1.0.1
+
+* Add API to delete saved autologin tokens
+* Add Swift Package Manager support
+
 ## 1.0.0
 
 * First official stable version

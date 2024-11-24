@@ -43,8 +43,6 @@ class DemoPage extends StatefulWidget {
 /// Most of those state fields are just for debugging what's going on
 class _DemoPageState extends State<DemoPage> {
   bool? isPlatformSupported;
-  String? usernameNote;
-  String? passwordNote;
   bool obscurePassword = true;
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -54,8 +52,6 @@ class _DemoPageState extends State<DemoPage> {
   void initState() {
     super.initState();
     unawaited(initPlatformState());
-    usernameController.addListener(resetUsernameNote);
-    passwordController.addListener(resetPasswordNote);
     AutologinPlugin.setup(
       domain: 'rekire.github.io',
       appId: 'eu.rekisoft.flutter.autologin',
@@ -65,8 +61,14 @@ class _DemoPageState extends State<DemoPage> {
       if (value != null) {
         setState(() => loginToken = value);
       } else {
-        final hasZeroTouchSupport = (await AutologinPlugin.performCompatibilityChecks()).hasZeroTouchSupport;
-        setState(() => loginToken = hasZeroTouchSupport ? 'This is the first app start' : 'Platform not supported');
+        final hasZeroTouchSupport =
+            (await AutologinPlugin.performCompatibilityChecks())
+                .hasZeroTouchSupport;
+        setState(
+          () => loginToken = hasZeroTouchSupport
+              ? 'null (this is the first app start or token was deleted)'
+              : '(Platform not supported)',
+        );
         if (hasZeroTouchSupport) {
           await AutologinPlugin.saveLoginToken('First start ${DateTime.now()}');
         }
@@ -76,53 +78,27 @@ class _DemoPageState extends State<DemoPage> {
     });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    usernameController.removeListener(resetUsernameNote);
-    passwordController.removeListener(resetPasswordNote);
-  }
-
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     final isSupported = await AutologinPlugin.isPlatformSupported;
     setState(() => isPlatformSupported = isSupported);
   }
 
-  void resetUsernameNote() {
-    setState(() => usernameNote = null);
-  }
-
-  void resetPasswordNote() {
-    setState(() => passwordNote = null);
-  }
-
   Future<void> requestCredentials() async {
     final credentials = await AutologinPlugin.requestCredentials();
 
     if (mounted) {
-      setState(() {
-        if (credentials?.username != null) {
-          usernameController.text = credentials!.username!;
-          usernameNote = null;
-        } else {
-          usernameController.text = '';
-          usernameNote = 'API did not provide a username';
-        }
-        if (credentials?.password != null) {
-          passwordController.text = credentials!.password!;
-          passwordNote = null;
-        } else {
-          passwordController.text = '';
-          passwordNote = 'API did not provide a password';
-        }
-      });
+      updateCredentials(credentials?.username, credentials?.password);
     }
   }
 
   Future<void> saveCredentials() async {
     final success = await AutologinPlugin.saveCredentials(
-      Credential(username: usernameController.text, password: passwordController.text, domain: 'rekire.github.io'),
+      Credential(
+        username: usernameController.text,
+        password: passwordController.text,
+        domain: 'rekire.github.io',
+      ),
     );
 
     if (!success && mounted) {
@@ -134,23 +110,52 @@ class _DemoPageState extends State<DemoPage> {
     }
   }
 
+  void updateCredentials(String? username, String? password) {
+    final usernameChanged = usernameController.text != username;
+    final passwordChanged = passwordController.text != password;
+    if (username == null || password == null) {
+      final fields = [
+        if (username == null) 'username',
+        if (password == null) 'password',
+      ].join(' or ');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('The API returned no $fields.')),
+      );
+    } else if (!usernameChanged || !passwordChanged) {
+      final fields = [
+        if (!usernameChanged) 'username',
+        if (!passwordChanged) 'password',
+      ].join(' and ');
+      final verb = usernameChanged == passwordChanged ? 'have' : 'has';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('The $fields $verb not changed.')),
+      );
+    }
+    usernameController.text = username ?? '';
+    passwordController.text = password ?? '';
+  }
+
   @override
   Widget build(BuildContext context) {
+    const target=kIsWeb ? 'browser' : 'platform';
     return Column(
       children: [
         if (isPlatformSupported != true)
           const Padding(
             padding: EdgeInsets.only(bottom: 16),
-            child: Text('⚠️ This ${kIsWeb ? 'browser' : 'platform'} is not supported ⚠️'),
+            child: Text(
+              '⚠️ This $target is not supported ⚠️',
+            ),
           ),
+        const Text('This app shows the features of the autologin flutter package. You cannot sign in this app, you need to implement that in your own app.'),
+        const SizedBox(height: 16),
         TextFormField(
           controller: usernameController,
           textInputAction: TextInputAction.next,
           autofillHints: const [AutofillHints.username],
-          decoration: InputDecoration(
-            border: const OutlineInputBorder(),
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
             labelText: 'Username',
-            helperText: usernameNote,
           ),
           onFieldSubmitted: (_) => saveCredentials(),
         ),
@@ -164,9 +169,10 @@ class _DemoPageState extends State<DemoPage> {
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
             labelText: 'Password',
-            helperText: passwordNote,
             suffixIcon: IconButton(
-              icon: Icon(obscurePassword ? Icons.visibility : Icons.visibility_off),
+              icon: Icon(
+                obscurePassword ? Icons.visibility : Icons.visibility_off,
+              ),
               onPressed: () {
                 setState(() => obscurePassword = !obscurePassword);
               },
@@ -182,16 +188,24 @@ class _DemoPageState extends State<DemoPage> {
         ),
         const SizedBox(height: 8),
         OutlinedButton(
-          onPressed: () {
-            usernameController.text = 'Some-Username';
-            passwordController.text = r'Example-P@§$w0rd!';
-          },
+          onPressed: () =>
+              updateCredentials('Some-Username', r'Example-P@§$w0rd!'),
           child: const Text('Enter sample data'),
         ),
         const SizedBox(height: 8),
         OutlinedButton(
           onPressed: isPlatformSupported == true ? requestCredentials : null,
           child: const Text('Request login data'),
+        ),
+        const SizedBox(height: 8),
+        OutlinedButton(
+          onPressed: isPlatformSupported == true
+              ? () {
+                  AutologinPlugin.deleteLoginToken();
+                  setState(() => loginToken = '(token deleted)');
+                }
+              : null,
+          child: const Text('Delete login token'),
         ),
         const SizedBox(height: 8),
         Text('Login-Token: $loginToken'),

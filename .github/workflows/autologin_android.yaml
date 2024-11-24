@@ -16,8 +16,9 @@ on:
 
 jobs:
   build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    uses: ./.github/workflows/workspace.yaml
     with:
       flutter_channel: stable
       flutter_version: 3.24.1
-      working_directory: autologin_android
+      analyze_directories: autologin_android/lib autologin_android/test
+      test_directory: autologin_android/test

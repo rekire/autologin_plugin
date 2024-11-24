@@ -18,9 +18,10 @@ on:
 
 jobs:
   build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    uses: ./.github/workflows/workspace.yaml
     with:
       runs_on: windows-latest
       flutter_channel: stable
       flutter_version: 3.24.1
-      working_directory: autologin_windows
+      analyze_directories: autologin_windows/lib autologin_windows/test
+      test_directory: autologin_windows/test

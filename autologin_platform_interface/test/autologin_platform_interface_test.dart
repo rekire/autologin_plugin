@@ -40,6 +40,12 @@ class AutologinMock extends AutologinPlatform {
     loginToken = token;
     return true;
   }
+
+  @override
+  Future<bool> deleteLoginToken() async {
+    loginToken = null;
+    return true;
+  }
 }
 
 void main() {

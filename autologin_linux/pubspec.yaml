@@ -1,10 +1,11 @@
 name: autologin_linux
 description: The platform implementation of the autologin plugin for Linux.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/rekire/autologin_plugin/tree/main/autologin_linux
+resolution: workspace
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: '>=3.5.0 <4.0.0'
   flutter: ">=1.20.0"
 
 flutter:
@@ -16,7 +17,7 @@ flutter:
         dartPluginClass: AutologinLinux
 
 dependencies:
-  autologin_platform_interface: ^1.0.0
+  autologin_platform_interface: ^1.0.1
   flutter:
     sdk: flutter
 
@@ -28,4 +29,4 @@ dev_dependencies:
       ref: 1.0.0
   flutter_test:
     sdk: flutter
-  very_good_analysis: ^5.1.0
+  very_good_analysis: ^6.0.0
