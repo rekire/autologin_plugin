@@ -23,4 +23,3 @@ jobs:
       flutter_version: 3.24.1
       analyze_directories: autologin_darwin/lib autologin_darwin/test
       test_directory: autologin_darwin/test
-      working_directory: autologin_darwin
