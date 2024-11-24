@@ -4,6 +4,7 @@ name: autologin_plugin
 description: This Plugin helps the developer to auto login into their app as simple as possible.
 version: 1.0.1
 homepage: https://github.com/rekire/autologin_plugin
+publish_to: none
 
 environment:
   sdk: ">=3.5.0 <4.0.0"

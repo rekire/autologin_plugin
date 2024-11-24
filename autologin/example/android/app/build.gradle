@@ -60,7 +60,7 @@ android {
                 keyAlias 'upload'
                 keyPassword uploadPassword
             } else {
-                throw Exception("Signing not possible: Keystore is ${uploadKeystore.exists()?'':'not '}found and password is ${uploadPassword == null?'not ':''}set")
+                print("Upload not possible: Keystore is ${uploadKeystore.exists()?'':'not '}found and password is ${uploadPassword == null?'not ':''}set")
             }
         }
         dev {
