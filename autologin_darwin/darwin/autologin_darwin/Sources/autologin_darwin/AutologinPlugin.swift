@@ -9,11 +9,13 @@ import FlutterMacOS
 #endif
 
 public class AutologinPlugin: NSObject, FlutterPlugin {
+    static var macosRegistrar: FlutterPluginRegistrar?;
+
     public static func register(with registrar: FlutterPluginRegistrar) {
         // Workaround for https://github.com/flutter/flutter/issues/118103.
 #if os(iOS)
         let messenger = registrar.messenger()
-#else
+#elseif os(macOS)
         let messenger = registrar.messenger
 #endif
         let channel = FlutterMethodChannel(
@@ -21,30 +23,33 @@ public class AutologinPlugin: NSObject, FlutterPlugin {
             binaryMessenger: messenger)
         let instance = AutologinPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
+        macosRegistrar = registrar;
     }
-    
+
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
         case "requestCredentials":
-            // possible migration: https://developer.apple.com/forums/thread/692844
-            if let domain = call.arguments as? String {
-                SecRequestSharedWebCredential(domain as CFString, nil) { (credentials, error) in
-                    if let error = error {
-                        result(FlutterError(code: "UNAVAILABLE",
-                                            message: "Could not fetch credentials from keychain: \(error)",
-                                            details: nil))
-                    } else if let credentials = credentials as? [[String: Any]] {
-                        for credential in credentials {
-                            if let account = credential[kSecAttrAccount as String] as? String,
-                               let password = credential[kSecSharedPassword as String] as? String {
-                                result(["username": account, "password": password])
-                            }
-                        }
-                    }
+            let passwordProvider = ASAuthorizationPasswordProvider()
+            let request = passwordProvider.createRequest()
+            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+#if os(macOS)
+            authorizationController.presentationContextProvider = { (controller: ASAuthorizationController) in
+              return AutologinPlugin.macosRegistrar!.view!
+            } as? ASAuthorizationControllerPresentationContextProviding;
+#endif
+            authorizationController.delegate = { (controller: ASAuthorizationController, authorization: ASAuthorization) in
+                if let credential = authorization.credential as? ASPasswordCredential {
+                    let password = credential.password
+                    let username = credential.user
+                    result(["username": username, "password": password])
                 }
-            } else {
-                result(FlutterError(code: "INVALID_ARGUMENT", message: "Argument must be a string", details: nil))
-            }
+                else if let error = authorization.credential as? ASAuthorizationError {
+                    result(FlutterError(code: "UNAVAILABLE",
+                                        message: "Could not fetch credentials from keychain: \(error)",
+                                        details: nil))
+                }
+            } as? ASAuthorizationControllerDelegate
+            authorizationController.performRequests()
         case "saveCredentials":
             guard let arguments = call.arguments as? [String: Any],
                   let username = arguments["username"] as? String,
