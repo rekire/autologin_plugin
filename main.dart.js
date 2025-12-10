@@ -24154,7 +24154,7 @@ $S:2}
 A.ajj.prototype={
 $1(a){var s=A.cG().b
 s=s==null?null:s.canvasKitBaseUrl
-return(s==null?"https://www.gstatic.com/flutter-canvaskit/b5990e5ccc5e325fd24f0746e7d6689bbebc7c65/":s)+a},
+return(s==null?"https://www.gstatic.com/flutter-canvaskit/a5cb96369ef86c7e85abf5d662a1ca5d89775053/":s)+a},
 $S:185}
 A.Fb.prototype={
 Qt(){var s=this.a47(),r=$.bj.bn().ImageFilter.MakeColorFilter(s,null)
