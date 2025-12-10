@@ -23,7 +23,7 @@ jobs:
         working-directory: autologin/example
         run: flutter build web
       - name: Upload to gh-pages
-        uses: JamesIves/github-pages-deploy-action@v4.7.4
+        uses: JamesIves/github-pages-deploy-action@v4.7.6
         with:
           branch: gh-pages
           folder: autologin/example/build/web
