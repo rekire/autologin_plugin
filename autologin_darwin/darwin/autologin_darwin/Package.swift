@@ -10,12 +10,12 @@ let package = Package(
         .macOS("11.0")
     ],
     products: [
-        .library(name: "plugin-name", targets: ["autologin_darwin"])
+        .library(name: "plugin-name", targets: ["autologin-darwin"])
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "autologin_darwin",
+            name: "autologin-darwin",
             dependencies: [],
             resources: [
                 // Hint: If your plugin requires a privacy manifest
