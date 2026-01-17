@@ -10,7 +10,7 @@ let package = Package(
         .macOS("11.0")
     ],
     products: [
-        .library(name: "plugin-name", targets: ["autologin-darwin"])
+        .library(name: "plugin-name", targets: ["autologin_darwin"])
     ],
     dependencies: [],
     targets: [
