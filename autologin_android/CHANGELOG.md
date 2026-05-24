@@ -1,3 +1,7 @@
+## 1.0.2
+
+* Gradle 9.0 migration
+
 ## 1.0.1
 
 * Add API to delete saved autologin tokens
