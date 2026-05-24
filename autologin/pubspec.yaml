@@ -1,6 +1,6 @@
 name: autologin
 description: This Plugin helps the developer to auto login into their app as simple as possible.
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/rekire/autologin_plugin
 resolution: workspace
 
@@ -25,8 +25,8 @@ flutter:
         default_package: autologin_windows
 
 dependencies:
-  autologin_android: ^1.0.1
-  autologin_darwin: ^1.0.1
+  autologin_android: ^1.0.2
+  autologin_darwin: ^1.0.2
   autologin_linux: ^1.0.1
   autologin_platform_interface: ^1.0.1
   autologin_web: ^1.0.1

@@ -1,3 +1,9 @@
+## 1.0.2
+
+* Fix a wrong naming in the darwin package which broke the swift package manager
+  support
+* Mark some constructors as private for a better documentation coverage
+
 ## 1.0.1
 
 * Add API to delete saved autologin tokens (supported on Android, iOS and macOS)

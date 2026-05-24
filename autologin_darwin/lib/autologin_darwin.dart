@@ -5,6 +5,9 @@ import 'package:autologin_platform_interface/autologin_platform_interface.dart';
 
 /// The Darwin implementation of [AutologinPlatform] for iOS and MacOS.
 class AutologinDarwin extends MethodChannelAutologin {
+  /// Creates a new instance of [AutologinDarwin].
+  AutologinDarwin();
+
   late String _domain;
 
   /// Registers this class as the default instance of [AutologinPlatform]

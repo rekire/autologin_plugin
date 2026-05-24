@@ -12,6 +12,10 @@ export 'package:autologin_platform_interface/autologin_platform_interface.dart'
 /// saved [Credential]s can be requested which you need to safe before with
 /// [saveCredentials].
 class AutologinPlugin {
+  /// Private constructor. All methods are static therefore it doesn't matter
+  /// anyway.
+  AutologinPlugin._();
+
   /// Returns `true` when the current platform is supported.
   static Future<bool> get isPlatformSupported =>
       AutologinPlatform.instance.isPlatformSupported;
