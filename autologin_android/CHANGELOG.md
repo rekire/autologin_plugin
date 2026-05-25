@@ -1,4 +1,4 @@
-## 1.0.2
+## 1.1.0
 
 * Gradle 9.0 migration
 * Add support for Flutter 3.44/Dart 3.12

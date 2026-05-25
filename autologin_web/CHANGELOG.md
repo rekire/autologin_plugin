@@ -1,4 +1,4 @@
-## 1.0.2
+## 1.1.0
 
 * Add WASM support
 * Throw UnsupportedError in unsupported browsers
