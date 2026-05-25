@@ -25,11 +25,11 @@ flutter:
         default_package: autologin_windows
 
 dependencies:
-  autologin_android: ^1.0.2
-  autologin_darwin: ^1.0.2
+  autologin_android: ^1.1.0
+  autologin_darwin: ^1.1.0
   autologin_linux: ^1.0.1
   autologin_platform_interface: ^1.0.2
-  autologin_web: ^1.0.2
+  autologin_web: ^1.1.0
   autologin_windows: ^1.0.1
   flutter:
     sdk: flutter
