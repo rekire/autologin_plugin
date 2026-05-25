@@ -1,6 +1,11 @@
 plugins {
   id("com.android.library")
-  id("org.jetbrains.kotlin.android")
+}
+
+val agpMajor = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.substringBefore('.').toInt()
+
+if (agpMajor < 9) {
+  apply(plugin = "org.jetbrains.kotlin.android")
 }
 
 group = "eu.rekisoft.flutter.autologin"
