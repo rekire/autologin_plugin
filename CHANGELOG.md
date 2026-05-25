@@ -3,6 +3,10 @@
 * Fix a wrong naming in the darwin package which broke the swift package manager
   support
 * Mark some constructors as private for a better documentation coverage
+* Add Gradle 9.0 migration
+* Add support for Flutter 3.44/Dart 3.12
+* Add WASM support
+* Throw UnsupportedError in unsupported browsers
 
 ## 1.0.1
 
