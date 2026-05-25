@@ -152,11 +152,6 @@ be aware that just Chrome, Edge and Opera support this feature
 On Windows the APIs [`CredRead`][CredRead] and [`CredWrite`][CredWrite] are
 used. Like on Linux that API is used without any user interface.
 
-## TODO
-
-- [ ] Extend installation documentation. In the mean time you can use the
-  [example app](./autologin/example).
-
 [web-demo]: https://rekire.github.io/autologin_plugin/
 [Android]: ./autologin_android
 [iOS]: ./autologin_darwin
