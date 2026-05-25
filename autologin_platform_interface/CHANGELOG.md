@@ -1,3 +1,7 @@
+## 1.0.3
+
+* Improve code metrics by adding a constructor and reformat a generated file
+
 ## 1.0.2
 
 * Support freezed_annotation 3.x the change is not breaking for this package

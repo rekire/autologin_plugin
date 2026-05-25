@@ -4,6 +4,9 @@ import 'package:flutter/services.dart';
 
 /// An implementation of [AutologinPlatform] that uses method channels.
 class MethodChannelAutologin extends AutologinPlatform {
+  /// Creates a new instance of [MethodChannelAutologin].
+  MethodChannelAutologin();
+
   /// The method channel used to interact with the native platform.
   @protected
   @visibleForTesting

@@ -1,3 +1,13 @@
+## 1.0.2
+
+* Fix a wrong naming in the darwin package which broke the swift package manager
+  support
+* Mark some constructors as private for a better documentation coverage
+* Add Gradle 9.0 migration
+* Add support for Flutter 3.44/Dart 3.12
+* Add WASM support
+* Throw UnsupportedError in unsupported browsers
+
 ## 1.0.1
 
 * Add API to delete saved autologin tokens (supported on Android, iOS and macOS)

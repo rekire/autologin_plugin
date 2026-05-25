@@ -1,6 +1,6 @@
 name: autologin_platform_interface
 description: The common platform interface with shared code for the autologin plugin.
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/rekire/autologin_plugin/tree/main/autologin_platform_interface
 resolution: workspace
 
@@ -21,4 +21,4 @@ dev_dependencies:
     sdk: flutter
   freezed: ^2.4.6
   json_serializable: ^6.7.1
-  very_good_analysis: ">=5.1.0 <7.0.0"
+  very_good_analysis: ">=5.1.0 <11.0.0"
