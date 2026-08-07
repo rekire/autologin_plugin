@@ -63,6 +63,10 @@ on:
         required: false
         type: string
         default: "test"
+      package_directory:
+        required: false
+        type: string
+        default: "."
     secrets:
       ssh_key:
         required: false
@@ -117,7 +121,13 @@ jobs:
 
       - name: Publish dry run
         if: ${{ github.ref == 'refs/heads/main' }}
-        run: dart pub publish --dry-run
+        run: |
+          if [ "${{inputs.package_directory}}" != "." ]; then
+            cd ${{inputs.package_directory}}
+          fi
+          if ! grep -q 'publish_to: none' pubspec.yaml; then
+            dart pub publish --dry-run
+          fi
 
       - name: Install pana
         run: dart pub global activate pana
@@ -125,7 +135,7 @@ jobs:
       - name: Verify code metrics
         run: |
           echo "# Pana report" >> $GITHUB_STEP_SUMMARY
-          $HOME/.pub-cache/bin/pana >> $GITHUB_STEP_SUMMARY
+          $HOME/.pub-cache/bin/pana ${{inputs.package_directory}} >> $GITHUB_STEP_SUMMARY
           if ! grep -q 'API elements (100.0 %) have documentation comments.' $GITHUB_STEP_SUMMARY; then
             echo "Documentation coverage is not 100%. Please add documentation comments to all public API elements." >&2
             exit 1

@@ -22,3 +22,4 @@ jobs:
       flutter_version: 3.24.1
       analyze_directories: autologin_linux/lib autologin_linux/test
       test_directory: autologin_linux/test
+      package_directory: autologin_linux

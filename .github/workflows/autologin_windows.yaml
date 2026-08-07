@@ -25,3 +25,4 @@ jobs:
       flutter_version: 3.24.1
       analyze_directories: autologin_windows/lib autologin_windows/test
       test_directory: autologin_windows/test
+      package_directory: autologin_windows
