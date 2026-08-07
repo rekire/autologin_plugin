@@ -115,6 +115,25 @@ jobs:
         run: flutter test ${{inputs.test_directory}} --coverage --test-randomize-ordering-seed random
         #run: very_good test -j ${{inputs.concurrency}} ${{(inputs.test_recursion && '--recursive') || ''}} ${{(inputs.test_optimization && '--optimization') || '--no-optimization'}} --coverage --test-randomize-ordering-seed random
 
+      - name: Publish dry run
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: dart pub publish --dry-run
+
+      - name: Install pana
+        run: dart pub global activate pana
+
+      - name: Verify code metrics
+        run: |
+          echo "# Pana report" >> $GITHUB_STEP_SUMMARY
+          $HOME/.pub-cache/bin/pana >> $GITHUB_STEP_SUMMARY
+          if ! grep -q 'API elements (100.0 %) have documentation comments.' $GITHUB_STEP_SUMMARY; then
+            echo "Documentation coverage is not 100%. Please add documentation comments to all public API elements." >&2
+            exit 1
+          fi
+          if ! grep -q 'Points: 160/160.' $GITHUB_STEP_SUMMARY; then
+            echo "The score is not the expected 160/160 points. Please check and fix this." >&2
+          fi
+
       # disabled until this works again
       #- name: 📊 Check Code Coverage
       #  uses: VeryGoodOpenSource/very_good_coverage@v3
