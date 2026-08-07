@@ -31,7 +31,6 @@ jobs:
       flutter_version: 3.24.1
       analyze_directories: autologin/lib autologin/test
       test_directory: autologin/test
-      package_directory: autologin
 
   android:
     runs-on: ubuntu-latest

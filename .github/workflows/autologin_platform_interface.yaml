@@ -22,4 +22,3 @@ jobs:
       flutter_version: 3.24.1
       analyze_directories: autologin_platform_interface/lib autologin_platform_interface/test
       test_directory: autologin_platform_interface/test
-      package_directory: autologin_platform_interface
