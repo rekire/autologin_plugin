@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('AutologinDarwin', () {
+  group('AutologinWindows', () {
     final autologin = AutologinWindows();
     final utils = SharedTests(
       compatibilities: const Compatibilities(

@@ -1,3 +1,7 @@
+## 1.0.2
+
+* Support freezed_annotation 3.x the change is not breaking for this package
+
 ## 1.0.1
 
 * Add API to delete saved autologin tokens

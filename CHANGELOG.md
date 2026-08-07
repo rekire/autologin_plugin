@@ -1,3 +1,20 @@
+## 1.1.0
+
+* Fix a wrong naming in the darwin package which broke the swift package manager
+  support
+* Mark some constructors as private for a better documentation coverage
+* Add Gradle 9.0 migration
+* Add support for Flutter 3.44/Dart 3.12
+* Add WASM support
+* Throw UnsupportedError in unsupported browsers
+
+## 1.0.2
+* Support freezed_annotation 3.x the change is not breaking for this package
+* Bump JamesIves/github-pages-deploy-action from 4.6.9 to 4.7.2
+* Bump very_good_analysis from 6.0.0 to 7.0.0 in /autologin/example
+* Bump JamesIves/github-pages-deploy-action from 4.7.2 to 4.7.3
+* Bump webfactory/ssh-agent from 0.9.0 to 0.9.1
+
 ## 1.0.1
 
 * Add API to delete saved autologin tokens (supported on Android, iOS and macOS)

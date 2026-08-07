@@ -1,3 +1,8 @@
+## 1.1.0
+
+* Add WASM support
+* Throw UnsupportedError in unsupported browsers
+
 ## 1.0.1
 
 * Update platform interface to 1.0.1 without new features for Web

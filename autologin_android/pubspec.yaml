@@ -1,6 +1,6 @@
 name: autologin_android
 description: The platform implementation of the autologin plugin for Android.
-version: 1.0.1
+version: 1.1.0
 homepage: https://github.com/rekire/autologin_plugin/tree/main/autologin_android
 resolution: workspace
 
@@ -18,9 +18,10 @@ flutter:
         dartPluginClass: AutologinAndroid
 
 dependencies:
-  autologin_platform_interface: ^1.0.1
+  autologin_platform_interface: ^1.0.2
   flutter:
     sdk: flutter
+  plugin_platform_interface: ^2.0.0
 
 dev_dependencies:
   autologin_test_utils:
@@ -30,5 +31,4 @@ dev_dependencies:
       ref: 1.0.0
   flutter_test:
     sdk: flutter
-  plugin_platform_interface: ^2.0.0
-  very_good_analysis: ">=5.1.0 <7.0.0"
+  very_good_analysis: ">=5.1.0 <11.0.0"

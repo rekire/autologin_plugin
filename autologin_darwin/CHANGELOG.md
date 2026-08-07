@@ -1,3 +1,10 @@
+## 1.1.0
+
+* Fix a wrong naming in the darwin package which broke the swift package manager
+  support
+* Mark some constructors as private for a better documentation coverage
+* Add support for Flutter 3.44/Dart 3.12
+
 ## 1.0.1
 
 * Add API to delete saved autologin tokens

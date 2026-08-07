@@ -6,6 +6,9 @@ import 'package:flutter/services.dart';
 
 /// The Linux implementation of [AutologinPlatform].
 class AutologinLinux extends MethodChannelAutologin {
+  /// Creates a new instance of [AutologinLinux].
+  AutologinLinux();
+
   String? _appId;
   String? _appName;
 
