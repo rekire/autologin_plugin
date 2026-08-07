@@ -12,8 +12,9 @@ add it to your `pubspec.yaml` as usual.
 
 # Installation
 
-For storing credentials the
-[Shared Web Credentials][shared_web_credentials] are used. In order
+For storing and retrieving credentials,
+[Shared Web Credentials][shared_web_credentials] /
+[ASAuthorizationController][asauthorizationcontroller] are used. In order
 to make this working you need to setup the [Associated Domains
 Entitlement][associated-domains].
 The main documentation can be found on the
@@ -58,3 +59,4 @@ in your Xcode project. Here is a step per step guide:
 [associated-domains]: https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_associated-domains
 [supporting-associated-domains]: https://developer.apple.com/documentation/xcode/supporting-associated-domains
 [kvstore]: https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_ubiquity-kvstore-identifier
+[asauthorizationcontroller]: https://developer.apple.com/documentation/authenticationservices/asauthorizationcontroller

@@ -1,3 +1,8 @@
+## 1.2.0
+
+* Migrate iOS and macOS `requestCredentials` implementation to `ASAuthorizationController` using `ASAuthorizationPasswordProvider` (fixing deprecated `SecRequestSharedWebCredential` API)
+* Migrate example application on iOS and macOS from CocoaPods to native Swift Package Manager (SPM)
+
 ## 1.1.0
 
 * Fix a wrong naming in the darwin package which broke the swift package manager
