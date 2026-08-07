@@ -1,13 +1,13 @@
 name: autologin_example
 description: Demonstrates how to use the autologin plugin.
-version: 1.0.1+2
+version: 1.2.0+4
 publish_to: 'none'
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  autologin: ^1.0.0
+  autologin: ^1.2.0
   flutter:
     sdk: flutter
 

@@ -1,3 +1,7 @@
+## 1.2.0
+
+* Bump version to align with autologin 1.2.0
+
 ## 1.1.0
 
 * Gradle 9.0 migration

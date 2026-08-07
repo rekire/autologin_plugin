@@ -1,3 +1,7 @@
+## 1.2.0
+
+* Bump version to align with autologin 1.2.0
+
 ## 1.0.1
 
 * Update platform interface to 1.0.1 without new features for Linux

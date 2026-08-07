@@ -1,3 +1,7 @@
+## 1.2.0
+
+* Bump version to align with autologin 1.2.0
+
 ## 1.0.2
 
 * Support freezed_annotation 3.x the change is not breaking for this package
