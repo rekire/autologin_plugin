@@ -24560,7 +24560,7 @@ $S:2}
 A.aj8.prototype={
 $1(a){var s=A.cm().b
 s=s==null?null:s.canvasKitBaseUrl
-return(s==null?"https://www.gstatic.com/flutter-canvaskit/a804b261645ef8c13eb3d5c44a5c2fb0340c5539/":s)+a},
+return(s==null?"https://www.gstatic.com/flutter-canvaskit/deb287481e3ce9468f3434937ced4240a70539ca/":s)+a},
 $S:139}
 A.EN.prototype={
 SA(){var s=this.a6F(),r=$.b3.bl().ImageFilter.MakeColorFilter(s,null)
